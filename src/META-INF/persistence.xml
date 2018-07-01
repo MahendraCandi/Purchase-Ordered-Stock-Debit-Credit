@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="FladeoAppPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>fladeoapp.data.BarangDetail</class>
+    <class>fladeoapp.data.JurnalDetail</class>
+    <class>fladeoapp.data.PurchaseOrder</class>
+    <class>fladeoapp.data.PelunasanPembayaranDetail</class>
+    <class>fladeoapp.data.Supplier</class>
+    <class>fladeoapp.data.User</class>
+    <class>fladeoapp.data.Jurnal</class>
+    <class>fladeoapp.data.PelunasanPembayaran</class>
+    <class>fladeoapp.data.PurchaseOrderDetail</class>
+    <class>fladeoapp.data.PenerimaanBarang</class>
+    <class>fladeoapp.data.TransaksiPembelian</class>
+    <class>fladeoapp.data.DataAkun</class>
+    <class>fladeoapp.data.Barang</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fladeodb?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

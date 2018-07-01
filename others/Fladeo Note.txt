@@ -1,0 +1,19 @@
+fladeodb
+----------
+Kd_Supplier     = sup-001
+Kd_Barang       = brg-001
+Username        = Fnc-001, Pch-001
+Hak_Akses       = Finance, Purchasing
+No_Tanda_Terima = NTR-001
+No_PO           = PO-001 
+No_Transaksi    = Trans-001
+No_Invoice      = Inv-001
+No_Pembayaran	= Byr-001
+Jenis_Barang	= ladies, mens, kids, bag
+No_Jurnal	= jurnal-001
+Kd_Akun		= akun-001
+Art_Barang	= 
+
+
+
+--------------------------
