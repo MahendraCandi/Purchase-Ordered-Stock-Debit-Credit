@@ -1,16 +1,19 @@
 package fladeoapp.controller;
 
-import fladeoapp.data.BarangDetail;
+import fladeoapp.data.DetailPelunasanPembayaran;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
-public class BarangDetailController implements Serializable{
+public class DetailPelunasanPembayaranController implements  Serializable{
     private static final long serialVersionUID = 1L;
     
     private EntityManagerFactory emf=null;
     
-    public BarangDetailController(EntityManagerFactory emf){
+    public DetailPelunasanPembayaranController(EntityManagerFactory emf){
         this.emf=emf;
     }
     
@@ -18,44 +21,44 @@ public class BarangDetailController implements Serializable{
         return emf.createEntityManager();
     }
     
-    public void save(BarangDetail barang){
+    public void save(DetailPelunasanPembayaran pembayaranDetail){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
-            em.persist(barang);
+            em.persist(pembayaranDetail);
             em.getTransaction().commit();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
-    public void update(BarangDetail barang){
+    public void update(DetailPelunasanPembayaran pembayaranDetail){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
-            em.merge(barang);
+            em.merge(pembayaranDetail);
             em.getTransaction().commit();
         }catch(Exception ex){}
     }
     
-    public void delete(String nama){
+    public void delete(String kode){
         EntityManager em = getEntityManager();
-        BarangDetail brg;
+        DetailPelunasanPembayaran pp;
         try{
-            brg=em.getReference(BarangDetail.class, nama);
-            brg.getArtBarang();
+            pp=em.getReference(DetailPelunasanPembayaran.class, kode);
+            pp.getId();
             em.getTransaction().begin();
-            em.remove(brg);
+            em.remove(pp);
             em.getTransaction().commit();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
-    public BarangDetail findBarangDetail(String nama){
+    public DetailPelunasanPembayaran findDetailPelunasanPembayaran(String kode){
         EntityManager em=getEntityManager();
         try{
-            return em.find(BarangDetail.class, nama);
+            return em.find(DetailPelunasanPembayaran.class, kode);
         }finally{}
     }
 }

@@ -46,7 +46,7 @@ public class UserController implements Serializable{
         User us;
         try{
             us=em.getReference(User.class, kode);
-            us.getId();
+            us.getIdUser();
             em.getTransaction().begin();
             em.remove(us);
             em.getTransaction().commit();
@@ -67,11 +67,11 @@ public class UserController implements Serializable{
         String kode="";
         String formatKode="";
         if(hakAkses.equalsIgnoreCase("Finance")){
-            kode = "Fnc-001";
-            formatKode = "Fnc-000";
+            kode = "FIN-001";
+            formatKode = "FIN-000";
         }else if(hakAkses.equalsIgnoreCase("Purchasing")){
-            kode = "Pch-001";
-            formatKode = "Pch-000";
+            kode = "PUC-001";
+            formatKode = "PUC-000";
         }
         try{
             em=getEntityManager();
@@ -85,6 +85,7 @@ public class UserController implements Serializable{
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
         }catch(NoResultException ex){
+            ex.printStackTrace();
         }
         return kode;
     }

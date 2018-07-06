@@ -64,7 +64,7 @@ public class JurnalController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="jurnal-001";
+        String kode="JURNAL-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -72,7 +72,7 @@ public class JurnalController implements Serializable{
             q.setMaxResults(1);
             Jurnal jurnal=(Jurnal) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("jurnal-000");
+                DecimalFormat formatnomor = new DecimalFormat("JURNAL-000");
                 String nomorurut = jurnal.getNoJurnal().substring(7);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }

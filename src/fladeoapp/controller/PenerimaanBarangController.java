@@ -63,7 +63,7 @@ public class PenerimaanBarangController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="NTR-001";
+        String kode="00001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -71,8 +71,8 @@ public class PenerimaanBarangController implements Serializable{
             q.setMaxResults(1);
             PenerimaanBarang penerimaanBarang=(PenerimaanBarang) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("NTR-000");
-                String nomorurut = penerimaanBarang.getNoTandaTerima().substring(4);
+                DecimalFormat formatnomor = new DecimalFormat("00000");
+                String nomorurut = penerimaanBarang.getNoTandaTerima();
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
         }catch(NoResultException ex){}

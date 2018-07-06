@@ -22,18 +22,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author 0085
  */
 @Entity
-@Table(name = "purchase_order_detail")
+@Table(name = "detail_purchase_order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PurchaseOrderDetail.findAll", query = "SELECT p FROM PurchaseOrderDetail p")
-    , @NamedQuery(name = "PurchaseOrderDetail.findById", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.id = :id")
-    , @NamedQuery(name = "PurchaseOrderDetail.findByNoPO", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.noPO = :noPO")
-    , @NamedQuery(name = "PurchaseOrderDetail.findByArtBarang", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.artBarang = :artBarang")
-    , @NamedQuery(name = "PurchaseOrderDetail.findBySize", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.size = :size")
-    , @NamedQuery(name = "PurchaseOrderDetail.findByQtyOrder", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.qtyOrder = :qtyOrder")
-    , @NamedQuery(name = "PurchaseOrderDetail.findByHargaBeli", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.hargaBeli = :hargaBeli")
-    , @NamedQuery(name = "PurchaseOrderDetail.findByHargaJual", query = "SELECT p FROM PurchaseOrderDetail p WHERE p.hargaJual = :hargaJual")})
-public class PurchaseOrderDetail implements Serializable {
+    @NamedQuery(name = "DetailPurchaseOrder.findAll", query = "SELECT d FROM DetailPurchaseOrder d")
+    , @NamedQuery(name = "DetailPurchaseOrder.findById", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.id = :id")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByNoPO", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.noPO = :noPO")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByArtBarang", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.artBarang = :artBarang")
+    , @NamedQuery(name = "DetailPurchaseOrder.findBySize", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.size = :size")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByQtyOrder", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.qtyOrder = :qtyOrder")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaBeli", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaBeli = :hargaBeli")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaJual", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaJual = :hargaJual")})
+public class DetailPurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,14 +60,14 @@ public class PurchaseOrderDetail implements Serializable {
     @Column(name = "Harga_Jual")
     private double hargaJual;
 
-    public PurchaseOrderDetail() {
+    public DetailPurchaseOrder() {
     }
 
-    public PurchaseOrderDetail(Integer id) {
+    public DetailPurchaseOrder(Integer id) {
         this.id = id;
     }
 
-    public PurchaseOrderDetail(Integer id, String noPO, String artBarang, String size, int qtyOrder, double hargaBeli, double hargaJual) {
+    public DetailPurchaseOrder(Integer id, String noPO, String artBarang, String size, int qtyOrder, double hargaBeli, double hargaJual) {
         this.id = id;
         this.noPO = noPO;
         this.artBarang = artBarang;
@@ -143,10 +143,10 @@ public class PurchaseOrderDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PurchaseOrderDetail)) {
+        if (!(object instanceof DetailPurchaseOrder)) {
             return false;
         }
-        PurchaseOrderDetail other = (PurchaseOrderDetail) object;
+        DetailPurchaseOrder other = (DetailPurchaseOrder) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -155,7 +155,7 @@ public class PurchaseOrderDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.PurchaseOrderDetail[ id=" + id + " ]";
+        return "fladeoapp.data.DetailPurchaseOrder[ id=" + id + " ]";
     }
     
 }

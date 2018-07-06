@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2018 at 05:58 PM
+-- Generation Time: Jul 06, 2018 at 03:34 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -30,12 +30,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `barang` (
   `Id_Barang` int(11) NOT NULL,
-  `Kd_Barang` int(8) NOT NULL,
+  `Kd_Barang` varchar(8) NOT NULL,
   `Jenis_Barang` varchar(20) NOT NULL,
   `Hrg_Beli` double NOT NULL,
   `Hrg_Jual` double NOT NULL,
   `Kd_Supplier` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`Id_Barang`, `Kd_Barang`, `Jenis_Barang`, `Hrg_Beli`, `Hrg_Jual`, `Kd_Supplier`) VALUES
+(1, 'KSGC-001', 'SEPATU KIDS CASUAL', 175000, 500000, 'SUP-001'),
+(2, 'MSM-001', 'MENS FORMAL', 175000, 500000, 'SUP-001'),
+(3, 'LSC-001', 'LADIES CASUAL', 175000, 500000, 'SUP-001'),
+(4, 'LSM-001', 'LADIES FORMAL', 175000, 500000, 'SUP-001'),
+(5, 'LSM-002', 'LADIES FORMAL', 175000, 500000, 'SUP-001'),
+(6, 'KSGC-002', 'SEPATU KIDS CASUAL', 175000, 500000, 'SUP-001'),
+(7, 'QC-001', 'BAG', 175000, 500000, 'SUP-001'),
+(8, 'QC-002', 'BAG', 175000, 500000, 'SUP-001');
 
 -- --------------------------------------------------------
 
@@ -127,6 +141,14 @@ CREATE TABLE `penerimaan_barang` (
   `Tgl_Terima_Barang` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `penerimaan_barang`
+--
+
+INSERT INTO `penerimaan_barang` (`No_Tanda_Terima`, `No_PO`, `Tgl_Terima_Barang`) VALUES
+('00001', 'TES', '2018-07-06'),
+('00002', 'TES', '2018-07-06');
+
 -- --------------------------------------------------------
 
 --
@@ -164,7 +186,7 @@ CREATE TABLE `supplier` (
 CREATE TABLE `transaksi_pembelian` (
   `No_Transaksi` varchar(9) NOT NULL,
   `No_Tanda_Terima` varchar(7) NOT NULL,
-  `No_Invoice` varchar(7) NOT NULL,
+  `No_Invoice` varchar(10) NOT NULL,
   `Total_Transaksi` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -280,7 +302,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `Id_Barang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detail_jurnal`

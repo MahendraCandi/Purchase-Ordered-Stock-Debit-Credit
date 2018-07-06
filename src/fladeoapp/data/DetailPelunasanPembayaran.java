@@ -22,15 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author 0085
  */
 @Entity
-@Table(name = "barang_detail")
+@Table(name = "detail_pelunasan_pembayaran")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BarangDetail.findAll", query = "SELECT b FROM BarangDetail b")
-    , @NamedQuery(name = "BarangDetail.findById", query = "SELECT b FROM BarangDetail b WHERE b.id = :id")
-    , @NamedQuery(name = "BarangDetail.findByArtBarang", query = "SELECT b FROM BarangDetail b WHERE b.artBarang = :artBarang")
-    , @NamedQuery(name = "BarangDetail.findBySize", query = "SELECT b FROM BarangDetail b WHERE b.size = :size")
-    , @NamedQuery(name = "BarangDetail.findByQtyBarang", query = "SELECT b FROM BarangDetail b WHERE b.qtyBarang = :qtyBarang")})
-public class BarangDetail implements Serializable {
+    @NamedQuery(name = "DetailPelunasanPembayaran.findAll", query = "SELECT d FROM DetailPelunasanPembayaran d")
+    , @NamedQuery(name = "DetailPelunasanPembayaran.findById", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.id = :id")
+    , @NamedQuery(name = "DetailPelunasanPembayaran.findByNoPembayaran", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noPembayaran = :noPembayaran")
+    , @NamedQuery(name = "DetailPelunasanPembayaran.findByNoTransaksi", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noTransaksi = :noTransaksi")})
+public class DetailPelunasanPembayaran implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,27 +38,23 @@ public class BarangDetail implements Serializable {
     @Column(name = "Id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "Art_Barang")
-    private String artBarang;
+    @Column(name = "No_Pembayaran")
+    private String noPembayaran;
     @Basic(optional = false)
-    @Column(name = "Size")
-    private String size;
-    @Basic(optional = false)
-    @Column(name = "Qty_Barang")
-    private int qtyBarang;
+    @Column(name = "No_Transaksi")
+    private String noTransaksi;
 
-    public BarangDetail() {
+    public DetailPelunasanPembayaran() {
     }
 
-    public BarangDetail(Integer id) {
+    public DetailPelunasanPembayaran(Integer id) {
         this.id = id;
     }
 
-    public BarangDetail(Integer id, String artBarang, String size, int qtyBarang) {
+    public DetailPelunasanPembayaran(Integer id, String noPembayaran, String noTransaksi) {
         this.id = id;
-        this.artBarang = artBarang;
-        this.size = size;
-        this.qtyBarang = qtyBarang;
+        this.noPembayaran = noPembayaran;
+        this.noTransaksi = noTransaksi;
     }
 
     public Integer getId() {
@@ -70,28 +65,20 @@ public class BarangDetail implements Serializable {
         this.id = id;
     }
 
-    public String getArtBarang() {
-        return artBarang;
+    public String getNoPembayaran() {
+        return noPembayaran;
     }
 
-    public void setArtBarang(String artBarang) {
-        this.artBarang = artBarang;
+    public void setNoPembayaran(String noPembayaran) {
+        this.noPembayaran = noPembayaran;
     }
 
-    public String getSize() {
-        return size;
+    public String getNoTransaksi() {
+        return noTransaksi;
     }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public int getQtyBarang() {
-        return qtyBarang;
-    }
-
-    public void setQtyBarang(int qtyBarang) {
-        this.qtyBarang = qtyBarang;
+    public void setNoTransaksi(String noTransaksi) {
+        this.noTransaksi = noTransaksi;
     }
 
     @Override
@@ -104,10 +91,10 @@ public class BarangDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BarangDetail)) {
+        if (!(object instanceof DetailPelunasanPembayaran)) {
             return false;
         }
-        BarangDetail other = (BarangDetail) object;
+        DetailPelunasanPembayaran other = (DetailPelunasanPembayaran) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -116,7 +103,7 @@ public class BarangDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.BarangDetail[ id=" + id + " ]";
+        return "fladeoapp.data.DetailPelunasanPembayaran[ id=" + id + " ]";
     }
     
 }

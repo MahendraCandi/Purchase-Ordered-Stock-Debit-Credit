@@ -1,6 +1,6 @@
 fladeodb
 ----------
-Kd_Supplier     = sup-001
+
 Kd_Barang       = 
 LDT = ladies tali
 
@@ -22,16 +22,19 @@ MDS = mens sandal
 
 KSGC= sepatu kids casual
 KSGR= sepatu kids sekolah
+KSGS=kids sandal
+
+KSGT=kids tali
 
 QC=assesories atau bag
 
-
+Kd_Supplier     = sup-001
 Username        = FIN-001, PUC-001
 Hak_Akses       = Finance, Purchasing
 No_Tanda_Terima = 00001
-No_PO           = PO00001
+No_PO           = PO-00001
 No_Transaksi    = Trans-001
-No_Invoice      = Inv-001
+No_Invoice      = INPUT MANUAL MAKS. 10 KARAKTER
 No_Pembayaran	= Byr-001
 Jenis_Barang	= ladies (LDS), mens(MNS), kids(KDS), bag(ACC)
 No_Jurnal	= jurnal-001

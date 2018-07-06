@@ -22,16 +22,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author 0085
  */
 @Entity
-@Table(name = "jurnal_detail")
+@Table(name = "detail_jurnal")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "JurnalDetail.findAll", query = "SELECT j FROM JurnalDetail j")
-    , @NamedQuery(name = "JurnalDetail.findById", query = "SELECT j FROM JurnalDetail j WHERE j.id = :id")
-    , @NamedQuery(name = "JurnalDetail.findByNoJurnal", query = "SELECT j FROM JurnalDetail j WHERE j.noJurnal = :noJurnal")
-    , @NamedQuery(name = "JurnalDetail.findByKdAkun", query = "SELECT j FROM JurnalDetail j WHERE j.kdAkun = :kdAkun")
-    , @NamedQuery(name = "JurnalDetail.findByDebet", query = "SELECT j FROM JurnalDetail j WHERE j.debet = :debet")
-    , @NamedQuery(name = "JurnalDetail.findByKredit", query = "SELECT j FROM JurnalDetail j WHERE j.kredit = :kredit")})
-public class JurnalDetail implements Serializable {
+    @NamedQuery(name = "DetailJurnal.findAll", query = "SELECT d FROM DetailJurnal d")
+    , @NamedQuery(name = "DetailJurnal.findById", query = "SELECT d FROM DetailJurnal d WHERE d.id = :id")
+    , @NamedQuery(name = "DetailJurnal.findByNoJurnal", query = "SELECT d FROM DetailJurnal d WHERE d.noJurnal = :noJurnal")
+    , @NamedQuery(name = "DetailJurnal.findByKdAkun", query = "SELECT d FROM DetailJurnal d WHERE d.kdAkun = :kdAkun")
+    , @NamedQuery(name = "DetailJurnal.findByDebet", query = "SELECT d FROM DetailJurnal d WHERE d.debet = :debet")
+    , @NamedQuery(name = "DetailJurnal.findByKredit", query = "SELECT d FROM DetailJurnal d WHERE d.kredit = :kredit")})
+public class DetailJurnal implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,14 +52,14 @@ public class JurnalDetail implements Serializable {
     @Column(name = "Kredit")
     private double kredit;
 
-    public JurnalDetail() {
+    public DetailJurnal() {
     }
 
-    public JurnalDetail(Integer id) {
+    public DetailJurnal(Integer id) {
         this.id = id;
     }
 
-    public JurnalDetail(Integer id, String noJurnal, String kdAkun, double debet, double kredit) {
+    public DetailJurnal(Integer id, String noJurnal, String kdAkun, double debet, double kredit) {
         this.id = id;
         this.noJurnal = noJurnal;
         this.kdAkun = kdAkun;
@@ -117,10 +117,10 @@ public class JurnalDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof JurnalDetail)) {
+        if (!(object instanceof DetailJurnal)) {
             return false;
         }
-        JurnalDetail other = (JurnalDetail) object;
+        DetailJurnal other = (DetailJurnal) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -129,7 +129,7 @@ public class JurnalDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.JurnalDetail[ id=" + id + " ]";
+        return "fladeoapp.data.DetailJurnal[ id=" + id + " ]";
     }
     
 }

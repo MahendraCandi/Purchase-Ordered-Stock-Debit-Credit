@@ -15,6 +15,9 @@
     <class>fladeoapp.data.TransaksiPembelian</class>
     <class>fladeoapp.data.DataAkun</class>
     <class>fladeoapp.data.Barang</class>
+    <class>fladeoapp.data.DetailJurnal</class>
+    <class>fladeoapp.data.DetailPelunasanPembayaran</class>
+    <class>fladeoapp.data.DetailPurchaseOrder</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fladeodb?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

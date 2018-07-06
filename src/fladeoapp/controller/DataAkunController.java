@@ -63,7 +63,7 @@ public class DataAkunController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="akun-001";
+        String kode="AKUN-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -71,7 +71,7 @@ public class DataAkunController implements Serializable{
             q.setMaxResults(1);
             DataAkun dataAkun=(DataAkun) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("akun-000");
+                DecimalFormat formatnomor = new DecimalFormat("AKUN-000");
                 String nomorurut = dataAkun.getKdAkun().substring(5);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }

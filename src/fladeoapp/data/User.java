@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
+    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = :idUser")
     , @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username")
     , @NamedQuery(name = "User.findByNama", query = "SELECT u FROM User u WHERE u.nama = :nama")
     , @NamedQuery(name = "User.findByHakAkses", query = "SELECT u FROM User u WHERE u.hakAkses = :hakAkses")
@@ -37,8 +37,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "Id")
-    private Integer id;
+    @Column(name = "Id_User")
+    private Integer idUser;
     @Basic(optional = false)
     @Column(name = "Username")
     private String username;
@@ -55,24 +55,24 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer id) {
-        this.id = id;
+    public User(Integer idUser) {
+        this.idUser = idUser;
     }
 
-    public User(Integer id, String username, String nama, String hakAkses, String password) {
-        this.id = id;
+    public User(Integer idUser, String username, String nama, String hakAkses, String password) {
+        this.idUser = idUser;
         this.username = username;
         this.nama = nama;
         this.hakAkses = hakAkses;
         this.password = password;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdUser() {
+        return idUser;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     public String getUsername() {
@@ -110,7 +110,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idUser != null ? idUser.hashCode() : 0);
         return hash;
     }
 
@@ -121,7 +121,7 @@ public class User implements Serializable {
             return false;
         }
         User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
             return false;
         }
         return true;
@@ -129,7 +129,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.User[ id=" + id + " ]";
+        return "fladeoapp.data.User[ idUser=" + idUser + " ]";
     }
     
 }

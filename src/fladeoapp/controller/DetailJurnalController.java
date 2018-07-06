@@ -1,6 +1,6 @@
 package fladeoapp.controller;
 
-import fladeoapp.data.PelunasanPembayaranDetail;
+import fladeoapp.data.DetailJurnal;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import javax.persistence.EntityManager;
@@ -8,12 +8,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-public class PelunasanPembayaranDetailController implements  Serializable{
+public class DetailJurnalController implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private EntityManagerFactory emf=null;
     
-    public PelunasanPembayaranDetailController(EntityManagerFactory emf){
+    public DetailJurnalController(EntityManagerFactory emf){
         this.emf=emf;
     }
     
@@ -21,44 +21,44 @@ public class PelunasanPembayaranDetailController implements  Serializable{
         return emf.createEntityManager();
     }
     
-    public void save(PelunasanPembayaranDetail pembayaranDetail){
+    public void save(DetailJurnal jurnal){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
-            em.persist(pembayaranDetail);
+            em.persist(jurnal);
             em.getTransaction().commit();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
-    public void update(PelunasanPembayaranDetail pembayaranDetail){
+    public void update(DetailJurnal jurnal){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
-            em.merge(pembayaranDetail);
+            em.merge(jurnal);
             em.getTransaction().commit();
         }catch(Exception ex){}
     }
     
     public void delete(String kode){
         EntityManager em = getEntityManager();
-        PelunasanPembayaranDetail pp;
+        DetailJurnal jr;
         try{
-            pp=em.getReference(PelunasanPembayaranDetail.class, kode);
-            pp.getId();
+            jr=em.getReference(DetailJurnal.class, kode);
+            jr.getId();
             em.getTransaction().begin();
-            em.remove(pp);
+            em.remove(jr);
             em.getTransaction().commit();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
-    public PelunasanPembayaranDetail findPelunasanPembayaranDetail(String kode){
+    public DetailJurnal findDetailJurnal(int kode){
         EntityManager em=getEntityManager();
         try{
-            return em.find(PelunasanPembayaranDetail.class, kode);
+            return em.find(DetailJurnal.class, kode);
         }finally{}
     }
 }

@@ -63,7 +63,7 @@ public class SupplierController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="sup-001";
+        String kode="SUP-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -71,7 +71,7 @@ public class SupplierController implements Serializable{
             q.setMaxResults(1);
             Supplier supplier=(Supplier) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("sup-000");
+                DecimalFormat formatnomor = new DecimalFormat("SUP-000");
                 String nomorurut = supplier.getKdSupplier().substring(4);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
