@@ -13,6 +13,7 @@ import fladeoapp.data.User;
 import fladeoapp.data.Barang;
 import fladeoapp.data.PenerimaanBarang;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -26,13 +27,7 @@ public class TesMain {
         User u = new User();
         Barang b = new Barang();
         PenerimaanBarang pb = new PenerimaanBarang();
-        
-        pb.setNoPO("TES");
-        pb.setNoTandaTerima(pbCont.nomorOtomatis());
-        pb.setTglTerimaBarang(new Date());
-        pbCont.save(pb);
-        String tes = pbCont.nomorOtomatis();
-        System.out.println(tes);
+
     }
     
     

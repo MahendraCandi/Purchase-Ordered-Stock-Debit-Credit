@@ -3,10 +3,14 @@ package fladeoapp.controller;
 import fladeoapp.data.User;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.swing.table.DefaultTableModel;
 
 public class UserController implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -55,12 +59,64 @@ public class UserController implements Serializable{
         }
     }
     
-    public User findUser(String kode){
-        EntityManager em=getEntityManager();
-        try{
-            return em.find(User.class, kode);
-        }finally{}
+    public User findOneUser(String username, String hakAkses){
+        EntityManager em = getEntityManager();
+        User us = new User();
+        try {
+            Query q = em.createQuery("SELECT u FROM User u WHERE u.hakAkses = :hakAkses AND u.username = :username");
+            q.setParameter("hakAkses", hakAkses);
+            q.setParameter("username", username);
+            us = (User) q.getSingleResult();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return us;
     }
+    
+    public DefaultTableModel findAllUser(DefaultTableModel model, String hakAkses){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createQuery("SELECT u FROM User u WHERE u.hakAkses = :hakAkses");
+            q.setParameter("hakAkses", hakAkses);
+            List<User> listUser = q.getResultList();
+            for(User u : listUser){
+                Object[] obj = new Object[4];
+                obj[0] = u.getUsername();
+                obj[1] = u.getNama();
+                obj[2] = u.getHakAkses();
+                obj[3] = u.getPassword();
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+    
+    public DefaultTableModel findUserToTable(DefaultTableModel model, String hakAkses ,String cari){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createQuery("SELECT u FROM User u WHERE u.hakAkses = :hakAkses AND u.username LIKE %:cari% OR u.nama LIKE %:cari%");
+            q.setParameter("hakAkses", hakAkses);
+            q.setParameter("cari", cari);
+            List<Object[]> listUser = q.getResultList();
+            Iterator itr = listUser.iterator();
+            while(itr.hasNext()){
+                Object[] obj = (Object[]) itr.next();
+                model.addRow(obj);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+    
     
     public String nomorOtomatis(String hakAkses){
         EntityManager em=null;

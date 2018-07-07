@@ -40,6 +40,6 @@ Jenis_Barang	= ladies (LDS), mens(MNS), kids(KDS), bag(ACC)
 No_Jurnal	= jurnal-001
 Kd_Akun		= akun-001
 
-
-
+0, 184, 148
+85, 239, 196
 --------------------------
