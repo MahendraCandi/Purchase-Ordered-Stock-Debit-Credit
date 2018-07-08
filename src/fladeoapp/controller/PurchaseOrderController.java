@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fladeoapp.controller;
 
 import fladeoapp.data.PurchaseOrder;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-/**
- *
- * @author 0085
- */
 public class PurchaseOrderController implements Serializable{
     private static final long serialVersionUID = 1L;
     
@@ -69,6 +62,41 @@ public class PurchaseOrderController implements Serializable{
         try{
             return em.find(PurchaseOrder.class, kode);
         }finally{}
+    }
+    
+    public List<Object[]> findAllPurchaseOrder(){
+        EntityManager em=getEntityManager();
+        List<Object[]> listPO = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT purchase_order.*, supplier.Nm_Supplier \n" +
+                "FROM `purchase_order`\n" +
+                "INNER JOIN supplier ON purchase_order.Kd_Supplier = supplier.Kd_Supplier");
+            listPO = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPO;
+    }
+    
+    public List<Object[]> searchPurchaseOrder(String cari){
+        EntityManager em=getEntityManager();
+        List<Object[]> listPO = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT purchase_order.*, supplier.Nm_Supplier \n" +
+                "FROM `purchase_order` \n" +
+                "INNER JOIN supplier ON purchase_order.Kd_Supplier = supplier.Kd_Supplier\n" +
+                "WHERE purchase_order.No_PO LIKE ?cari\n" +
+                "OR purchase_order.Kd_Supplier LIKE ?cari\n" +
+                "OR purchase_order.Username LIKE ?cari\n" +
+                "OR purchase_order.Tgl_PO LIKE ?cari\n" +
+                "OR purchase_order.Tgl_Kirim LIKE ?cari\n" +
+                "OR supplier.Nm_Supplier LIKE ?cari");
+            q.setParameter("cari", "%"+cari+"%");
+            listPO = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPO;
     }
     
     public String nomorOtomatis(){

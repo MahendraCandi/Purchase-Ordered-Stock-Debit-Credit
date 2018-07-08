@@ -301,11 +301,10 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari Akun");
+        jLabel6.setText("Cari ");
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
-        txtCari.setText("Cari Akun");
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCariKeyPressed(evt);

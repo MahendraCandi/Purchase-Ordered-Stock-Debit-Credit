@@ -264,6 +264,11 @@ public class FormUtama extends javax.swing.JFrame {
         transItemPO.setBackground(new java.awt.Color(255, 255, 255));
         transItemPO.setText("Purchase Order");
         transItemPO.setOpaque(true);
+        transItemPO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transItemPOActionPerformed(evt);
+            }
+        });
         MenuTransaksi.add(transItemPO);
 
         transItemPB.setBackground(new java.awt.Color(255, 255, 255));
@@ -395,6 +400,11 @@ public class FormUtama extends javax.swing.JFrame {
         FormBarang FB = new FormBarang();
         showForm(FB);
     }//GEN-LAST:event_masterItemBarangActionPerformed
+
+    private void transItemPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemPOActionPerformed
+        FormPurchaseOrder po = new FormPurchaseOrder(userLogin);
+        showForm(po);
+    }//GEN-LAST:event_transItemPOActionPerformed
 
     /**
      * @param args the command line arguments

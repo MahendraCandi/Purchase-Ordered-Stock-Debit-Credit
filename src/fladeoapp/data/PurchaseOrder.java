@@ -20,18 +20,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "purchase_order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PurchaseOrder.findAll", query = "SELECT p FROM PurchaseOrder p")
-    , @NamedQuery(name = "PurchaseOrder.findByNoPO", query = "SELECT p FROM PurchaseOrder p WHERE p.noPO = :noPO")
-    , @NamedQuery(name = "PurchaseOrder.findByTglPO", query = "SELECT p FROM PurchaseOrder p WHERE p.tglPO = :tglPO")
-    , @NamedQuery(name = "PurchaseOrder.findByTglKirim", query = "SELECT p FROM PurchaseOrder p WHERE p.tglKirim = :tglKirim")
-    , @NamedQuery(name = "PurchaseOrder.findByKdSupplier", query = "SELECT p FROM PurchaseOrder p WHERE p.kdSupplier = :kdSupplier")
-    , @NamedQuery(name = "PurchaseOrder.findByTotalQty", query = "SELECT p FROM PurchaseOrder p WHERE p.totalQty = :totalQty")})
+    @NamedQuery(name = "PurchaseOrder.findAll", query = "SELECT p FROM PurchaseOrder p"),
+    @NamedQuery(name = "PurchaseOrder.findByNoPO", query = "SELECT p FROM PurchaseOrder p WHERE p.noPO = :noPO"),
+    @NamedQuery(name = "PurchaseOrder.findByTglPO", query = "SELECT p FROM PurchaseOrder p WHERE p.tglPO = :tglPO"),
+    @NamedQuery(name = "PurchaseOrder.findByTglKirim", query = "SELECT p FROM PurchaseOrder p WHERE p.tglKirim = :tglKirim"),
+    @NamedQuery(name = "PurchaseOrder.findByKdSupplier", query = "SELECT p FROM PurchaseOrder p WHERE p.kdSupplier = :kdSupplier"),
+    @NamedQuery(name = "PurchaseOrder.findByTotalQty", query = "SELECT p FROM PurchaseOrder p WHERE p.totalQty = :totalQty"),
+    @NamedQuery(name = "PurchaseOrder.findByUsername", query = "SELECT p FROM PurchaseOrder p WHERE p.username = :username")})
 public class PurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,6 +54,9 @@ public class PurchaseOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "Total_Qty")
     private int totalQty;
+    @Basic(optional = false)
+    @Column(name = "Username")
+    private String username;
 
     public PurchaseOrder() {
     }
@@ -61,12 +65,13 @@ public class PurchaseOrder implements Serializable {
         this.noPO = noPO;
     }
 
-    public PurchaseOrder(String noPO, Date tglPO, Date tglKirim, String kdSupplier, int totalQty) {
+    public PurchaseOrder(String noPO, Date tglPO, Date tglKirim, String kdSupplier, int totalQty, String username) {
         this.noPO = noPO;
         this.tglPO = tglPO;
         this.tglKirim = tglKirim;
         this.kdSupplier = kdSupplier;
         this.totalQty = totalQty;
+        this.username = username;
     }
 
     public String getNoPO() {
@@ -107,6 +112,14 @@ public class PurchaseOrder implements Serializable {
 
     public void setTotalQty(int totalQty) {
         this.totalQty = totalQty;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

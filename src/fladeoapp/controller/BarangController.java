@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import fladeoapp.data.Barang;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -81,19 +82,32 @@ public class BarangController implements Serializable{
             List<Object[]> listBarang = q.getResultList();
             for(Object[] obj : listBarang){
                 Object[] objModel = new Object[7];
-                objModel[0] = obj[0];
-                objModel[1] = obj[1];
-                objModel[2] = obj[2];
-                objModel[3] = obj[3];
-                objModel[4] = obj[4];
-                objModel[5] = obj[5];
-                objModel[6] = obj[6];
+//                objModel[0] = obj[0];
+//                objModel[1] = obj[1];
+//                objModel[2] = obj[2];
+//                objModel[3] = obj[3];
+//                objModel[4] = obj[4];
+//                objModel[5] = obj[5];
+//                objModel[6] = obj[6];
                 model.addRow(obj);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return model;
+    }
+    
+    public List<Barang> findBarangBySupplierToList(String kodeSupplier){
+        EntityManager em = getEntityManager();
+        List<Barang> listBarang = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT b FROM Barang b WHERE b.kdSupplier = :kodeSupplier");
+            q.setParameter("kodeSupplier", kodeSupplier);
+            listBarang = q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        return listBarang;
     }
     
     public DefaultTableModel searchBarang(DefaultTableModel model, String cari){
