@@ -5,8 +5,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import fladeoapp.data.Barang;
 import java.text.DecimalFormat;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.swing.table.DefaultTableModel;
 
 public class BarangController implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -41,11 +43,11 @@ public class BarangController implements Serializable{
         }catch(Exception ex){}
     }
     
-    public void delete(String nama){
+    public void delete(int idBarang){
         EntityManager em = getEntityManager();
         Barang brg;
         try{
-            brg=em.getReference(Barang.class, nama);
+            brg=em.getReference(Barang.class, idBarang);
             brg.getKdBarang();
             em.getTransaction().begin();
             em.remove(brg);
@@ -55,11 +57,75 @@ public class BarangController implements Serializable{
         }
     }
     
-    public Barang findBarang(String nama){
+    public Barang findByKodeBarang(String kodeBarang){
         EntityManager em=getEntityManager();
-        try{
-            return em.find(Barang.class, nama);
-        }finally{}
+        Barang barang = new Barang();
+        try {
+            Query q = em.createQuery("SELECT b FROM Barang b WHERE b.kdBarang = :kodeBarang");
+            q.setParameter("kodeBarang", kodeBarang);
+            barang = (Barang) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return barang;
+    }
+    
+    public DefaultTableModel findAllBarang(DefaultTableModel model){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+                "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier "
+                    + "ORDER BY barang.Kd_Barang ASC");
+            List<Object[]> listBarang = q.getResultList();
+            for(Object[] obj : listBarang){
+                Object[] objModel = new Object[7];
+                objModel[0] = obj[0];
+                objModel[1] = obj[1];
+                objModel[2] = obj[2];
+                objModel[3] = obj[3];
+                objModel[4] = obj[4];
+                objModel[5] = obj[5];
+                objModel[6] = obj[6];
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+    
+    public DefaultTableModel searchBarang(DefaultTableModel model, String cari){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+                "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier\n" +
+                "WHERE barang.Kd_Barang LIKE ?cari\n" +
+                "OR barang.Jenis_Barang LIKE ?cari\n" +
+                "OR barang.Kd_Supplier LIKE ?cari\n" +
+                "OR supplier.Nm_Supplier LIKE ?cari\n" +
+                "OR supplier.Kota LIKE ?cari\n" +
+                "ORDER BY barang.Kd_Barang ASC");
+            q.setParameter("cari", "%"+cari+"%");
+            List<Object[]> listBarang = q.getResultList();
+            for(Object[] obj : listBarang){
+                Object[] objModel = new Object[7];
+                objModel[0] = obj[0];
+                objModel[1] = obj[1];
+                objModel[2] = obj[2];
+                objModel[3] = obj[3];
+                objModel[4] = obj[4];
+                objModel[5] = obj[5];
+                objModel[6] = obj[6];
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
     }
     
     public String kodeOtomatis(String jenisBarang){

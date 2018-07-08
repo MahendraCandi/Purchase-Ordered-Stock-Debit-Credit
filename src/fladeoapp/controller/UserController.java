@@ -45,11 +45,11 @@ public class UserController implements Serializable{
         }catch(Exception ex){}
     }
     
-    public void delete(String kode){
+    public void delete(int pk){
         EntityManager em = getEntityManager();
         User us;
         try{
-            us=em.getReference(User.class, kode);
+            us=em.getReference(User.class, pk);
             us.getIdUser();
             em.getTransaction().begin();
             em.remove(us);
@@ -69,7 +69,7 @@ public class UserController implements Serializable{
             us = (User) q.getSingleResult();
             
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return us;
     }
@@ -96,21 +96,23 @@ public class UserController implements Serializable{
         return model;
     }
     
-    public DefaultTableModel findUserToTable(DefaultTableModel model, String hakAkses ,String cari){
+    public DefaultTableModel findUserToTable(DefaultTableModel model, String hakAkses, String cari){
         EntityManager em = getEntityManager();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createQuery("SELECT u FROM User u WHERE u.hakAkses = :hakAkses AND u.username LIKE %:cari% OR u.nama LIKE %:cari%");
+            Query q = em.createQuery("SELECT u FROM User u WHERE u.hakAkses = :hakAkses AND u.username LIKE :cari OR u.nama LIKE :cari");
             q.setParameter("hakAkses", hakAkses);
-            q.setParameter("cari", cari);
-            List<Object[]> listUser = q.getResultList();
-            Iterator itr = listUser.iterator();
-            while(itr.hasNext()){
-                Object[] obj = (Object[]) itr.next();
+            q.setParameter("cari", "%"+cari+"%");
+            List<User> listUser = q.getResultList();
+            for(User u : listUser){
+                Object[] obj = new Object[4];
+                obj[0] = u.getUsername();
+                obj[1] = u.getNama();
+                obj[2] = u.getHakAkses();
+                obj[3] = u.getPassword();
                 model.addRow(obj);
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
         }

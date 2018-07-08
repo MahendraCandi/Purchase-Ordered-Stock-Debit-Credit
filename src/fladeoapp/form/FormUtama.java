@@ -228,6 +228,11 @@ public class FormUtama extends javax.swing.JFrame {
         masterItemBarang.setText("Data Barang");
         masterItemBarang.setContentAreaFilled(false);
         masterItemBarang.setOpaque(true);
+        masterItemBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                masterItemBarangActionPerformed(evt);
+            }
+        });
         MenuMaster.add(masterItemBarang);
 
         masterItemUser.setBackground(new java.awt.Color(255, 255, 255));
@@ -245,6 +250,11 @@ public class FormUtama extends javax.swing.JFrame {
         masterItemAkun.setText("Data Akun");
         masterItemAkun.setContentAreaFilled(false);
         masterItemAkun.setOpaque(true);
+        masterItemAkun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                masterItemAkunActionPerformed(evt);
+            }
+        });
         MenuMaster.add(masterItemAkun);
 
         jMenuBar1.add(MenuMaster);
@@ -309,7 +319,8 @@ public class FormUtama extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void masterItemSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterItemSupplierActionPerformed
-        // TODO add your handling code here:
+        FormSupplier FS = new FormSupplier();
+        showForm(FS);
     }//GEN-LAST:event_masterItemSupplierActionPerformed
 
     private void panelHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelHeaderMousePressed
@@ -374,6 +385,16 @@ public class FormUtama extends javax.swing.JFrame {
         FL.setVisible(true);
         FL.setAutoRequestFocus(true);
     }//GEN-LAST:event_MenuLogoutMouseClicked
+
+    private void masterItemAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterItemAkunActionPerformed
+        FormAkun fa = new FormAkun();
+        showForm(fa);
+    }//GEN-LAST:event_masterItemAkunActionPerformed
+
+    private void masterItemBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterItemBarangActionPerformed
+        FormBarang FB = new FormBarang();
+        showForm(FB);
+    }//GEN-LAST:event_masterItemBarangActionPerformed
 
     /**
      * @param args the command line arguments

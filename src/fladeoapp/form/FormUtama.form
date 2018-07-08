@@ -37,6 +37,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="masterItemBarangActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="masterItemUser">
               <Properties>
@@ -60,6 +63,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="masterItemAkunActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

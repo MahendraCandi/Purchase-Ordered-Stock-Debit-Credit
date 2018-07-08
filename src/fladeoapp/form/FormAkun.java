@@ -1,8 +1,9 @@
+
 package fladeoapp.form;
 
-import fladeoapp.controller.UserController;
+import fladeoapp.controller.DataAkunController;
+import fladeoapp.data.DataAkun;
 import fladeoapp.FladeoApp;
-import fladeoapp.data.User;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -10,72 +11,61 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class FormUser extends javax.swing.JInternalFrame implements NavigatorFormInterface{
+public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
-    UserController uCont = new UserController(FladeoApp.emf);
-    User user = new User();
+    DataAkun dataAkun = new DataAkun();
+    DataAkunController akunCont = new DataAkunController(FladeoApp.emf);
     DefaultTableModel model;
-    String hakAkses;
     
     /**
-     * Creates new form FormUser
+     * Creates new form FormAkun
      */
-    public FormUser(User userLogin) {
+    public FormAkun() {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
         model=new DefaultTableModel();
-        model.addColumn("Username");
-        model.addColumn("Nama");
-        model.addColumn("Hak Akses");
-        model.addColumn("Password");
-        tableUser.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        hakAkses = userLogin.getHakAkses();
+        model.addColumn("Kode Akun");
+        model.addColumn("Nama Akun");
+        tableAkun.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tidakAktif();
     }
     
     private void tidakAktif(){
-        txtUsername.setEnabled(false);
-        txtAkses.setEnabled(false);
-        txtNama.setEnabled(false);
-        txtPassword.setEnabled(false);
+        txtKdAkun.setEnabled(false);
+        txtNamaAkun.setEnabled(false);
         txtCari.setEnabled(false);
     }
     
     private void showTable(){
-        tableUser.setModel(uCont.findAllUser(model, hakAkses));
+        tableAkun.setModel(akunCont.findAllAkun(model));
     }
     
     private void cariTable(String cari){
-        DefaultTableModel x=uCont.findUserToTable(model, hakAkses, cari);
+        DefaultTableModel x=akunCont.findOneAkunToTable(model,cari);
         if(x.getRowCount()==0){
             JOptionPane.showMessageDialog(null, "Data tidak ditemukan!");
         }else{
             if(cari.isEmpty()){
                 showTable();
             }else{
-                tableUser.setModel(uCont.findUserToTable(model, hakAkses, cari));
+                tableAkun.setModel(akunCont.findOneAkunToTable(model,cari));
             }
         }
     }
     
     private void seleksiBaris(){
-        tableUser.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        tableAkun.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int baris=tableUser.getSelectedRow(); 
+                int baris=tableAkun.getSelectedRow(); 
                 if(baris != -1){                        
-                    txtUsername.setText(tableUser.getValueAt(baris, 0).toString());
-                    txtNama.setText(tableUser.getValueAt(baris, 1).toString());
-                    txtAkses.setText(tableUser.getValueAt(baris, 2).toString());
-                    txtPassword.setText(tableUser.getValueAt(baris, 3).toString());
+                    txtKdAkun.setText(tableAkun.getValueAt(baris, 0).toString());
+                    txtNamaAkun.setText(tableAkun.getValueAt(baris, 1).toString());
                 }
             }
         });
     }
-    
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,17 +77,13 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtNama = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtAkses = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
+        txtNamaAkun = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
+        txtKdAkun = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableUser = new javax.swing.JTable();
+        tableAkun = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         txtCari = new javax.swing.JTextField();
 
@@ -107,37 +93,23 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nama");
+        jLabel3.setText("Nama Akun");
 
-        txtNama.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNama.setForeground(new java.awt.Color(51, 51, 51));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Hak Akses");
-
-        txtAkses.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtAkses.setForeground(new java.awt.Color(51, 51, 51));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Password");
-
-        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPassword.setForeground(new java.awt.Color(51, 51, 51));
+        txtNamaAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNamaAkun.setForeground(new java.awt.Color(51, 51, 51));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat User Baru");
+        jLabel1.setText("Buat Akun Jurnal");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Username");
+        jLabel2.setText("Kode Akun");
 
-        txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtUsername.setForeground(new java.awt.Color(51, 51, 51));
+        txtKdAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtKdAkun.setForeground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,26 +118,18 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAkses, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(661, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,45 +141,37 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtAkses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
-        tableUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tableUser.setForeground(new java.awt.Color(51, 51, 51));
-        tableUser.setModel(new javax.swing.table.DefaultTableModel(
+        tableAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableAkun.setForeground(new java.awt.Color(51, 51, 51));
+        tableAkun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Username", "Nama", "Akses", "Password"
+                "Kode Akun", "Nama Akun"
             }
         ));
-        jScrollPane1.setViewportView(tableUser);
+        jScrollPane1.setViewportView(tableAkun);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari User");
+        jLabel6.setText("Cari Akun");
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
-        txtCari.setText("Cari User");
+        txtCari.setText("Cari Akun");
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCariKeyPressed(evt);
@@ -265,66 +221,54 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tableUser;
-    private javax.swing.JTextField txtAkses;
+    private javax.swing.JTable tableAkun;
     private javax.swing.JTextField txtCari;
-    private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtKdAkun;
+    private javax.swing.JTextField txtNamaAkun;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void aktif() {
-        txtNama.setEnabled(true);
-        txtPassword.setEnabled(true);
+        txtNamaAkun.setEnabled(true);
         txtCari.setEnabled(true);
         bersih();
-        txtNama.requestFocus();
+        txtNamaAkun.requestFocus();
         seleksiBaris();
     }
 
     @Override
     public void bersih() {
+        txtNamaAkun.setText("");
         txtCari.setText("");
-        txtNama.setText("");
-        txtPassword.setText("");
-        txtAkses.setText(hakAkses);
-        txtUsername.setText(uCont.nomorOtomatis(hakAkses));
+        txtKdAkun.setText(akunCont.nomorOtomatis());
         showTable();
     }
-    
 
     @Override
     public void simpan() {
-        if(txtNama.getText().equalsIgnoreCase("") || txtPassword.getText().equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(null, "Data tidak valid!");
+        if(txtNamaAkun.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(null, "Masukan nama akun!");
         }else{
-            user=uCont.findOneUser(txtUsername.getText(), hakAkses);
-            User us=new User();
-            if(user==null){
-                us.setUsername(txtUsername.getText());
-                us.setNama(txtNama.getText());
-                us.setHakAkses(txtAkses.getText());
-                us.setPassword(txtPassword.getText());
+            dataAkun=akunCont.findDataAkun(txtKdAkun.getText());
+            DataAkun da=new DataAkun();
+            if(dataAkun==null){
+                da.setKdAkun(txtKdAkun.getText());
+                da.setNmAkun(txtNamaAkun.getText());
                 try{
-                    uCont.save(us);
+                    akunCont.save(da);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
             }else{
-                user.setUsername(txtUsername.getText());
-                user.setNama(txtNama.getText());
-                user.setHakAkses(txtAkses.getText());
-                user.setPassword(txtPassword.getText());
+                da.setKdAkun(txtKdAkun.getText());
+                da.setNmAkun(txtNamaAkun.getText());
                 try{
-                    uCont.update(user);
+                    akunCont.update(da);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
@@ -337,20 +281,19 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
 
     @Override
     public void hapus() {
-        int baris = tableUser.getSelectedRow();
+        int baris = tableAkun.getSelectedRow();
         if(baris==-1){
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
-        try{
-            User userPK = uCont.findOneUser(txtUsername.getText(), txtAkses.getText());
-            uCont.delete(userPK.getIdUser());
-             JOptionPane.showMessageDialog(null, "Data telah dihapus!");
+            try{
+                akunCont.delete(txtKdAkun.getText());
+                JOptionPane.showMessageDialog(null, "Data telah dihapus!");
             }catch(Exception ex){
                 ex.printStackTrace();
             }
             bersih();
         }
-        
+
     }
 
     @Override

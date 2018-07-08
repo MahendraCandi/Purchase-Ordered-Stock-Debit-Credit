@@ -5,8 +5,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import fladeoapp.data.DataAkun;
 import java.text.DecimalFormat;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.swing.table.DefaultTableModel;
 
 public class DataAkunController implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -60,6 +62,45 @@ public class DataAkunController implements Serializable{
         try{
             return em.find(DataAkun.class, nama);
         }finally{}
+    }
+    
+    public DefaultTableModel findAllAkun(DefaultTableModel model){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createQuery("SELECT da FROM DataAkun da");
+            List<DataAkun> listAkun = q.getResultList();
+            for(DataAkun akun : listAkun){
+                Object[] obj = new Object[2];
+                obj[0] = akun.getKdAkun();
+                obj[1] = akun.getNmAkun();
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+    
+    public DefaultTableModel findOneAkunToTable(DefaultTableModel model, String cari){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createQuery("SELECT da FROM DataAkun da WHERE da.kdAkun LIKE :cari OR da.nmAkun LIKE :cari");
+            q.setParameter("cari", "%"+cari+"%");
+            List<DataAkun> listAkun = q.getResultList();
+            for(DataAkun akun : listAkun){
+                Object[] obj = new Object[2];
+                obj[0] = akun.getKdAkun();
+                obj[1] = akun.getNmAkun();
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
     }
     
     public String nomorOtomatis(){
