@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
--- http://www.phpmyadmin.net
+-- version 4.8.0.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2018 at 01:25 AM
--- Server version: 5.6.24
--- PHP Version: 5.6.8
+-- Generation Time: Jul 09, 2018 at 08:26 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 5.6.36
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `fladeodb`
@@ -26,14 +28,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `barang`
 --
 
-CREATE TABLE IF NOT EXISTS `barang` (
+CREATE TABLE `barang` (
   `Id_Barang` int(11) NOT NULL,
   `Kd_Barang` varchar(8) NOT NULL,
   `Jenis_Barang` varchar(20) NOT NULL,
   `Hrg_Beli` double NOT NULL,
   `Hrg_Jual` double NOT NULL,
   `Kd_Supplier` varchar(7) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `barang`
@@ -55,7 +57,7 @@ INSERT INTO `barang` (`Id_Barang`, `Kd_Barang`, `Jenis_Barang`, `Hrg_Beli`, `Hrg
 -- Table structure for table `data_akun`
 --
 
-CREATE TABLE IF NOT EXISTS `data_akun` (
+CREATE TABLE `data_akun` (
   `Kd_Akun` varchar(8) NOT NULL,
   `Nm_Akun` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -74,7 +76,7 @@ INSERT INTO `data_akun` (`Kd_Akun`, `Nm_Akun`) VALUES
 -- Table structure for table `detail_jurnal`
 --
 
-CREATE TABLE IF NOT EXISTS `detail_jurnal` (
+CREATE TABLE `detail_jurnal` (
   `Id` int(11) NOT NULL,
   `No_Jurnal` varchar(10) NOT NULL,
   `Kd_Akun` varchar(8) NOT NULL,
@@ -88,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `detail_jurnal` (
 -- Table structure for table `detail_pelunasan_pembayaran`
 --
 
-CREATE TABLE IF NOT EXISTS `detail_pelunasan_pembayaran` (
+CREATE TABLE `detail_pelunasan_pembayaran` (
   `Id` int(11) NOT NULL,
   `No_Pembayaran` varchar(7) NOT NULL,
   `No_Transaksi` varchar(9) NOT NULL
@@ -100,15 +102,22 @@ CREATE TABLE IF NOT EXISTS `detail_pelunasan_pembayaran` (
 -- Table structure for table `detail_purchase_order`
 --
 
-CREATE TABLE IF NOT EXISTS `detail_purchase_order` (
+CREATE TABLE `detail_purchase_order` (
   `Id` int(11) NOT NULL,
-  `No_PO` varchar(6) NOT NULL,
+  `No_PO` varchar(8) NOT NULL,
   `Kd_Barang` varchar(8) NOT NULL,
-  `Size` varchar(20) NOT NULL,
   `Qty_Order` int(11) NOT NULL,
   `Harga_Beli` double NOT NULL,
   `Harga_Jual` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_purchase_order`
+--
+
+INSERT INTO `detail_purchase_order` (`Id`, `No_PO`, `Kd_Barang`, `Qty_Order`, `Harga_Beli`, `Harga_Jual`) VALUES
+(1, 'PO-00001', 'KSGC-002', 30, 175000, 500000),
+(2, 'PO-00001', 'LSM-001', 30, 175000, 500000);
 
 -- --------------------------------------------------------
 
@@ -116,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `detail_purchase_order` (
 -- Table structure for table `jurnal`
 --
 
-CREATE TABLE IF NOT EXISTS `jurnal` (
+CREATE TABLE `jurnal` (
   `No_Jurnal` varchar(10) NOT NULL,
   `No_Transaksi` double NOT NULL,
   `Tgl_Jurnal` date NOT NULL,
@@ -129,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `jurnal` (
 -- Table structure for table `pelunasan_pembayaran`
 --
 
-CREATE TABLE IF NOT EXISTS `pelunasan_pembayaran` (
+CREATE TABLE `pelunasan_pembayaran` (
   `No_Pembayaran` varchar(7) NOT NULL,
   `Jth_Tempo` date NOT NULL,
   `Total_Bayar` double NOT NULL
@@ -141,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `pelunasan_pembayaran` (
 -- Table structure for table `penerimaan_barang`
 --
 
-CREATE TABLE IF NOT EXISTS `penerimaan_barang` (
+CREATE TABLE `penerimaan_barang` (
   `No_Tanda_Terima` varchar(7) NOT NULL,
   `No_PO` varchar(6) NOT NULL,
   `Tgl_Terima_Barang` date NOT NULL
@@ -161,7 +170,7 @@ INSERT INTO `penerimaan_barang` (`No_Tanda_Terima`, `No_PO`, `Tgl_Terima_Barang`
 -- Table structure for table `purchase_order`
 --
 
-CREATE TABLE IF NOT EXISTS `purchase_order` (
+CREATE TABLE `purchase_order` (
   `No_PO` varchar(8) NOT NULL,
   `Tgl_PO` date NOT NULL,
   `Tgl_Kirim` date NOT NULL,
@@ -175,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `purchase_order` (
 --
 
 INSERT INTO `purchase_order` (`No_PO`, `Tgl_PO`, `Tgl_Kirim`, `Kd_Supplier`, `Total_Qty`, `Username`) VALUES
-('PO-00001', '2018-07-08', '2018-07-11', 'SUP-002', 9, 'TES');
+('PO-00001', '2018-07-09', '2018-07-14', 'SUP-001', 60, 'Pch-001');
 
 -- --------------------------------------------------------
 
@@ -183,7 +192,7 @@ INSERT INTO `purchase_order` (`No_PO`, `Tgl_PO`, `Tgl_Kirim`, `Kd_Supplier`, `To
 -- Table structure for table `supplier`
 --
 
-CREATE TABLE IF NOT EXISTS `supplier` (
+CREATE TABLE `supplier` (
   `Kd_Supplier` varchar(7) NOT NULL,
   `Nm_Supplier` varchar(50) NOT NULL,
   `Alamat` varchar(100) NOT NULL,
@@ -205,7 +214,7 @@ INSERT INTO `supplier` (`Kd_Supplier`, `Nm_Supplier`, `Alamat`, `Telepon`, `Kota
 -- Table structure for table `transaksi_pembelian`
 --
 
-CREATE TABLE IF NOT EXISTS `transaksi_pembelian` (
+CREATE TABLE `transaksi_pembelian` (
   `No_Transaksi` varchar(9) NOT NULL,
   `No_Tanda_Terima` varchar(7) NOT NULL,
   `No_Invoice` varchar(10) NOT NULL,
@@ -218,13 +227,13 @@ CREATE TABLE IF NOT EXISTS `transaksi_pembelian` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `Id_User` int(11) NOT NULL,
   `Username` varchar(8) NOT NULL,
   `Nama` varchar(50) NOT NULL,
   `Hak_Akses` varchar(10) NOT NULL,
   `Password` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -314,7 +323,8 @@ ALTER TABLE `transaksi_pembelian`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`Id_User`), ADD UNIQUE KEY `Username` (`Username`);
+  ADD PRIMARY KEY (`Id_User`),
+  ADD UNIQUE KEY `Username` (`Username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -324,27 +334,33 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `Id_Barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `Id_Barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `detail_jurnal`
 --
 ALTER TABLE `detail_jurnal`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `detail_pelunasan_pembayaran`
 --
 ALTER TABLE `detail_pelunasan_pembayaran`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `detail_purchase_order`
 --
 ALTER TABLE `detail_purchase_order`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id_User` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `Id_User` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

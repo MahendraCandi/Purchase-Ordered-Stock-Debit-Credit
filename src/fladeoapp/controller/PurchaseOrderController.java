@@ -100,7 +100,7 @@ public class PurchaseOrderController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="PO-001";
+        String kode="PO-00001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -108,7 +108,7 @@ public class PurchaseOrderController implements Serializable{
             q.setMaxResults(1);
             PurchaseOrder purchaseOrder=(PurchaseOrder) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("PO-000");
+                DecimalFormat formatnomor = new DecimalFormat("PO-00000");
                 String nomorurut = purchaseOrder.getNoPO().substring(3);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }

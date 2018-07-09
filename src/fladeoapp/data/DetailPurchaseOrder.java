@@ -19,20 +19,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Candi-PC
+ * @author 0085
  */
 @Entity
 @Table(name = "detail_purchase_order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailPurchaseOrder.findAll", query = "SELECT d FROM DetailPurchaseOrder d"),
-    @NamedQuery(name = "DetailPurchaseOrder.findById", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.id = :id"),
-    @NamedQuery(name = "DetailPurchaseOrder.findByNoPO", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.noPO = :noPO"),
-    @NamedQuery(name = "DetailPurchaseOrder.findByKdBarang", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.kdBarang = :kdBarang"),
-    @NamedQuery(name = "DetailPurchaseOrder.findBySize", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.size = :size"),
-    @NamedQuery(name = "DetailPurchaseOrder.findByQtyOrder", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.qtyOrder = :qtyOrder"),
-    @NamedQuery(name = "DetailPurchaseOrder.findByHargaBeli", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaBeli = :hargaBeli"),
-    @NamedQuery(name = "DetailPurchaseOrder.findByHargaJual", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaJual = :hargaJual")})
+    @NamedQuery(name = "DetailPurchaseOrder.findAll", query = "SELECT d FROM DetailPurchaseOrder d")
+    , @NamedQuery(name = "DetailPurchaseOrder.findById", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.id = :id")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByNoPO", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.noPO = :noPO")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByKdBarang", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.kdBarang = :kdBarang")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByQtyOrder", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.qtyOrder = :qtyOrder")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaBeli", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaBeli = :hargaBeli")
+    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaJual", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaJual = :hargaJual")})
 public class DetailPurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,9 +46,6 @@ public class DetailPurchaseOrder implements Serializable {
     @Basic(optional = false)
     @Column(name = "Kd_Barang")
     private String kdBarang;
-    @Basic(optional = false)
-    @Column(name = "Size")
-    private String size;
     @Basic(optional = false)
     @Column(name = "Qty_Order")
     private int qtyOrder;
@@ -67,11 +63,10 @@ public class DetailPurchaseOrder implements Serializable {
         this.id = id;
     }
 
-    public DetailPurchaseOrder(Integer id, String noPO, String kdBarang, String size, int qtyOrder, double hargaBeli, double hargaJual) {
+    public DetailPurchaseOrder(Integer id, String noPO, String kdBarang, int qtyOrder, double hargaBeli, double hargaJual) {
         this.id = id;
         this.noPO = noPO;
         this.kdBarang = kdBarang;
-        this.size = size;
         this.qtyOrder = qtyOrder;
         this.hargaBeli = hargaBeli;
         this.hargaJual = hargaJual;
@@ -99,14 +94,6 @@ public class DetailPurchaseOrder implements Serializable {
 
     public void setKdBarang(String kdBarang) {
         this.kdBarang = kdBarang;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
     }
 
     public int getQtyOrder() {

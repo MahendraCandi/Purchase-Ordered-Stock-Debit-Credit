@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
+    // TAMPILKAN DATA PURCHASES ORDER DETAIL!!!
+    
     PurchaseOrderController poCont = new PurchaseOrderController(FladeoApp.emf);
     DetailPurchaseOrderController detailCont = new DetailPurchaseOrderController(FladeoApp.emf);
     BarangController bCont = new BarangController(FladeoApp.emf);
@@ -726,7 +728,45 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
 
     @Override
     public void simpan() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int baris=tableDetailBarang.getRowCount();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if(baris == 0){
+            JOptionPane.showMessageDialog(null, "Daftar barang masih kosong!");
+        }else{
+            if(jdcTglKirim.equals("")){
+                JOptionPane.showMessageDialog(null, "Masukan tanggal kirim!");
+            }else{
+                try {
+                    detailOrder.setNoPO(txtNoPO.getText());
+                    for(int i=0;i<baris;i++){
+                        detailOrder.setKdBarang(tableDetailBarang.getValueAt(i, 1).toString());
+                        detailOrder.setQtyOrder(Integer.parseInt(tableDetailBarang.getValueAt(i, 2).toString()));
+                        detailOrder.setHargaBeli(Double.parseDouble(tableDetailBarang.getValueAt(i, 3).toString()));
+                        detailOrder.setHargaJual(Double.parseDouble(tableDetailBarang.getValueAt(i, 4).toString()));
+                        detailCont.save(detailOrder);
+                    }
+                    
+                    poSession = new PurchaseOrder();
+                    poSession.setNoPO(txtNoPO.getText());
+                    poSession.setTglPO(sdf.parse(txtTglBuat.getText()));
+                    poSession.setTglKirim(jdcTglKirim.getDate());
+                    poSession.setKdSupplier(supplier.getKdSupplier());
+                    poSession.setTotalQty(Integer.parseInt(txtTotalQty.getText()));
+                    poSession.setUsername(userLogin.getUsername());
+                    poCont.save(poSession);
+                    
+                    JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                    FormPurchaseOrder formPO = new FormPurchaseOrder(userLogin);
+                    JDesktopPane desktopPane = getDesktopPane();
+                    desktopPane.add(formPO);
+                    formPO.setVisible(true);
+                    this.dispose();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        }
     }
 
     @Override
