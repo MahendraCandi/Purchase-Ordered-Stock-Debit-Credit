@@ -56,8 +56,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         jdcTglKirim.setLocale(Locale.forLanguageTag("in-ID"));
         jdcTglKirim.setDateFormatString("dd MMMM yyyy");
         dataComboBoxSupplier();
-        validasiPO();
         tableDetailBarang();
+        validasiPO();
         //barang dialog
         columnBarang();
         barangDialog.setLocationRelativeTo(null);
@@ -86,6 +86,23 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
             dataNamaSupplier();
             txtTglBuat.setText(sdf.format(poSession.getTglPO()));
             jdcTglKirim.setDate(poSession.getTglKirim());
+            dataDetailByPO();
+            totalQty();
+            cmbSupplier.setEnabled(false);
+            jdcTglKirim.setEnabled(false);
+        }
+    }
+    
+    private void dataDetailByPO(){
+        List<DetailPurchaseOrder> listDetail = detailCont.findAllDetailByPONumber(poSession.getNoPO());
+        for(DetailPurchaseOrder dpo : listDetail){
+            Object[] obj=new Object[5];  
+            obj[1]=dpo.getKdBarang();
+            obj[2]=dpo.getQtyOrder(); 
+            obj[3]=dpo.getHargaBeli(); 
+            obj[4]=dpo.getHargaJual(); 
+            modelDetail.addRow(obj); 
+            noTable();
         }
     }
     

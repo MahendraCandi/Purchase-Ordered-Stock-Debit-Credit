@@ -3,6 +3,8 @@ package fladeoapp.controller;
 import fladeoapp.data.DetailPurchaseOrder;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -55,10 +57,17 @@ public class DetailPurchaseOrderController implements Serializable{
         }
     }
     
-    public DetailPurchaseOrder findDetailPurchaseOrder(String kode){
+    public List<DetailPurchaseOrder> findAllDetailByPONumber(String noPO){
         EntityManager em=getEntityManager();
-        try{
-            return em.find(DetailPurchaseOrder.class, kode);
-        }finally{}
+        List<DetailPurchaseOrder> listDetailPO = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT dpo FROM DetailPurchaseOrder dpo WHERE dpo.noPO = :noPO");
+            q.setParameter("noPO", noPO);
+            listDetailPO = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listDetailPO;
     }
+    
 }
