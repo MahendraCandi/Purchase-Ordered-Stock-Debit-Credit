@@ -74,6 +74,26 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         });
     }
     
+    private void validasiKodeSupplier(){
+        supplier = supCont.findSupplier(txtKdSupplie.getText());
+        if(supplier.getKdSupplier() != null){
+            if(JOptionPane.showConfirmDialog(null, "Kode Supplier eksis! Mau edit data?", "Warning", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                txtNmSupplier.setText(supplier.getNmSupplier());
+                txtTelp.setText(supplier.getTelepon());
+                txtKota.setText(supplier.getKota());
+                txtAlamat.setText(supplier.getAlamat());
+                txtNmSupplier.requestFocus();
+            }else{
+                txtKdSupplie.setText("");
+                txtNmSupplier.setText("");
+                txtTelp.setText("");
+                txtKota.setText("");
+                txtAlamat.setText("");
+                txtKdSupplie.requestFocus();
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,6 +159,16 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
         txtKdSupplie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtKdSupplie.setForeground(new java.awt.Color(51, 51, 51));
+        txtKdSupplie.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtKdSupplieFocusLost(evt);
+            }
+        });
+        txtKdSupplie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtKdSupplieKeyPressed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,6 +312,16 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
+    private void txtKdSupplieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKdSupplieKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            validasiKodeSupplier();
+        }
+    }//GEN-LAST:event_txtKdSupplieKeyPressed
+
+    private void txtKdSupplieFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKdSupplieFocusLost
+        validasiKodeSupplier();
+    }//GEN-LAST:event_txtKdSupplieFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -306,6 +346,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
     @Override
     public void aktif() {
+        txtKdSupplie.setEnabled(true);
         txtNmSupplier.setEnabled(true);
         txtTelp.setEnabled(true);
         txtKota.setEnabled(true);
@@ -318,12 +359,13 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
     @Override
     public void bersih() {
-        txtKdSupplie.setText(supCont.nomorOtomatis());
+        txtKdSupplie.setText("");
         txtNmSupplier.setText("");
         txtTelp.setText("");
         txtKota.setText("");
         txtAlamat.setText("");
         txtCari.setText("");
+        txtKdSupplie.requestFocus();
         showTable();    
     }
 

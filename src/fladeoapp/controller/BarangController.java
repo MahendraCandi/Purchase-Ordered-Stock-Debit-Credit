@@ -76,19 +76,11 @@ public class BarangController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.size, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
                 "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier "
                     + "ORDER BY barang.Kd_Barang ASC");
             List<Object[]> listBarang = q.getResultList();
             for(Object[] obj : listBarang){
-                Object[] objModel = new Object[7];
-//                objModel[0] = obj[0];
-//                objModel[1] = obj[1];
-//                objModel[2] = obj[2];
-//                objModel[3] = obj[3];
-//                objModel[4] = obj[4];
-//                objModel[5] = obj[5];
-//                objModel[6] = obj[6];
                 model.addRow(obj);
             }
         } catch (Exception e) {
@@ -115,10 +107,11 @@ public class BarangController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.size, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
                 "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier\n" +
                 "WHERE barang.Kd_Barang LIKE ?cari\n" +
                 "OR barang.Jenis_Barang LIKE ?cari\n" +
+                "OR barang.size LIKE ?cari\n" +
                 "OR barang.Kd_Supplier LIKE ?cari\n" +
                 "OR supplier.Nm_Supplier LIKE ?cari\n" +
                 "OR supplier.Kota LIKE ?cari\n" +
@@ -126,14 +119,6 @@ public class BarangController implements Serializable{
             q.setParameter("cari", "%"+cari+"%");
             List<Object[]> listBarang = q.getResultList();
             for(Object[] obj : listBarang){
-                Object[] objModel = new Object[7];
-                objModel[0] = obj[0];
-                objModel[1] = obj[1];
-                objModel[2] = obj[2];
-                objModel[3] = obj[3];
-                objModel[4] = obj[4];
-                objModel[5] = obj[5];
-                objModel[6] = obj[6];
                 model.addRow(obj);
             }
         } catch (Exception e) {

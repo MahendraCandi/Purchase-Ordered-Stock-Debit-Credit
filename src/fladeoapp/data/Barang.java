@@ -19,19 +19,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "barang")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Barang.findAll", query = "SELECT b FROM Barang b")
-    , @NamedQuery(name = "Barang.findByIdBarang", query = "SELECT b FROM Barang b WHERE b.idBarang = :idBarang")
-    , @NamedQuery(name = "Barang.findByKdBarang", query = "SELECT b FROM Barang b WHERE b.kdBarang = :kdBarang")
-    , @NamedQuery(name = "Barang.findByJenisBarang", query = "SELECT b FROM Barang b WHERE b.jenisBarang = :jenisBarang")
-    , @NamedQuery(name = "Barang.findByHrgBeli", query = "SELECT b FROM Barang b WHERE b.hrgBeli = :hrgBeli")
-    , @NamedQuery(name = "Barang.findByHrgJual", query = "SELECT b FROM Barang b WHERE b.hrgJual = :hrgJual")
-    , @NamedQuery(name = "Barang.findByKdSupplier", query = "SELECT b FROM Barang b WHERE b.kdSupplier = :kdSupplier")})
+    @NamedQuery(name = "Barang.findAll", query = "SELECT b FROM Barang b"),
+    @NamedQuery(name = "Barang.findByIdBarang", query = "SELECT b FROM Barang b WHERE b.idBarang = :idBarang"),
+    @NamedQuery(name = "Barang.findByKdBarang", query = "SELECT b FROM Barang b WHERE b.kdBarang = :kdBarang"),
+    @NamedQuery(name = "Barang.findByJenisBarang", query = "SELECT b FROM Barang b WHERE b.jenisBarang = :jenisBarang"),
+    @NamedQuery(name = "Barang.findByHrgBeli", query = "SELECT b FROM Barang b WHERE b.hrgBeli = :hrgBeli"),
+    @NamedQuery(name = "Barang.findByHrgJual", query = "SELECT b FROM Barang b WHERE b.hrgJual = :hrgJual"),
+    @NamedQuery(name = "Barang.findByKdSupplier", query = "SELECT b FROM Barang b WHERE b.kdSupplier = :kdSupplier"),
+    @NamedQuery(name = "Barang.findBySize", query = "SELECT b FROM Barang b WHERE b.size = :size")})
 public class Barang implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +56,9 @@ public class Barang implements Serializable {
     @Basic(optional = false)
     @Column(name = "Kd_Supplier")
     private String kdSupplier;
+    @Basic(optional = false)
+    @Column(name = "size")
+    private String size;
 
     public Barang() {
     }
@@ -63,13 +67,14 @@ public class Barang implements Serializable {
         this.idBarang = idBarang;
     }
 
-    public Barang(Integer idBarang, String kdBarang, String jenisBarang, double hrgBeli, double hrgJual, String kdSupplier) {
+    public Barang(Integer idBarang, String kdBarang, String jenisBarang, double hrgBeli, double hrgJual, String kdSupplier, String size) {
         this.idBarang = idBarang;
         this.kdBarang = kdBarang;
         this.jenisBarang = jenisBarang;
         this.hrgBeli = hrgBeli;
         this.hrgJual = hrgJual;
         this.kdSupplier = kdSupplier;
+        this.size = size;
     }
 
     public Integer getIdBarang() {
@@ -118,6 +123,14 @@ public class Barang implements Serializable {
 
     public void setKdSupplier(String kdSupplier) {
         this.kdSupplier = kdSupplier;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     @Override
