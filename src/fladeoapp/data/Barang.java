@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -59,6 +60,9 @@ public class Barang implements Serializable {
     @Basic(optional = false)
     @Column(name = "size")
     private String size;
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
 
     public Barang() {
     }
@@ -131,6 +135,14 @@ public class Barang implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     @Override

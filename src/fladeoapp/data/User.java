@@ -9,8 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,26 +17,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = :idUser")
-    , @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username")
-    , @NamedQuery(name = "User.findByNama", query = "SELECT u FROM User u WHERE u.nama = :nama")
-    , @NamedQuery(name = "User.findByHakAkses", query = "SELECT u FROM User u WHERE u.hakAkses = :hakAkses")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
+    @NamedQuery(name = "User.findByNama", query = "SELECT u FROM User u WHERE u.nama = :nama"),
+    @NamedQuery(name = "User.findByHakAkses", query = "SELECT u FROM User u WHERE u.hakAkses = :hakAkses"),
+    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "Id_User")
-    private Integer idUser;
     @Basic(optional = false)
     @Column(name = "Username")
     private String username;
@@ -55,24 +48,15 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer idUser) {
-        this.idUser = idUser;
+    public User(String username) {
+        this.username = username;
     }
 
-    public User(Integer idUser, String username, String nama, String hakAkses, String password) {
-        this.idUser = idUser;
+    public User(String username, String nama, String hakAkses, String password) {
         this.username = username;
         this.nama = nama;
         this.hakAkses = hakAkses;
         this.password = password;
-    }
-
-    public Integer getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
     }
 
     public String getUsername() {
@@ -110,7 +94,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idUser != null ? idUser.hashCode() : 0);
+        hash += (username != null ? username.hashCode() : 0);
         return hash;
     }
 
@@ -121,7 +105,7 @@ public class User implements Serializable {
             return false;
         }
         User other = (User) object;
-        if ((this.idUser == null && other.idUser != null) || (this.idUser != null && !this.idUser.equals(other.idUser))) {
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
             return false;
         }
         return true;
@@ -129,7 +113,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.User[ idUser=" + idUser + " ]";
+        return "fladeoapp.data.User[ username=" + username + " ]";
     }
     
 }

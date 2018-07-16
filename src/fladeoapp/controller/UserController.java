@@ -45,12 +45,12 @@ public class UserController implements Serializable{
         }catch(Exception ex){}
     }
     
-    public void delete(int pk){
+    public void delete(String pk){
         EntityManager em = getEntityManager();
         User us;
         try{
             us=em.getReference(User.class, pk);
-            us.getIdUser();
+            us.getUsername();
             em.getTransaction().begin();
             em.remove(us);
             em.getTransaction().commit();
@@ -125,11 +125,11 @@ public class UserController implements Serializable{
         String kode="";
         String formatKode="";
         if(hakAkses.equalsIgnoreCase("Finance")){
-            kode = "FIN-001";
-            formatKode = "FIN-000";
+            kode = "Fnc1";
+            formatKode = "Fnc0";
         }else if(hakAkses.equalsIgnoreCase("Purchasing")){
-            kode = "PUC-001";
-            formatKode = "PUC-000";
+            kode = "Pch1";
+            formatKode = "Pch0";
         }
         try{
             em=getEntityManager();
@@ -139,11 +139,11 @@ public class UserController implements Serializable{
             User user=(User) q.getSingleResult();
             if(q!=null){
                 DecimalFormat formatnomor = new DecimalFormat(formatKode);
-                String nomorurut = user.getUsername().substring(4);
+                String nomorurut = user.getUsername().substring(3);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
         }catch(NoResultException ex){
-            ex.printStackTrace();
+            return kode;
         }
         return kode;
     }

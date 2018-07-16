@@ -31,7 +31,7 @@ public class FormUtama extends javax.swing.JFrame {
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
         });
-        txtUsername.setText(user.getUsername());
+        txtUsername.setText(user.getNama());
         txtHakAkses.setText(user.getHakAkses());
         userLogin = user;
     }

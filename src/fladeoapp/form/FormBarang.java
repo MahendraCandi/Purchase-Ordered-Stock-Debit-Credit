@@ -6,7 +6,14 @@ import fladeoapp.data.Barang;
 import fladeoapp.data.Supplier;
 import fladeoapp.FladeoApp;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -14,6 +21,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FormBarang extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
@@ -22,6 +33,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     BarangController brgCont= new BarangController(FladeoApp.emf);
     SupplierController supCont = new SupplierController(FladeoApp.emf);
     DefaultTableModel model;
+    Image imageBarang;
     /**
      * Creates new form FormBarang
      */
@@ -38,7 +50,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         model.addColumn("Kode Supplier");
         model.addColumn("Nama Supplier");
         model.addColumn("Kota");
-        tableBarang.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tableBarang.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
     }
     
@@ -52,6 +64,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         txtKdSupplier.setEnabled(false);
         txtKotaSupplier.setEnabled(false);
         txtCari.setEnabled(false);
+        btnFoto.setEnabled(false);
     }
     
     private void dataComboBoxJenisBarang(){
@@ -113,10 +126,29 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     cmbSize.setSelectedItem(tableBarang.getValueAt(baris, 2).toString()); 
                     txtBeli.setText(tableBarang.getValueAt(baris, 3).toString());
                     txtJual.setText(tableBarang.getValueAt(baris, 4).toString());
-                    cmbSupplier.setSelectedItem(tableBarang.getValueAt(baris, 5).toString());
+                    cmbSupplier.setSelectedItem(tableBarang.getValueAt(baris, 6).toString());
+                    tampilFoto();
                 }
             }
         });
+    }
+    
+    private void tampilFoto(){
+        barang=brgCont.findByKodeBarang(txtKode.getText());
+        if(barang.getFoto()!=null){
+            try{
+                ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(barang.getFoto()));
+                ImageIcon icon=(ImageIcon) inputStream.readObject();
+                imageBarang=icon.getImage();
+                panelGambar1.setImage(imageBarang);
+                inputStream.close();
+                txtFoto.setText("");
+            }catch(ClassNotFoundException ex){
+            }catch(IOException ex){}
+        }else{
+            panelGambar1.setImage(null);
+            txtFoto.setText("Foto tidak ada");
+        }
     }
 
     /**
@@ -147,10 +179,14 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         txtKotaSupplier = new javax.swing.JTextField();
         cmbSize = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        panelGambar1 = new fladeoapp.panelFoto.panelGambar();
+        txtFoto = new javax.swing.JLabel();
+        btnFoto = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableBarang = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
         txtCari = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 118, 117));
 
@@ -228,6 +264,44 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Size");
 
+        panelGambar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        panelGambar1.setOpaque(false);
+        panelGambar1.setPreferredSize(new java.awt.Dimension(260, 260));
+
+        txtFoto.setBackground(new java.awt.Color(255, 255, 255));
+        txtFoto.setForeground(new java.awt.Color(255, 255, 255));
+        txtFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtFoto.setText("Tidak ada foto");
+
+        javax.swing.GroupLayout panelGambar1Layout = new javax.swing.GroupLayout(panelGambar1);
+        panelGambar1.setLayout(panelGambar1Layout);
+        panelGambar1Layout.setHorizontalGroup(
+            panelGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGambar1Layout.createSequentialGroup()
+                .addContainerGap(110, Short.MAX_VALUE)
+                .addComponent(txtFoto)
+                .addGap(104, 104, 104))
+        );
+        panelGambar1Layout.setVerticalGroup(
+            panelGambar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGambar1Layout.createSequentialGroup()
+                .addContainerGap(258, Short.MAX_VALUE)
+                .addComponent(txtFoto)
+                .addContainerGap())
+        );
+
+        btnFoto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnFoto.setText("Cari Foto");
+        btnFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFotoActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Foto");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -239,17 +313,16 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbJenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbJenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -259,26 +332,31 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtJual, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtKdSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKotaSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtKdSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtKotaSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFoto))))
+                .addGap(18, 18, 18)
+                .addComponent(panelGambar1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,15 +381,21 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFoto)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(128, 128, 128))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(panelGambar1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tableBarang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableBarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableBarang.setForeground(new java.awt.Color(51, 51, 51));
         tableBarang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -323,11 +407,6 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         ));
         jScrollPane1.setViewportView(tableBarang);
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari ");
-
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -335,6 +414,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 txtCariKeyPressed(evt);
             }
         });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText("Cari ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -358,10 +442,10 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -394,13 +478,29 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbSizeActionPerformed
 
+    private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
+        JFileChooser chooser = new JFileChooser("..\\Purchase-Ordered-Stock-Debit-Credit\\foto\\fotoBarang");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileFilter(new FileNameExtensionFilter("jpg|jpeg|png|bmp", "jpg","jpeg","png","bmp"));
+        if(chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
+            File file=chooser.getSelectedFile();
+            try{
+                imageBarang=ImageIO.read(file);
+                panelGambar1.setImage(imageBarang);
+                txtFoto.setText("");
+            }catch(IOException ex){}
+        }
+    }//GEN-LAST:event_btnFotoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFoto;
     private javax.swing.JComboBox<String> cmbJenis;
     private javax.swing.JComboBox<String> cmbSize;
     private javax.swing.JComboBox<String> cmbSupplier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -412,9 +512,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private fladeoapp.panelFoto.panelGambar panelGambar1;
     private javax.swing.JTable tableBarang;
     private javax.swing.JTextField txtBeli;
     private javax.swing.JTextField txtCari;
+    private javax.swing.JLabel txtFoto;
     private javax.swing.JTextField txtJual;
     private javax.swing.JTextField txtKdSupplier;
     private javax.swing.JTextField txtKode;
@@ -429,6 +531,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         cmbSupplier.setEnabled(true);
         cmbSize.setEnabled(true);
         txtCari.setEnabled(true);
+        btnFoto.setEnabled(true);
         bersih();
         seleksiBaris();
     }
@@ -447,6 +550,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         txtKdSupplier.setText("");
         txtKotaSupplier.setText("");
         txtCari.setText("");
+        txtFoto.setText("Tidak ada foto");
+        panelGambar1.setImage(null);
         showTable();
     }
 
@@ -460,26 +565,46 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
             barang=brgCont.findByKodeBarang(txtKode.getText());
             Barang brg=new Barang();
             if(barang==null){
-                brg.setKdBarang(txtKode.getText());
-                brg.setJenisBarang(cmbJenis.getSelectedItem().toString());
-                brg.setSize(cmbSize.getSelectedItem().toString());
-                brg.setHrgBeli(Double.parseDouble(txtBeli.getText()));
-                brg.setHrgJual(Double.parseDouble(txtJual.getText()));
-                brg.setKdSupplier(txtKdSupplier.getText());
                 try{
+                    brg.setKdBarang(txtKode.getText());
+                    brg.setJenisBarang(cmbJenis.getSelectedItem().toString());
+                    brg.setSize(cmbSize.getSelectedItem().toString());
+                    brg.setHrgBeli(Double.parseDouble(txtBeli.getText()));
+                    brg.setHrgJual(Double.parseDouble(txtJual.getText()));
+                    brg.setKdSupplier(txtKdSupplier.getText());
+                
+                    ObjectOutputStream objectoutputstream=null;
+                    ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
+                    objectoutputstream=new ObjectOutputStream(outputstream);
+                    ImageIcon icon=new ImageIcon(imageBarang);
+                    objectoutputstream.writeObject(icon);
+                    objectoutputstream.flush();
+                    objectoutputstream.close();
+                    brg.setFoto(outputstream.toByteArray());
+                    
                     brgCont.save(brg);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
             }else{
-                barang.setKdBarang(txtKode.getText());
-                barang.setJenisBarang(cmbJenis.getSelectedItem().toString());
-                barang.setSize(cmbSize.getSelectedItem().toString());;
-                barang.setHrgBeli(Double.parseDouble(txtBeli.getText()));
-                barang.setHrgJual(Double.parseDouble(txtJual.getText()));
-                barang.setKdSupplier(txtKdSupplier.getText());
                 try{
+                    barang.setKdBarang(txtKode.getText());
+                    barang.setJenisBarang(cmbJenis.getSelectedItem().toString());
+                    barang.setSize(cmbSize.getSelectedItem().toString());;
+                    barang.setHrgBeli(Double.parseDouble(txtBeli.getText()));
+                    barang.setHrgJual(Double.parseDouble(txtJual.getText()));
+                    barang.setKdSupplier(txtKdSupplier.getText());
+                    
+                    ObjectOutputStream objectoutputstream=null;
+                    ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
+                    objectoutputstream=new ObjectOutputStream(outputstream);
+                    ImageIcon icon=new ImageIcon(imageBarang);
+                    objectoutputstream.writeObject(icon);
+                    objectoutputstream.flush();
+                    objectoutputstream.close();
+                    barang.setFoto(outputstream.toByteArray());
+                
                     brgCont.update(barang);
                 }catch(Exception ex){
                     ex.printStackTrace();

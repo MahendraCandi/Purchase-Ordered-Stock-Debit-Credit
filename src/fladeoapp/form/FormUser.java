@@ -343,7 +343,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         }else{
         try{
             User userPK = uCont.findOneUser(txtUsername.getText(), txtAkses.getText());
-            uCont.delete(userPK.getIdUser());
+            uCont.delete(userPK.getUsername());
              JOptionPane.showMessageDialog(null, "Data telah dihapus!");
             }catch(Exception ex){
                 ex.printStackTrace();
