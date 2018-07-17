@@ -9,8 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -27,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Barang.findAll", query = "SELECT b FROM Barang b"),
-    @NamedQuery(name = "Barang.findByIdBarang", query = "SELECT b FROM Barang b WHERE b.idBarang = :idBarang"),
     @NamedQuery(name = "Barang.findByKdBarang", query = "SELECT b FROM Barang b WHERE b.kdBarang = :kdBarang"),
     @NamedQuery(name = "Barang.findByJenisBarang", query = "SELECT b FROM Barang b WHERE b.jenisBarang = :jenisBarang"),
     @NamedQuery(name = "Barang.findByHrgBeli", query = "SELECT b FROM Barang b WHERE b.hrgBeli = :hrgBeli"),
@@ -38,10 +35,6 @@ public class Barang implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "Id_Barang")
-    private Integer idBarang;
     @Basic(optional = false)
     @Column(name = "Kd_Barang")
     private String kdBarang;
@@ -61,32 +54,23 @@ public class Barang implements Serializable {
     @Column(name = "size")
     private String size;
     @Lob
-    @Column(name = "foto")
+    @Column(name = "foto", length = 1048576)
     private byte[] foto;
 
     public Barang() {
     }
 
-    public Barang(Integer idBarang) {
-        this.idBarang = idBarang;
+    public Barang(String kdBarang) {
+        this.kdBarang = kdBarang;
     }
 
-    public Barang(Integer idBarang, String kdBarang, String jenisBarang, double hrgBeli, double hrgJual, String kdSupplier, String size) {
-        this.idBarang = idBarang;
+    public Barang(String kdBarang, String jenisBarang, double hrgBeli, double hrgJual, String kdSupplier, String size) {
         this.kdBarang = kdBarang;
         this.jenisBarang = jenisBarang;
         this.hrgBeli = hrgBeli;
         this.hrgJual = hrgJual;
         this.kdSupplier = kdSupplier;
         this.size = size;
-    }
-
-    public Integer getIdBarang() {
-        return idBarang;
-    }
-
-    public void setIdBarang(Integer idBarang) {
-        this.idBarang = idBarang;
     }
 
     public String getKdBarang() {
@@ -148,7 +132,7 @@ public class Barang implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idBarang != null ? idBarang.hashCode() : 0);
+        hash += (kdBarang != null ? kdBarang.hashCode() : 0);
         return hash;
     }
 
@@ -159,7 +143,7 @@ public class Barang implements Serializable {
             return false;
         }
         Barang other = (Barang) object;
-        if ((this.idBarang == null && other.idBarang != null) || (this.idBarang != null && !this.idBarang.equals(other.idBarang))) {
+        if ((this.kdBarang == null && other.kdBarang != null) || (this.kdBarang != null && !this.kdBarang.equals(other.kdBarang))) {
             return false;
         }
         return true;
@@ -167,7 +151,7 @@ public class Barang implements Serializable {
 
     @Override
     public String toString() {
-        return "fladeoapp.data.Barang[ idBarang=" + idBarang + " ]";
+        return "fladeoapp.data.Barang[ kdBarang=" + kdBarang + " ]";
     }
     
 }

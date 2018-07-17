@@ -50,13 +50,13 @@ REVISI 1
 1. pch-001 diubah menjadi pch1 DONE
 2. menu utama tampil nama user bukan kode user DONE
 3. save gambar dan tampil gambar tiap barang DONE
-4. kode supplier ubah ambil 3 huruf/input manual
-5. pencarian supplier bug
-6. typo di pencarian supplier
-7. primary key id barang hapus
-8. kode barang diubah format
-9. format tulisan di nomor PO 19920131001
-10. table jurnal ganti nomor transaksi jadi nomor pembayaran
+4. kode supplier ubah ambil 3 huruf/input manual DONE
+5. pencarian supplier bug DONe
+6. typo di pencarian supplier DONE
+7. primary key id barang hapus DONE
+8. kode barang diubah format 
+9. format tulisan di nomor PO 19920131001 DONE
+10. table jurnal ganti nomor transaksi jadi nomor pembayaran 
 11. table data akun ganti jadi data perkiraan
 12. kd Akun jadi kd Perkiraan
 13. nama akun jadi nama perkiraan

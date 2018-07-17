@@ -25,8 +25,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
-    // TAMPILKAN DATA PURCHASES ORDER DETAIL!!!
-    
     PurchaseOrderController poCont = new PurchaseOrderController(FladeoApp.emf);
     DetailPurchaseOrderController detailCont = new DetailPurchaseOrderController(FladeoApp.emf);
     BarangController bCont = new BarangController(FladeoApp.emf);
@@ -43,6 +41,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     DefaultTableModel modelDetail; // tableDetail
     
     int qty=0, totalQty=0;
+    
+    boolean kembaliPenerimaBarang = false;
     
     /**
      * Creates new form FormDetailPurchaseOrder
@@ -129,6 +129,7 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         model = new DefaultTableModel();
         model.addColumn("Kode Barang");
         model.addColumn("Jenis Barang");
+        model.addColumn("Size");
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Kode Supplier");
@@ -154,8 +155,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
                 int baris=tableBarangDialog.getSelectedRow();       
                 if(baris != -1){                        
                     cmbDKdBarang.setSelectedItem(tableBarangDialog.getValueAt(baris, 0));
-                    txtDHrgbeli.setText(tableBarangDialog.getValueAt(baris, 2).toString());
-                    txtDHrgJual.setText(tableBarangDialog.getValueAt(baris, 3).toString());
+                    txtDHrgbeli.setText(tableBarangDialog.getValueAt(baris, 3).toString());
+                    txtDHrgJual.setText(tableBarangDialog.getValueAt(baris, 4).toString());
                 }
             }
         });
@@ -624,6 +625,13 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        if(kembaliPenerimaBarang == true){
+            FormPenerimaanBarang fpb = new FormPenerimaanBarang(userLogin);
+            JDesktopPane desktopPane = getDesktopPane();
+            desktopPane.add(fpb);
+            fpb.setVisible(true);
+            this.dispose();
+        }
         FormPurchaseOrder formPO = new FormPurchaseOrder(userLogin);
         JDesktopPane desktopPane = getDesktopPane();
         desktopPane.add(formPO);
@@ -641,7 +649,7 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void cmbDKdBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDKdBarangActionPerformed
-        barang = bCont.findByKodeBarang(cmbDKdBarang.getSelectedItem().toString());
+        barang = bCont.findBarang(cmbDKdBarang.getSelectedItem().toString());
         txtDHrgbeli.setText(String.valueOf(barang.getHrgBeli()));
         txtDHrgJual.setText(String.valueOf(barang.getHrgJual()));
         txtDQty.requestFocus();
@@ -749,6 +757,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         if(baris == 0){
             JOptionPane.showMessageDialog(null, "Daftar barang masih kosong!");
+        }else if(jdcTglKirim.getDate() == null){
+            JOptionPane.showMessageDialog(null, "Masukan Tanggal Kirim!");
         }else{
             if(jdcTglKirim.equals("")){
                 JOptionPane.showMessageDialog(null, "Masukan tanggal kirim!");

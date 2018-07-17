@@ -95,11 +95,6 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
             }
         });
     }
-    
-    private PurchaseOrder getPOSession(){
-        PurchaseOrder purchaseOrder = poCont.findPurchaseOrder(txtNoPO.getText());
-        return purchaseOrder;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.

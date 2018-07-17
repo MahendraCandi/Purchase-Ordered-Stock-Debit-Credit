@@ -98,7 +98,7 @@ public class SupplierController implements Serializable{
                     + "OR s.nmSupplier LIKE :cari "
                     + "OR s.telepon LIKE :cari "
                     + "OR s.alamat LIKE :cari "
-                    + "OR s.kota LIKE :Cari");
+                    + "OR s.kota LIKE :cari");
             q.setParameter("cari", "%"+cari+"%");
             List<Supplier> listAkun = q.getResultList();
             for(Supplier supplier : listAkun){

@@ -134,7 +134,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     }
     
     private void tampilFoto(){
-        barang=brgCont.findByKodeBarang(txtKode.getText());
+        barang=brgCont.findBarang(txtKode.getText());
         if(barang.getFoto()!=null){
             try{
                 ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(barang.getFoto()));
@@ -562,7 +562,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 txtBeli.getText().isEmpty() || txtJual.getText().isEmpty() || txtKdSupplier.getText().isEmpty() ){
             JOptionPane.showMessageDialog(null, "Data belum lengkap!");
         }else{
-            barang=brgCont.findByKodeBarang(txtKode.getText());
+            barang=brgCont.findBarang(txtKode.getText());
             Barang brg=new Barang();
             if(barang==null){
                 try{
@@ -580,6 +580,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     objectoutputstream.writeObject(icon);
                     objectoutputstream.flush();
                     objectoutputstream.close();
+                    System.out.println(outputstream.size());
                     brg.setFoto(outputstream.toByteArray());
                     
                     brgCont.save(brg);
@@ -603,6 +604,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     objectoutputstream.writeObject(icon);
                     objectoutputstream.flush();
                     objectoutputstream.close();
+                    System.out.println(outputstream.size());
                     barang.setFoto(outputstream.toByteArray());
                 
                     brgCont.update(barang);
@@ -621,10 +623,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         if(baris == -1){
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
-            Barang brg = new Barang();
             try {
-                brg = brgCont.findByKodeBarang(txtKode.getText());
-                brgCont.delete(brg.getIdBarang());
+                brgCont.delete(txtKode.getText());
             } catch (Exception e) {
                 e.printStackTrace();
             }

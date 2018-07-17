@@ -3,6 +3,8 @@ package fladeoapp.controller;
 import fladeoapp.data.PenerimaanBarang;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -60,6 +62,58 @@ public class PenerimaanBarangController implements Serializable{
         try{
             return em.find(PenerimaanBarang.class, kode);
         }finally{}
+    }
+    
+    public List<Object[]> findAllPenerimaanBarang(){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT \n" +
+                "pb.No_Tanda_Terima, \n" +
+                "pb.Tgl_Terima_Barang,	\n" +
+                "pb.No_PO, \n" +
+                "po.Tgl_PO,\n" +
+                "po.Tgl_Kirim,\n" +
+                "s.Nm_Supplier,\n" +
+                "po.Total_Qty,\n" +
+                "po.Username\n" +
+                "FROM penerimaan_barang pb\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public List<Object[]> searchPenerimaanBarang(String cari){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT \n" +
+                "pb.No_Tanda_Terima, \n" +
+                "pb.Tgl_Terima_Barang,	\n" +
+                "pb.No_PO, \n" +
+                "po.Tgl_PO,\n" +
+                "po.Tgl_Kirim,\n" +
+                "s.Nm_Supplier,\n" +
+                "po.Total_Qty,\n" +
+                "po.Username\n" +
+                "FROM penerimaan_barang pb\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier\n" +
+                "WHERE pb.No_Tanda_Terima LIKE ?cari \n" +
+                "OR pb.Tgl_Terima_Barang LIKE ?cari	\n" +
+                "OR pb.No_PO LIKE ?cari\n" +
+                "OR s.Nm_Supplier LIKE ?cari\n" +
+                "OR po.Username LIKE ?cari");
+            q.setParameter("cari", "%"+cari+"%");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
     
     public String nomorOtomatis(){

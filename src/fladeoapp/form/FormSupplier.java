@@ -28,12 +28,12 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         model.addColumn("Telepon");
         model.addColumn("Kota");
         model.addColumn("Alamat");
-        tableSupplier.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tableSupplier.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
     }
 
     private void tidakAktif(){
-        txtKdSupplie.setEnabled(false);
+        txtKode.setEnabled(false);
         txtNmSupplier.setEnabled(false);
         txtTelp.setEnabled(false);
         txtKota.setEnabled(false);
@@ -64,19 +64,20 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
             public void valueChanged(ListSelectionEvent e) {
                 int baris=tableSupplier.getSelectedRow(); 
                 if(baris != -1){                        
-                    txtKdSupplie.setText(tableSupplier.getValueAt(baris, 0).toString());
+                    txtKode.setText(tableSupplier.getValueAt(baris, 0).toString());
                     txtNmSupplier.setText(tableSupplier.getValueAt(baris, 1).toString());
                     txtTelp.setText(tableSupplier.getValueAt(baris, 2).toString());
                     txtKota.setText(tableSupplier.getValueAt(baris, 3).toString());
                     txtAlamat.setText(tableSupplier.getValueAt(baris, 4).toString());
+                    txtKode.requestFocus();
                 }
             }
         });
     }
     
     private void validasiKodeSupplier(){
-        supplier = supCont.findSupplier(txtKdSupplie.getText());
-        if(supplier.getKdSupplier() != null){
+        supplier = supCont.findSupplier(txtKode.getText());
+        if(supplier != null){
             if(JOptionPane.showConfirmDialog(null, "Kode Supplier eksis! Mau edit data?", "Warning", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
                 txtNmSupplier.setText(supplier.getNmSupplier());
                 txtTelp.setText(supplier.getTelepon());
@@ -84,12 +85,12 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 txtAlamat.setText(supplier.getAlamat());
                 txtNmSupplier.requestFocus();
             }else{
-                txtKdSupplie.setText("");
+                txtKode.setText("");
                 txtNmSupplier.setText("");
                 txtTelp.setText("");
                 txtKota.setText("");
                 txtAlamat.setText("");
-                txtKdSupplie.requestFocus();
+                txtKode.requestFocus();
             }
         }
     }
@@ -113,10 +114,10 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        txtKdSupplie = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAlamat = new javax.swing.JTextArea();
+        txtKode = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableSupplier = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -157,19 +158,6 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Kode Supplier");
 
-        txtKdSupplie.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtKdSupplie.setForeground(new java.awt.Color(51, 51, 51));
-        txtKdSupplie.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtKdSupplieFocusLost(evt);
-            }
-        });
-        txtKdSupplie.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtKdSupplieKeyPressed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Alamat");
@@ -181,6 +169,14 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         txtAlamat.setRows(5);
         txtAlamat.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtAlamat);
+
+        txtKode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtKode.setForeground(new java.awt.Color(51, 51, 51));
+        txtKode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtKodeKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -201,8 +197,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtKdSupplie, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(148, 148, 148)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,8 +227,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtKdSupplie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -248,7 +244,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        tableSupplier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableSupplier.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableSupplier.setForeground(new java.awt.Color(51, 51, 51));
         tableSupplier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,11 +259,10 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari User");
+        jLabel6.setText("Cari Supplier");
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
-        txtCari.setText("Cari User");
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCariKeyPressed(evt);
@@ -312,15 +307,15 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
-    private void txtKdSupplieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKdSupplieKeyPressed
+    private void txtKodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            validasiKodeSupplier();
+           if(!txtKode.getText().isEmpty()){
+               validasiKodeSupplier();
+           }else{
+               txtNmSupplier.requestFocus();
+           }
         }
-    }//GEN-LAST:event_txtKdSupplieKeyPressed
-
-    private void txtKdSupplieFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKdSupplieFocusLost
-        validasiKodeSupplier();
-    }//GEN-LAST:event_txtKdSupplieFocusLost
+    }//GEN-LAST:event_txtKodeKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -338,7 +333,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
     private javax.swing.JTable tableSupplier;
     private javax.swing.JTextArea txtAlamat;
     private javax.swing.JTextField txtCari;
-    private javax.swing.JTextField txtKdSupplie;
+    private javax.swing.JTextField txtKode;
     private javax.swing.JTextField txtKota;
     private javax.swing.JTextField txtNmSupplier;
     private javax.swing.JTextField txtTelp;
@@ -346,26 +341,26 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
     @Override
     public void aktif() {
-        txtKdSupplie.setEnabled(true);
+        txtKode.setEnabled(true);
         txtNmSupplier.setEnabled(true);
         txtTelp.setEnabled(true);
         txtKota.setEnabled(true);
         txtAlamat.setEnabled(true);
         txtCari.setEnabled(true);
         bersih();
-        txtNmSupplier.requestFocus();
+        txtKode.requestFocus();
         seleksiBaris();
     }
 
     @Override
     public void bersih() {
-        txtKdSupplie.setText("");
+        txtKode.setText("");
         txtNmSupplier.setText("");
         txtTelp.setText("");
         txtKota.setText("");
         txtAlamat.setText("");
         txtCari.setText("");
-        txtKdSupplie.requestFocus();
+        txtKode.requestFocus();
         showTable();    
     }
 
@@ -375,10 +370,10 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 txtKota.getText().isEmpty() || txtAlamat.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Data belum lengkap!");
         }else{
-            supplier=supCont.findSupplier(txtKdSupplie.getText());
+            supplier=supCont.findSupplier(txtKode.getText());
             Supplier Sup=new Supplier();
             if(supplier==null){
-                Sup.setKdSupplier(txtKdSupplie.getText());
+                Sup.setKdSupplier(txtKode.getText());
                 Sup.setNmSupplier(txtNmSupplier.getText());
                 Sup.setTelepon(txtTelp.getText());
                 Sup.setKota(txtKota.getText());
@@ -390,7 +385,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 }
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
             }else{
-                Sup.setKdSupplier(txtKdSupplie.getText());
+                Sup.setKdSupplier(txtKode.getText());
                 Sup.setNmSupplier(txtNmSupplier.getText());
                 Sup.setTelepon(txtTelp.getText());
                 Sup.setKota(txtKota.getText());
@@ -413,7 +408,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
             try{
-                supCont.delete(txtKdSupplie.getText());
+                supCont.delete(txtKode.getText());
                 JOptionPane.showMessageDialog(null, "Data telah dihapus!");
             }catch(Exception ex){
                 ex.printStackTrace();

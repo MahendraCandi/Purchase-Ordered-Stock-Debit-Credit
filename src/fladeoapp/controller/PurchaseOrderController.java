@@ -3,7 +3,9 @@ package fladeoapp.controller;
 import fladeoapp.data.PurchaseOrder;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -99,20 +101,43 @@ public class PurchaseOrderController implements Serializable{
         return listPO;
     }
     
+    public List<PurchaseOrder> findAllPONotExistInTerimaBarang(){
+        EntityManager em = getEntityManager();
+        List<PurchaseOrder> list = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("SELECT * \n" +
+                "FROM purchase_order po\n" +
+                "WHERE NOT EXISTS (\n" +
+                "SELECT * FROM penerimaan_barang pb\n" +
+                "WHERE po.No_PO = pb.No_PO\n" +
+                ")");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public String nomorOtomatis(){
-        String kode="PO-00001";
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+        Calendar cal=Calendar.getInstance();
+        String tahun=sdf.format(cal.getTime());
+        String kode=tahun+"001"; 
         EntityManager em=null;
         try{
             em=getEntityManager();
             Query q=em.createQuery("SELECT po FROM PurchaseOrder po ORDER BY po.noPO DESC");
             q.setMaxResults(1);
-            PurchaseOrder purchaseOrder=(PurchaseOrder) q.getSingleResult();
+            PurchaseOrder po=(PurchaseOrder) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("PO-00000");
-                String nomorurut = purchaseOrder.getNoPO().substring(3);
-                kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
+                String nomorurut = po.getNoPO().substring(8);
+                int urut = (Integer.parseInt(nomorurut)+1);
+                String formatted=String.format("%03d", urut);
+                kode=tahun+(formatted);
             }
-        }catch(NoResultException ex){}
+        }catch(NoResultException ex){
+            return kode;
+        }
         return kode;
     }
 }

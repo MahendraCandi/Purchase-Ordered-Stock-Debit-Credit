@@ -44,11 +44,11 @@ public class BarangController implements Serializable{
         }catch(Exception ex){}
     }
     
-    public void delete(int idBarang){
+    public void delete(String kodeBarang){
         EntityManager em = getEntityManager();
         Barang brg;
         try{
-            brg=em.getReference(Barang.class, idBarang);
+            brg=em.getReference(Barang.class, kodeBarang);
             brg.getKdBarang();
             em.getTransaction().begin();
             em.remove(brg);
@@ -58,17 +58,11 @@ public class BarangController implements Serializable{
         }
     }
     
-    public Barang findByKodeBarang(String kodeBarang){
+    public Barang findBarang(String kodeBarang){
         EntityManager em=getEntityManager();
-        Barang barang = new Barang();
-        try {
-            Query q = em.createQuery("SELECT b FROM Barang b WHERE b.kdBarang = :kodeBarang");
-            q.setParameter("kodeBarang", kodeBarang);
-            barang = (Barang) q.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
-        return barang;
+        try{
+            return em.find(Barang.class, kodeBarang);
+        }finally{}
     }
     
     public DefaultTableModel findAllBarang(DefaultTableModel model){
