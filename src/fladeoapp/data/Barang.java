@@ -26,10 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Barang.findAll", query = "SELECT b FROM Barang b"),
     @NamedQuery(name = "Barang.findByKdBarang", query = "SELECT b FROM Barang b WHERE b.kdBarang = :kdBarang"),
-    @NamedQuery(name = "Barang.findByJenisBarang", query = "SELECT b FROM Barang b WHERE b.jenisBarang = :jenisBarang"),
+    @NamedQuery(name = "Barang.findByNamaBarang", query = "SELECT b FROM Barang b WHERE b.namaBarang = :namaBarang"),
     @NamedQuery(name = "Barang.findByHrgBeli", query = "SELECT b FROM Barang b WHERE b.hrgBeli = :hrgBeli"),
     @NamedQuery(name = "Barang.findByHrgJual", query = "SELECT b FROM Barang b WHERE b.hrgJual = :hrgJual"),
     @NamedQuery(name = "Barang.findByKdSupplier", query = "SELECT b FROM Barang b WHERE b.kdSupplier = :kdSupplier"),
+    @NamedQuery(name = "Barang.findByWarna", query = "SELECT b FROM Barang b WHERE b.warna = :warna"),
     @NamedQuery(name = "Barang.findBySize", query = "SELECT b FROM Barang b WHERE b.size = :size")})
 public class Barang implements Serializable {
 
@@ -39,8 +40,8 @@ public class Barang implements Serializable {
     @Column(name = "Kd_Barang")
     private String kdBarang;
     @Basic(optional = false)
-    @Column(name = "Jenis_Barang")
-    private String jenisBarang;
+    @Column(name = "Nama_Barang")
+    private String namaBarang;
     @Basic(optional = false)
     @Column(name = "Hrg_Beli")
     private double hrgBeli;
@@ -51,10 +52,13 @@ public class Barang implements Serializable {
     @Column(name = "Kd_Supplier")
     private String kdSupplier;
     @Basic(optional = false)
+    @Column(name = "Warna")
+    private String warna;
+    @Basic(optional = false)
     @Column(name = "size")
     private String size;
     @Lob
-    @Column(name = "foto", length = 1048576)
+    @Column(name = "foto")
     private byte[] foto;
 
     public Barang() {
@@ -64,12 +68,13 @@ public class Barang implements Serializable {
         this.kdBarang = kdBarang;
     }
 
-    public Barang(String kdBarang, String jenisBarang, double hrgBeli, double hrgJual, String kdSupplier, String size) {
+    public Barang(String kdBarang, String namaBarang, double hrgBeli, double hrgJual, String kdSupplier, String warna, String size) {
         this.kdBarang = kdBarang;
-        this.jenisBarang = jenisBarang;
+        this.namaBarang = namaBarang;
         this.hrgBeli = hrgBeli;
         this.hrgJual = hrgJual;
         this.kdSupplier = kdSupplier;
+        this.warna = warna;
         this.size = size;
     }
 
@@ -81,12 +86,12 @@ public class Barang implements Serializable {
         this.kdBarang = kdBarang;
     }
 
-    public String getJenisBarang() {
-        return jenisBarang;
+    public String getNamaBarang() {
+        return namaBarang;
     }
 
-    public void setJenisBarang(String jenisBarang) {
-        this.jenisBarang = jenisBarang;
+    public void setNamaBarang(String namaBarang) {
+        this.namaBarang = namaBarang;
     }
 
     public double getHrgBeli() {
@@ -111,6 +116,14 @@ public class Barang implements Serializable {
 
     public void setKdSupplier(String kdSupplier) {
         this.kdSupplier = kdSupplier;
+    }
+
+    public String getWarna() {
+        return warna;
+    }
+
+    public void setWarna(String warna) {
+        this.warna = warna;
     }
 
     public String getSize() {

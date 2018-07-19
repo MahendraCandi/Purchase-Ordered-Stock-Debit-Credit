@@ -19,19 +19,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "detail_purchase_order")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailPurchaseOrder.findAll", query = "SELECT d FROM DetailPurchaseOrder d")
-    , @NamedQuery(name = "DetailPurchaseOrder.findById", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.id = :id")
-    , @NamedQuery(name = "DetailPurchaseOrder.findByNoPO", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.noPO = :noPO")
-    , @NamedQuery(name = "DetailPurchaseOrder.findByKdBarang", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.kdBarang = :kdBarang")
-    , @NamedQuery(name = "DetailPurchaseOrder.findByQtyOrder", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.qtyOrder = :qtyOrder")
-    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaBeli", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaBeli = :hargaBeli")
-    , @NamedQuery(name = "DetailPurchaseOrder.findByHargaJual", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaJual = :hargaJual")})
+    @NamedQuery(name = "DetailPurchaseOrder.findAll", query = "SELECT d FROM DetailPurchaseOrder d"),
+    @NamedQuery(name = "DetailPurchaseOrder.findById", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.id = :id"),
+    @NamedQuery(name = "DetailPurchaseOrder.findByNoPO", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.noPO = :noPO"),
+    @NamedQuery(name = "DetailPurchaseOrder.findByKdBarang", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.kdBarang = :kdBarang"),
+    @NamedQuery(name = "DetailPurchaseOrder.findByQtyOrder", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.qtyOrder = :qtyOrder"),
+    @NamedQuery(name = "DetailPurchaseOrder.findByHargaBeli", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaBeli = :hargaBeli"),
+    @NamedQuery(name = "DetailPurchaseOrder.findByHargaJual", query = "SELECT d FROM DetailPurchaseOrder d WHERE d.hargaJual = :hargaJual")})
 public class DetailPurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

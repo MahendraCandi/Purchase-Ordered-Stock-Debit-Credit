@@ -20,17 +20,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "jurnal")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Jurnal.findAll", query = "SELECT j FROM Jurnal j")
-    , @NamedQuery(name = "Jurnal.findByNoJurnal", query = "SELECT j FROM Jurnal j WHERE j.noJurnal = :noJurnal")
-    , @NamedQuery(name = "Jurnal.findByNoTransaksi", query = "SELECT j FROM Jurnal j WHERE j.noTransaksi = :noTransaksi")
-    , @NamedQuery(name = "Jurnal.findByTglJurnal", query = "SELECT j FROM Jurnal j WHERE j.tglJurnal = :tglJurnal")
-    , @NamedQuery(name = "Jurnal.findByKet", query = "SELECT j FROM Jurnal j WHERE j.ket = :ket")})
+    @NamedQuery(name = "Jurnal.findAll", query = "SELECT j FROM Jurnal j"),
+    @NamedQuery(name = "Jurnal.findByNoJurnal", query = "SELECT j FROM Jurnal j WHERE j.noJurnal = :noJurnal"),
+    @NamedQuery(name = "Jurnal.findByNoPembayaran", query = "SELECT j FROM Jurnal j WHERE j.noPembayaran = :noPembayaran"),
+    @NamedQuery(name = "Jurnal.findByTglJurnal", query = "SELECT j FROM Jurnal j WHERE j.tglJurnal = :tglJurnal"),
+    @NamedQuery(name = "Jurnal.findByKet", query = "SELECT j FROM Jurnal j WHERE j.ket = :ket")})
 public class Jurnal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,8 +39,8 @@ public class Jurnal implements Serializable {
     @Column(name = "No_Jurnal")
     private String noJurnal;
     @Basic(optional = false)
-    @Column(name = "No_Transaksi")
-    private double noTransaksi;
+    @Column(name = "No_Pembayaran")
+    private String noPembayaran;
     @Basic(optional = false)
     @Column(name = "Tgl_Jurnal")
     @Temporal(TemporalType.DATE)
@@ -56,9 +56,9 @@ public class Jurnal implements Serializable {
         this.noJurnal = noJurnal;
     }
 
-    public Jurnal(String noJurnal, double noTransaksi, Date tglJurnal, String ket) {
+    public Jurnal(String noJurnal, String noPembayaran, Date tglJurnal, String ket) {
         this.noJurnal = noJurnal;
-        this.noTransaksi = noTransaksi;
+        this.noPembayaran = noPembayaran;
         this.tglJurnal = tglJurnal;
         this.ket = ket;
     }
@@ -71,12 +71,12 @@ public class Jurnal implements Serializable {
         this.noJurnal = noJurnal;
     }
 
-    public double getNoTransaksi() {
-        return noTransaksi;
+    public String getNoPembayaran() {
+        return noPembayaran;
     }
 
-    public void setNoTransaksi(double noTransaksi) {
-        this.noTransaksi = noTransaksi;
+    public void setNoPembayaran(String noPembayaran) {
+        this.noPembayaran = noPembayaran;
     }
 
     public Date getTglJurnal() {

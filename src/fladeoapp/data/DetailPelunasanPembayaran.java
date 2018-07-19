@@ -19,16 +19,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "detail_pelunasan_pembayaran")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailPelunasanPembayaran.findAll", query = "SELECT d FROM DetailPelunasanPembayaran d")
-    , @NamedQuery(name = "DetailPelunasanPembayaran.findById", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.id = :id")
-    , @NamedQuery(name = "DetailPelunasanPembayaran.findByNoPembayaran", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noPembayaran = :noPembayaran")
-    , @NamedQuery(name = "DetailPelunasanPembayaran.findByNoTransaksi", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noTransaksi = :noTransaksi")})
+    @NamedQuery(name = "DetailPelunasanPembayaran.findAll", query = "SELECT d FROM DetailPelunasanPembayaran d"),
+    @NamedQuery(name = "DetailPelunasanPembayaran.findById", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.id = :id"),
+    @NamedQuery(name = "DetailPelunasanPembayaran.findByNoPembayaran", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noPembayaran = :noPembayaran"),
+    @NamedQuery(name = "DetailPelunasanPembayaran.findByNoTransaksi", query = "SELECT d FROM DetailPelunasanPembayaran d WHERE d.noTransaksi = :noTransaksi")})
 public class DetailPelunasanPembayaran implements Serializable {
 
     private static final long serialVersionUID = 1L;

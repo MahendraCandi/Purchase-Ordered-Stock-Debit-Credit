@@ -17,17 +17,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "transaksi_pembelian")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TransaksiPembelian.findAll", query = "SELECT t FROM TransaksiPembelian t")
-    , @NamedQuery(name = "TransaksiPembelian.findByNoTransaksi", query = "SELECT t FROM TransaksiPembelian t WHERE t.noTransaksi = :noTransaksi")
-    , @NamedQuery(name = "TransaksiPembelian.findByNoTandaTerima", query = "SELECT t FROM TransaksiPembelian t WHERE t.noTandaTerima = :noTandaTerima")
-    , @NamedQuery(name = "TransaksiPembelian.findByNoInvoice", query = "SELECT t FROM TransaksiPembelian t WHERE t.noInvoice = :noInvoice")
-    , @NamedQuery(name = "TransaksiPembelian.findByTotalTransaksi", query = "SELECT t FROM TransaksiPembelian t WHERE t.totalTransaksi = :totalTransaksi")})
+    @NamedQuery(name = "TransaksiPembelian.findAll", query = "SELECT t FROM TransaksiPembelian t"),
+    @NamedQuery(name = "TransaksiPembelian.findByNoTransaksi", query = "SELECT t FROM TransaksiPembelian t WHERE t.noTransaksi = :noTransaksi"),
+    @NamedQuery(name = "TransaksiPembelian.findByNoTandaTerima", query = "SELECT t FROM TransaksiPembelian t WHERE t.noTandaTerima = :noTandaTerima"),
+    @NamedQuery(name = "TransaksiPembelian.findByNoInvoice", query = "SELECT t FROM TransaksiPembelian t WHERE t.noInvoice = :noInvoice"),
+    @NamedQuery(name = "TransaksiPembelian.findByTotalTransaksi", query = "SELECT t FROM TransaksiPembelian t WHERE t.totalTransaksi = :totalTransaksi")})
 public class TransaksiPembelian implements Serializable {
 
     private static final long serialVersionUID = 1L;

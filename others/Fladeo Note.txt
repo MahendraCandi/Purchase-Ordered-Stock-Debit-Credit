@@ -56,10 +56,10 @@ REVISI 1
 7. primary key id barang hapus DONE
 8. kode barang diubah format 
 9. format tulisan di nomor PO 19920131001 DONE
-10. table jurnal ganti nomor transaksi jadi nomor pembayaran 
-11. table data akun ganti jadi data perkiraan
-12. kd Akun jadi kd Perkiraan
-13. nama akun jadi nama perkiraan
+10. table jurnal ganti nomor transaksi jadi nomor pembayaran DONE
+11. table data akun ganti jadi data perkiraan DONE
+12. kd Akun jadi kd Perkiraan DONE
+13. nama akun jadi nama perkiraan DONE
 
 
 

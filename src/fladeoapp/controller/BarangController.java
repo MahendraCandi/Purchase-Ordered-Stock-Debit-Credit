@@ -70,7 +70,7 @@ public class BarangController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.size, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Nama_Barang, barang.size, barang.Warna, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
                 "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier "
                     + "ORDER BY barang.Kd_Barang ASC");
             List<Object[]> listBarang = q.getResultList();
@@ -101,11 +101,12 @@ public class BarangController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Jenis_Barang, barang.size, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
+            Query q = em.createNativeQuery("SELECT barang.Kd_Barang, barang.Nama_Barang, barang.size, barang.Warna, barang.Hrg_Beli, barang.Hrg_Jual, barang.Kd_Supplier, supplier.Nm_Supplier, supplier.Kota FROM `barang`\n" +
                 "INNER JOIN supplier ON barang.Kd_Supplier = supplier.Kd_Supplier\n" +
                 "WHERE barang.Kd_Barang LIKE ?cari\n" +
-                "OR barang.Jenis_Barang LIKE ?cari\n" +
+                "OR barang.Nama_Barang LIKE ?cari\n" +
                 "OR barang.size LIKE ?cari\n" +
+                "OR barang.Warna LIKE ?cari\n" +
                 "OR barang.Kd_Supplier LIKE ?cari\n" +
                 "OR supplier.Nm_Supplier LIKE ?cari\n" +
                 "OR supplier.Kota LIKE ?cari\n" +
@@ -121,64 +122,61 @@ public class BarangController implements Serializable{
         return model;
     }
     
-    public String kodeOtomatis(String jenisBarang){
+    public String kodeOtomatis(String namaBarang){
         EntityManager em=null;
         String kode="";
         String formatKode="";
         int indexSubstring=4;
-        if(jenisBarang.equalsIgnoreCase("LADIES TALI")){
+        if(namaBarang.equalsIgnoreCase("LADIES SANDAL TALI")){
             kode="LDT-001";
             formatKode="LDT-000";
-        }else if(jenisBarang.equalsIgnoreCase("LADIES HAK")){
-            kode="LDH-001";
-            formatKode="LDH-000";
-        }else if(jenisBarang.equalsIgnoreCase("LADIES SANDAL")){
-            kode="LDS-001";
-            formatKode="LDS-000";
-        }else if(jenisBarang.equalsIgnoreCase("LADIES CASUAL")){
+        }else if(namaBarang.equalsIgnoreCase("LADIES SANDAL PARTY")){
+            kode="LDP-001";
+            formatKode="LDP-000";
+        }else if(namaBarang.equalsIgnoreCase("LADIES SANDAL JEPIT")){
+            kode="LDJ-001";
+            formatKode="LDJ-000";
+        }else if(namaBarang.equalsIgnoreCase("LADIES SEPATU CASUAL")){
             kode="LSC-001";
             formatKode="LSC-000";
-        }else if(jenisBarang.equalsIgnoreCase("LADIES FORMAL")){
-            kode="LSM-001";
-            formatKode="LSM-000";
-        }else if(jenisBarang.equalsIgnoreCase("MENS TALI")){
+        }else if(namaBarang.equalsIgnoreCase("LADIES SEPATU FORMAL")){
+            kode="LSF-001";
+            formatKode="LSF-000";
+        }else if(namaBarang.equalsIgnoreCase("MEN SANDAL TALI")){
             kode="MDT-001";
             formatKode="MDT-000";
-        }else if(jenisBarang.equalsIgnoreCase("MENS CASUAL")){
+        }else if(namaBarang.equalsIgnoreCase("MEN SANDAL JEPIT")){
+            kode="MDJ-001";
+            formatKode="MDJ-000";
+        }else if(namaBarang.equalsIgnoreCase("MEN SEPATU CASUAL")){
             kode="MSC-001";
-            formatKode="MSM-000";
-        }else if(jenisBarang.equalsIgnoreCase("MENS FORMAL")){
-            kode="MSM-001";
-            formatKode="MSM-000";
-        }else if(jenisBarang.equalsIgnoreCase("MENS SANDAL")){
-            kode="MDS-001";
-            formatKode="MDS-000";
-        }else if(jenisBarang.equalsIgnoreCase("SEPATU KIDS CASUAL")){
-            kode="KSGC-001";
-            formatKode="KSGC-000";
-            indexSubstring = 5;
-        }else if(jenisBarang.equalsIgnoreCase("SEPATU KIDS SEKOLAH")){
-            kode="KSGR-001";
-            formatKode="KSGR-000";
-            indexSubstring = 5;
-        }else if(jenisBarang.equalsIgnoreCase("KIDS SANDAL")){
-            kode="KSGS-001";
-            formatKode="KSGS-000";
-            indexSubstring = 5;
-        }else if(jenisBarang.equalsIgnoreCase("KIDS TALI")){
-            kode="KSGS-001";
-            formatKode="KSGS-000";
-            indexSubstring = 5;
-        }else if(jenisBarang.equalsIgnoreCase("BAG")){
-            kode="QC-001";
-            formatKode="QC-000";
+            formatKode="MSC-000";
+        }else if(namaBarang.equalsIgnoreCase("MEN SEPATU FORMAL")){
+            kode="MSF-001";
+            formatKode="MSF-000";
+        }else if(namaBarang.equalsIgnoreCase("KIDS SANDAL TALI")){
+            kode="KDT-001";
+            formatKode="KDT-000";
+        }else if(namaBarang.equalsIgnoreCase("KIDS SANDAL JEPIT")){
+            kode="KDJ-001";
+            formatKode="KDJ-000";
+        }else if(namaBarang.equalsIgnoreCase("KIDS SEPATU CASUAL")){
+            kode="KSC-001";
+            formatKode="KSC-000";
+        }else if(namaBarang.equalsIgnoreCase("TAS CASUAL")){
+            kode="TC-001";
+            formatKode="TC-000";
+            indexSubstring = 3;
+        }else if(namaBarang.equalsIgnoreCase("TAS PARTY")){
+            kode="TP-001";
+            formatKode="TP-000";
             indexSubstring = 3;
         }
         
         try {
             em=getEntityManager();
-            Query q=em.createQuery("SELECT b FROM Barang b WHERE b.jenisBarang=:jenisBarang ORDER BY b.kdBarang DESC");
-            q.setParameter("jenisBarang", jenisBarang);
+            Query q=em.createQuery("SELECT b FROM Barang b WHERE b.namaBarang=:namaBarang ORDER BY b.kdBarang DESC");
+            q.setParameter("namaBarang", namaBarang);
             q.setMaxResults(1);
             Barang barang = (Barang) q.getSingleResult();
             if(q != null){
@@ -187,6 +185,7 @@ public class BarangController implements Serializable{
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
         } catch (NoResultException e) {
+            return kode;
         }
         return kode;
     }

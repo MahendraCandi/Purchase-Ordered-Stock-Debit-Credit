@@ -20,16 +20,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "penerimaan_barang")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PenerimaanBarang.findAll", query = "SELECT p FROM PenerimaanBarang p")
-    , @NamedQuery(name = "PenerimaanBarang.findByNoTandaTerima", query = "SELECT p FROM PenerimaanBarang p WHERE p.noTandaTerima = :noTandaTerima")
-    , @NamedQuery(name = "PenerimaanBarang.findByNoPO", query = "SELECT p FROM PenerimaanBarang p WHERE p.noPO = :noPO")
-    , @NamedQuery(name = "PenerimaanBarang.findByTglTerimaBarang", query = "SELECT p FROM PenerimaanBarang p WHERE p.tglTerimaBarang = :tglTerimaBarang")})
+    @NamedQuery(name = "PenerimaanBarang.findAll", query = "SELECT p FROM PenerimaanBarang p"),
+    @NamedQuery(name = "PenerimaanBarang.findByNoTandaTerima", query = "SELECT p FROM PenerimaanBarang p WHERE p.noTandaTerima = :noTandaTerima"),
+    @NamedQuery(name = "PenerimaanBarang.findByNoPO", query = "SELECT p FROM PenerimaanBarang p WHERE p.noPO = :noPO"),
+    @NamedQuery(name = "PenerimaanBarang.findByTglTerimaBarang", query = "SELECT p FROM PenerimaanBarang p WHERE p.tglTerimaBarang = :tglTerimaBarang")})
 public class PenerimaanBarang implements Serializable {
 
     private static final long serialVersionUID = 1L;

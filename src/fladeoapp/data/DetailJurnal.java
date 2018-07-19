@@ -19,18 +19,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "detail_jurnal")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailJurnal.findAll", query = "SELECT d FROM DetailJurnal d")
-    , @NamedQuery(name = "DetailJurnal.findById", query = "SELECT d FROM DetailJurnal d WHERE d.id = :id")
-    , @NamedQuery(name = "DetailJurnal.findByNoJurnal", query = "SELECT d FROM DetailJurnal d WHERE d.noJurnal = :noJurnal")
-    , @NamedQuery(name = "DetailJurnal.findByKdAkun", query = "SELECT d FROM DetailJurnal d WHERE d.kdAkun = :kdAkun")
-    , @NamedQuery(name = "DetailJurnal.findByDebet", query = "SELECT d FROM DetailJurnal d WHERE d.debet = :debet")
-    , @NamedQuery(name = "DetailJurnal.findByKredit", query = "SELECT d FROM DetailJurnal d WHERE d.kredit = :kredit")})
+    @NamedQuery(name = "DetailJurnal.findAll", query = "SELECT d FROM DetailJurnal d"),
+    @NamedQuery(name = "DetailJurnal.findById", query = "SELECT d FROM DetailJurnal d WHERE d.id = :id"),
+    @NamedQuery(name = "DetailJurnal.findByNoJurnal", query = "SELECT d FROM DetailJurnal d WHERE d.noJurnal = :noJurnal"),
+    @NamedQuery(name = "DetailJurnal.findByKdPerkiraan", query = "SELECT d FROM DetailJurnal d WHERE d.kdPerkiraan = :kdPerkiraan"),
+    @NamedQuery(name = "DetailJurnal.findByDebet", query = "SELECT d FROM DetailJurnal d WHERE d.debet = :debet"),
+    @NamedQuery(name = "DetailJurnal.findByKredit", query = "SELECT d FROM DetailJurnal d WHERE d.kredit = :kredit")})
 public class DetailJurnal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,8 +43,8 @@ public class DetailJurnal implements Serializable {
     @Column(name = "No_Jurnal")
     private String noJurnal;
     @Basic(optional = false)
-    @Column(name = "Kd_Akun")
-    private String kdAkun;
+    @Column(name = "Kd_Perkiraan")
+    private String kdPerkiraan;
     @Basic(optional = false)
     @Column(name = "Debet")
     private double debet;
@@ -59,10 +59,10 @@ public class DetailJurnal implements Serializable {
         this.id = id;
     }
 
-    public DetailJurnal(Integer id, String noJurnal, String kdAkun, double debet, double kredit) {
+    public DetailJurnal(Integer id, String noJurnal, String kdPerkiraan, double debet, double kredit) {
         this.id = id;
         this.noJurnal = noJurnal;
-        this.kdAkun = kdAkun;
+        this.kdPerkiraan = kdPerkiraan;
         this.debet = debet;
         this.kredit = kredit;
     }
@@ -83,12 +83,12 @@ public class DetailJurnal implements Serializable {
         this.noJurnal = noJurnal;
     }
 
-    public String getKdAkun() {
-        return kdAkun;
+    public String getKdPerkiraan() {
+        return kdPerkiraan;
     }
 
-    public void setKdAkun(String kdAkun) {
-        this.kdAkun = kdAkun;
+    public void setKdPerkiraan(String kdPerkiraan) {
+        this.kdPerkiraan = kdPerkiraan;
     }
 
     public double getDebet() {

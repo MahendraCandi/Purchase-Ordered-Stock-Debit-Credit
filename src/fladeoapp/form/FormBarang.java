@@ -45,6 +45,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         model.addColumn("Kode Barang");
         model.addColumn("Jenis Barang");
         model.addColumn("size");
+        model.addColumn("Warna");
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Kode Supplier");
@@ -55,8 +56,9 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     }
     
     private void tidakAktif(){
-        cmbJenis.setEnabled(false);
+        cmbNama.setEnabled(false);
         txtKode.setEnabled(false);
+        txtWarna.setEnabled(false);
         txtBeli.setEnabled(false);
         txtJual.setEnabled(false);
         cmbSupplier.setEnabled(false);
@@ -67,19 +69,30 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         btnFoto.setEnabled(false);
     }
     
-    private void dataComboBoxJenisBarang(){
-        String[] jenisBarang = {
-            "Pilih Jenis Barang","Ladies Tali","Ladies Hak","Ladies Sandal","Ladies Casual","Ladies Formal",
-            "Mens Tali","Mens Casual","Mens Formal","Mens Sandal",
-            "Sepatu Kids Casual","Sepatu Kids Sekolah","Kids Sandal","Kids Tali","Bag"
+    private void dataComboBoxNamaBarang(){
+        String[] namaBarang = {
+            "Pilih nama barang",
+            "Ladies Sandal Tali",
+            "Ladies Sandal Party",
+            "Ladies Sandal Jepit",
+            "Ladies Sepatu Casual",
+            "Ladies Sepatu Formal",
+            "Men Sandal Tali",
+            "Men Sandal Jepit",
+            "Men Sepatu Casual",
+            "Men Sepatu Formal",
+            "Kids Sandal Tali",
+            "Kids Sepatu Jepit",
+            "Kids Sepatu Casual",
+            "Tas Casual",
+            "Tas Party"
         };
-        cmbJenis.setModel(new DefaultComboBoxModel(jenisBarang));
+        cmbNama.setModel(new DefaultComboBoxModel(namaBarang));
     }
     
     private void dataComboBoxSizeBarang(){
         String[] sizeBarang = {
-            "Pilih Size Barang", "31", "32", "33", "34", "35", "36", "37"
-        };
+            "Pilih size barang", "31-35", "36-40", "40-44", "39-43"};
         cmbSize.setModel(new DefaultComboBoxModel<>(sizeBarang));
     }
     
@@ -121,11 +134,12 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
             public void valueChanged(ListSelectionEvent e) {
                 int baris=tableBarang.getSelectedRow(); 
                 if(baris != -1){                       
-                    cmbJenis.setSelectedItem(tableBarang.getValueAt(baris, 1).toString());
+                    cmbNama.setSelectedItem(tableBarang.getValueAt(baris, 1).toString());
                     txtKode.setText(tableBarang.getValueAt(baris, 0).toString()); 
                     cmbSize.setSelectedItem(tableBarang.getValueAt(baris, 2).toString()); 
-                    txtBeli.setText(tableBarang.getValueAt(baris, 3).toString());
-                    txtJual.setText(tableBarang.getValueAt(baris, 4).toString());
+                    txtWarna.setText(tableBarang.getValueAt(baris, 3).toString()); 
+                    txtBeli.setText(tableBarang.getValueAt(baris, 4).toString());
+                    txtJual.setText(tableBarang.getValueAt(baris, 5).toString());
                     cmbSupplier.setSelectedItem(tableBarang.getValueAt(baris, 6).toString());
                     tampilFoto();
                 }
@@ -166,7 +180,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        cmbJenis = new javax.swing.JComboBox<>();
+        cmbNama = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtBeli = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -183,6 +197,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         txtFoto = new javax.swing.JLabel();
         btnFoto = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtWarna = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableBarang = new javax.swing.JTable();
         txtCari = new javax.swing.JTextField();
@@ -199,18 +215,18 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat Kode Barang");
+        jLabel1.setText("Form Barang");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Jenis Barang");
+        jLabel2.setText("Nama Barang");
 
-        cmbJenis.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbJenis.addActionListener(new java.awt.event.ActionListener() {
+        cmbNama.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbNama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbJenisActionPerformed(evt);
+                cmbNamaActionPerformed(evt);
             }
         });
 
@@ -302,35 +318,47 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Foto");
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Warna");
+
+        txtWarna.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtWarna.setForeground(new java.awt.Color(51, 51, 51));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmbSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cmbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtJual, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbJenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtJual, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtWarna, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -363,7 +391,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cmbJenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(cmbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -380,15 +408,19 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     .addComponent(txtKotaSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFoto)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(txtWarna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtBeli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(128, 128, 128))
+                .addGap(94, 94, 94))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addComponent(panelGambar1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,7 +434,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
             },
             new String [] {
-                "Kode Barang", "Jenis Barang", "Size", "Harga Beli", "Harga Jual", "Kode Supplier", "Nama Supplier", "Kota"
+                "Kode Barang", "Jenis Barang", "Warna", "Size", "Harga Beli", "Harga Jual", "Kode Supplier", "Nama Supplier", "Kota"
             }
         ));
         jScrollPane1.setViewportView(tableBarang);
@@ -458,17 +490,17 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
-    private void cmbJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbJenisActionPerformed
-        if("Pilih Jenis Barang".equalsIgnoreCase(cmbJenis.getSelectedItem().toString())){
+    private void cmbNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNamaActionPerformed
+        if("Pilih Jenis Barang".equalsIgnoreCase(cmbNama.getSelectedItem().toString())){
             txtKode.setText("");
             txtBeli.setText("");
             txtJual.setText("");
         }else{
-            txtKode.setText(brgCont.kodeOtomatis(cmbJenis.getSelectedItem().toString()));
+            txtKode.setText(brgCont.kodeOtomatis(cmbNama.getSelectedItem().toString()));
             txtBeli.setText("");
             txtJual.setText("");
         }
-    }//GEN-LAST:event_cmbJenisActionPerformed
+    }//GEN-LAST:event_cmbNamaActionPerformed
 
     private void cmbSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSupplierActionPerformed
         dataSupplierByName();
@@ -495,12 +527,13 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFoto;
-    private javax.swing.JComboBox<String> cmbJenis;
+    private javax.swing.JComboBox<String> cmbNama;
     private javax.swing.JComboBox<String> cmbSize;
     private javax.swing.JComboBox<String> cmbSupplier;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -521,11 +554,13 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     private javax.swing.JTextField txtKdSupplier;
     private javax.swing.JTextField txtKode;
     private javax.swing.JTextField txtKotaSupplier;
+    private javax.swing.JTextField txtWarna;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void aktif() {
-        cmbJenis.setEnabled(true);
+        cmbNama.setEnabled(true);
+        txtWarna.setEnabled(true);
         txtBeli.setEnabled(true);
         txtJual.setEnabled(true);
         cmbSupplier.setEnabled(true);
@@ -534,15 +569,17 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         btnFoto.setEnabled(true);
         bersih();
         seleksiBaris();
+        cmbSupplierActionPerformed(null);
     }
 
     @Override
     public void bersih() {
-        dataComboBoxJenisBarang();
+        dataComboBoxNamaBarang();
         dataComboBoxSizeBarang();
         dataComboBoxSupplier();
-        cmbJenis.setSelectedIndex(0);
+        cmbNama.setSelectedIndex(0);
         txtKode.setText("");
+        txtWarna.setText("");
         txtBeli.setText("");
         txtJual.setText("");
         cmbSupplier.setSelectedIndex(0);
@@ -557,9 +594,9 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
     @Override
     public void simpan() {
-        if("Pilih Jenis Barang".equalsIgnoreCase(cmbJenis.getSelectedItem().toString()) ||
-                "Pilih Size Barang".equalsIgnoreCase(cmbSize.getSelectedItem().toString()) ||
-                txtBeli.getText().isEmpty() || txtJual.getText().isEmpty() || txtKdSupplier.getText().isEmpty() ){
+        if("Pilih nama barang".equalsIgnoreCase(cmbNama.getSelectedItem().toString()) ||
+                "Pilih size barang".equalsIgnoreCase(cmbSize.getSelectedItem().toString()) ||
+                txtBeli.getText().isEmpty() || txtJual.getText().isEmpty() || txtKdSupplier.getText().isEmpty() || txtWarna.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Data belum lengkap!");
         }else{
             barang=brgCont.findBarang(txtKode.getText());
@@ -567,7 +604,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
             if(barang==null){
                 try{
                     brg.setKdBarang(txtKode.getText());
-                    brg.setJenisBarang(cmbJenis.getSelectedItem().toString());
+                    brg.setNamaBarang(cmbNama.getSelectedItem().toString());
+                    brg.setWarna(txtWarna.getText());
                     brg.setSize(cmbSize.getSelectedItem().toString());
                     brg.setHrgBeli(Double.parseDouble(txtBeli.getText()));
                     brg.setHrgJual(Double.parseDouble(txtJual.getText()));
@@ -591,7 +629,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
             }else{
                 try{
                     barang.setKdBarang(txtKode.getText());
-                    barang.setJenisBarang(cmbJenis.getSelectedItem().toString());
+                    barang.setNamaBarang(cmbNama.getSelectedItem().toString());
+                    barang.setWarna(txtWarna.getText());
                     barang.setSize(cmbSize.getSelectedItem().toString());;
                     barang.setHrgBeli(Double.parseDouble(txtBeli.getText()));
                     barang.setHrgJual(Double.parseDouble(txtJual.getText()));

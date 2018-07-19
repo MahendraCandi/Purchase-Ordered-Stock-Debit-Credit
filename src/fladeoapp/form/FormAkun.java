@@ -1,8 +1,8 @@
 
 package fladeoapp.form;
 
-import fladeoapp.controller.DataAkunController;
-import fladeoapp.data.DataAkun;
+import fladeoapp.controller.DataPerkiraanController;
+import fladeoapp.data.DataPerkiraan;
 import fladeoapp.FladeoApp;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -13,8 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
-    DataAkun dataAkun = new DataAkun();
-    DataAkunController akunCont = new DataAkunController(FladeoApp.emf);
+    DataPerkiraan dataAkun = new DataPerkiraan();
+    DataPerkiraanController perkiraanCont = new DataPerkiraanController(FladeoApp.emf);
     DefaultTableModel model;
     
     /**
@@ -38,18 +38,18 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
     }
     
     private void showTable(){
-        tableAkun.setModel(akunCont.findAllAkun(model));
+        tableAkun.setModel(perkiraanCont.findAllAkun(model));
     }
     
     private void cariTable(String cari){
-        DefaultTableModel x=akunCont.findOneAkunToTable(model,cari);
+        DefaultTableModel x=perkiraanCont.findOneAkunToTable(model,cari);
         if(x.getRowCount()==0){
             JOptionPane.showMessageDialog(null, "Data tidak ditemukan!");
         }else{
             if(cari.isEmpty()){
                 showTable();
             }else{
-                tableAkun.setModel(akunCont.findOneAkunToTable(model,cari));
+                tableAkun.setModel(perkiraanCont.findOneAkunToTable(model,cari));
             }
         }
     }
@@ -100,7 +100,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat Akun Jurnal");
+        jLabel1.setText("Form Perkiraan");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -233,6 +233,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
 
     @Override
     public void aktif() {
+        txtKdAkun.setEnabled(true);
         txtNamaAkun.setEnabled(true);
         txtCari.setEnabled(true);
         bersih();
@@ -244,31 +245,31 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
     public void bersih() {
         txtNamaAkun.setText("");
         txtCari.setText("");
-        txtKdAkun.setText(akunCont.nomorOtomatis());
+        txtKdAkun.setText("");
         showTable();
     }
 
     @Override
     public void simpan() {
         if(txtNamaAkun.getText().equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(null, "Masukan nama akun!");
+            JOptionPane.showMessageDialog(null, "Masukan nama perkiraan!");
         }else{
-            dataAkun=akunCont.findDataAkun(txtKdAkun.getText());
-            DataAkun da=new DataAkun();
+            dataAkun=perkiraanCont.findDataPerkiraan(txtKdAkun.getText());
+            DataPerkiraan da=new DataPerkiraan();
             if(dataAkun==null){
-                da.setKdAkun(txtKdAkun.getText());
-                da.setNmAkun(txtNamaAkun.getText());
+                da.setKdPerkiraan(txtKdAkun.getText());
+                da.setNmPerkiraan(txtNamaAkun.getText());
                 try{
-                    akunCont.save(da);
+                    perkiraanCont.save(da);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
             }else{
-                da.setKdAkun(txtKdAkun.getText());
-                da.setNmAkun(txtNamaAkun.getText());
+                da.setKdPerkiraan(txtKdAkun.getText());
+                da.setNmPerkiraan(txtNamaAkun.getText());
                 try{
-                    akunCont.update(da);
+                    perkiraanCont.update(da);
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
@@ -286,7 +287,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
             try{
-                akunCont.delete(txtKdAkun.getText());
+                perkiraanCont.delete(txtKdAkun.getText());
                 JOptionPane.showMessageDialog(null, "Data telah dihapus!");
             }catch(Exception ex){
                 ex.printStackTrace();

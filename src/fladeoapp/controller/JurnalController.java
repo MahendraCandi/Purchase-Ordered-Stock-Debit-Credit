@@ -1,6 +1,6 @@
 package fladeoapp.controller;
 
-import fladeoapp.data.DataAkun;
+import fladeoapp.data.DataPerkiraan;
 import fladeoapp.data.Jurnal;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -64,7 +64,7 @@ public class JurnalController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="JURNAL-001";
+        String kode="Ju-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -72,11 +72,13 @@ public class JurnalController implements Serializable{
             q.setMaxResults(1);
             Jurnal jurnal=(Jurnal) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("JURNAL-000");
-                String nomorurut = jurnal.getNoJurnal().substring(7);
+                DecimalFormat formatnomor = new DecimalFormat("Ju-000");
+                String nomorurut = jurnal.getNoJurnal().substring(3);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
-        }catch(NoResultException ex){}
+        }catch(NoResultException ex){
+            return kode;
+        }
         return kode;
     }
 }

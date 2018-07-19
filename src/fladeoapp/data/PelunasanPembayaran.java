@@ -20,16 +20,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "pelunasan_pembayaran")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PelunasanPembayaran.findAll", query = "SELECT p FROM PelunasanPembayaran p")
-    , @NamedQuery(name = "PelunasanPembayaran.findByNoPembayaran", query = "SELECT p FROM PelunasanPembayaran p WHERE p.noPembayaran = :noPembayaran")
-    , @NamedQuery(name = "PelunasanPembayaran.findByJthTempo", query = "SELECT p FROM PelunasanPembayaran p WHERE p.jthTempo = :jthTempo")
-    , @NamedQuery(name = "PelunasanPembayaran.findByTotalBayar", query = "SELECT p FROM PelunasanPembayaran p WHERE p.totalBayar = :totalBayar")})
+    @NamedQuery(name = "PelunasanPembayaran.findAll", query = "SELECT p FROM PelunasanPembayaran p"),
+    @NamedQuery(name = "PelunasanPembayaran.findByNoPembayaran", query = "SELECT p FROM PelunasanPembayaran p WHERE p.noPembayaran = :noPembayaran"),
+    @NamedQuery(name = "PelunasanPembayaran.findByJthTempo", query = "SELECT p FROM PelunasanPembayaran p WHERE p.jthTempo = :jthTempo"),
+    @NamedQuery(name = "PelunasanPembayaran.findByTotalBayar", query = "SELECT p FROM PelunasanPembayaran p WHERE p.totalBayar = :totalBayar")})
 public class PelunasanPembayaran implements Serializable {
 
     private static final long serialVersionUID = 1L;

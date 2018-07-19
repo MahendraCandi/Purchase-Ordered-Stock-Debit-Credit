@@ -3,19 +3,19 @@ package fladeoapp.controller;
 import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import fladeoapp.data.DataAkun;
+import fladeoapp.data.DataPerkiraan;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.swing.table.DefaultTableModel;
 
-public class DataAkunController implements Serializable{
+public class DataPerkiraanController implements Serializable{
     private static final long serialVersionUID = 1L;
     
     private EntityManagerFactory emf=null;
     
-    public DataAkunController(EntityManagerFactory emf){
+    public DataPerkiraanController(EntityManagerFactory emf){
         this.emf=emf;
     }
     
@@ -23,7 +23,7 @@ public class DataAkunController implements Serializable{
         return emf.createEntityManager();
     }
     
-    public void save(DataAkun dataAkun){
+    public void save(DataPerkiraan dataAkun){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
@@ -34,7 +34,7 @@ public class DataAkunController implements Serializable{
         }
     }
     
-    public void update(DataAkun dataAkun){
+    public void update(DataPerkiraan dataAkun){
         EntityManager em = getEntityManager();
         try{
             em.getTransaction().begin();
@@ -45,22 +45,22 @@ public class DataAkunController implements Serializable{
     
     public void delete(String kode){
         EntityManager em = getEntityManager();
-        DataAkun akun;
+        DataPerkiraan perkiraan;
         try{
-            akun=em.getReference(DataAkun.class, kode);
-            akun.getKdAkun();
+            perkiraan=em.getReference(DataPerkiraan.class, kode);
+            perkiraan.getKdPerkiraan();
             em.getTransaction().begin();
-            em.remove(akun);
+            em.remove(perkiraan);
             em.getTransaction().commit();
         }catch(Exception ex){
             ex.printStackTrace();
         }
     }
     
-    public DataAkun findDataAkun(String nama){
+    public DataPerkiraan findDataPerkiraan(String nama){
         EntityManager em=getEntityManager();
         try{
-            return em.find(DataAkun.class, nama);
+            return em.find(DataPerkiraan.class, nama);
         }finally{}
     }
     
@@ -69,12 +69,12 @@ public class DataAkunController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createQuery("SELECT da FROM DataAkun da");
-            List<DataAkun> listAkun = q.getResultList();
-            for(DataAkun akun : listAkun){
+            Query q = em.createQuery("SELECT da FROM DataPerkiraan da");
+            List<DataPerkiraan> listAkun = q.getResultList();
+            for(DataPerkiraan perkiraan : listAkun){
                 Object[] obj = new Object[2];
-                obj[0] = akun.getKdAkun();
-                obj[1] = akun.getNmAkun();
+                obj[0] = perkiraan.getKdPerkiraan();
+                obj[1] = perkiraan.getNmPerkiraan();
                 model.addRow(obj);
             }
         } catch (Exception e) {
@@ -88,13 +88,13 @@ public class DataAkunController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createQuery("SELECT da FROM DataAkun da WHERE da.kdAkun LIKE :cari OR da.nmAkun LIKE :cari");
+            Query q = em.createQuery("SELECT da FROM DataPerkiraan da WHERE da.kdAkun LIKE :cari OR da.nmAkun LIKE :cari");
             q.setParameter("cari", "%"+cari+"%");
-            List<DataAkun> listAkun = q.getResultList();
-            for(DataAkun akun : listAkun){
+            List<DataPerkiraan> listAkun = q.getResultList();
+            for(DataPerkiraan perkiraan : listAkun){
                 Object[] obj = new Object[2];
-                obj[0] = akun.getKdAkun();
-                obj[1] = akun.getNmAkun();
+                obj[0] = perkiraan.getKdPerkiraan();
+                obj[1] = perkiraan.getNmPerkiraan();
                 model.addRow(obj);
             }
         } catch (Exception e) {
@@ -108,12 +108,12 @@ public class DataAkunController implements Serializable{
         EntityManager em=null;
         try{
             em=getEntityManager();
-            Query q=em.createQuery("SELECT d FROM DataAkun d ORDER BY d.kdAkun DESC");
+            Query q=em.createQuery("SELECT d FROM DataPerkiraan d ORDER BY d.kdAkun DESC");
             q.setMaxResults(1);
-            DataAkun dataAkun=(DataAkun) q.getSingleResult();
+            DataPerkiraan dataPerkiraan=(DataPerkiraan) q.getSingleResult();
             if(q!=null){
                 DecimalFormat formatnomor = new DecimalFormat("AKUN-000");
-                String nomorurut = dataAkun.getKdAkun().substring(5);
+                String nomorurut = dataPerkiraan.getKdPerkiraan().substring(5);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
         }catch(NoResultException ex){}

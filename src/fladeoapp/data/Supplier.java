@@ -17,18 +17,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 0085
+ * @author Candi-PC
  */
 @Entity
 @Table(name = "supplier")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s")
-    , @NamedQuery(name = "Supplier.findByKdSupplier", query = "SELECT s FROM Supplier s WHERE s.kdSupplier = :kdSupplier")
-    , @NamedQuery(name = "Supplier.findByNmSupplier", query = "SELECT s FROM Supplier s WHERE s.nmSupplier = :nmSupplier")
-    , @NamedQuery(name = "Supplier.findByAlamat", query = "SELECT s FROM Supplier s WHERE s.alamat = :alamat")
-    , @NamedQuery(name = "Supplier.findByTelepon", query = "SELECT s FROM Supplier s WHERE s.telepon = :telepon")
-    , @NamedQuery(name = "Supplier.findByKota", query = "SELECT s FROM Supplier s WHERE s.kota = :kota")})
+    @NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s"),
+    @NamedQuery(name = "Supplier.findByKdSupplier", query = "SELECT s FROM Supplier s WHERE s.kdSupplier = :kdSupplier"),
+    @NamedQuery(name = "Supplier.findByNmSupplier", query = "SELECT s FROM Supplier s WHERE s.nmSupplier = :nmSupplier"),
+    @NamedQuery(name = "Supplier.findByAlamat", query = "SELECT s FROM Supplier s WHERE s.alamat = :alamat"),
+    @NamedQuery(name = "Supplier.findByTelepon", query = "SELECT s FROM Supplier s WHERE s.telepon = :telepon"),
+    @NamedQuery(name = "Supplier.findByKota", query = "SELECT s FROM Supplier s WHERE s.kota = :kota")})
 public class Supplier implements Serializable {
 
     private static final long serialVersionUID = 1L;
