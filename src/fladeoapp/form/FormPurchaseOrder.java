@@ -34,7 +34,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
         model.addColumn("Supplier");
         model.addColumn("Total Qty");
         model.addColumn("Username");
-        tablePO.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tablePO.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
         userLogin = user;
     }
@@ -149,7 +149,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat Purchase Order");
+        jLabel1.setText("Form Purchase Order");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -276,7 +276,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
                 .addContainerGap())
         );
 
-        tablePO.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablePO.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tablePO.setForeground(new java.awt.Color(51, 51, 51));
         tablePO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -291,7 +291,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari Data");
+        jLabel6.setText("Cari ");
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));

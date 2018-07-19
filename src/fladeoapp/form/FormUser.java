@@ -29,7 +29,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         model.addColumn("Nama");
         model.addColumn("Hak Akses");
         model.addColumn("Password");
-        tableUser.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tableUser.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         hakAkses = userLogin.getHakAkses();
         tidakAktif();
     }
@@ -128,7 +128,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat User Baru");
+        jLabel1.setText("Form User");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -146,9 +146,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -164,8 +162,9 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(661, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +192,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        tableUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableUser.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableUser.setForeground(new java.awt.Color(51, 51, 51));
         tableUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -215,7 +214,6 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
-        txtCari.setText("Cari User");
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCariKeyPressed(evt);

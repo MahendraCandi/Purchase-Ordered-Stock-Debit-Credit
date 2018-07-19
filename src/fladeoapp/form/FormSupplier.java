@@ -150,7 +150,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buat Supplier Baru");
+        jLabel1.setText("Form Supplier");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 

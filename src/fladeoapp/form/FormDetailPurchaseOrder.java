@@ -130,6 +130,7 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         model.addColumn("Kode Barang");
         model.addColumn("Jenis Barang");
         model.addColumn("Size");
+        model.addColumn("Warna");
         model.addColumn("Harga Beli");
         model.addColumn("Harga Jual");
         model.addColumn("Kode Supplier");
