@@ -101,9 +101,9 @@ public class PurchaseOrderController implements Serializable{
         return listPO;
     }
     
-    public List<PurchaseOrder> findAllPONotExistInTerimaBarang(){
+    public List<Object[]> findAllPONotExistInTerimaBarang(){
         EntityManager em = getEntityManager();
-        List<PurchaseOrder> list = new ArrayList<>();
+        List<Object[]> list = new ArrayList<>();
         try {
             Query q = em.createNativeQuery("SELECT * \n" +
                 "FROM purchase_order po\n" +

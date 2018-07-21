@@ -42,12 +42,12 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     
     int qty=0, totalQty=0;
     
-    boolean kembaliPenerimaBarang = false;
+    boolean tombolKembali;
     
     /**
      * Creates new form FormDetailPurchaseOrder
      */
-    public FormDetailPurchaseOrder(User user, PurchaseOrder purchaseOrder) {
+    public FormDetailPurchaseOrder(User user, PurchaseOrder purchaseOrder, boolean kembali) {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -57,12 +57,13 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         jdcTglKirim.setDateFormatString("dd MMMM yyyy");
         dataComboBoxSupplier();
         tableDetailBarang();
+        tidakAktif();
         validasiPO();
         //barang dialog
         columnBarang();
         barangDialog.setLocationRelativeTo(null);
         seleksiTableBarang();
-        tidakAktif();
+        tombolKembali = kembali;
     }
     
     private void tidakAktif(){
@@ -72,6 +73,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
             txtDKdSupplier.setEnabled(false);
             txtDHrgbeli.setEnabled(false);
             txtDHrgJual.setEnabled(false);
+            btnTambah.setEnabled(false);
+            btnHapusDetail.setEnabled(false);
     }
     
     private void validasiPO(){
@@ -80,6 +83,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
             txtNoPO.setText(poCont.nomorOtomatis());
             txtTglBuat.setText(sdf.format(new Date()));
             getTglKirim();
+            btnTambah.setEnabled(true);
+            btnHapusDetail.setEnabled(true);
         }else{
             txtTitleDetailPO.setText("Detail PO");
             txtNoPO.setText(poSession.getNoPO());
@@ -156,8 +161,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
                 int baris=tableBarangDialog.getSelectedRow();       
                 if(baris != -1){                        
                     cmbDKdBarang.setSelectedItem(tableBarangDialog.getValueAt(baris, 0));
-                    txtDHrgbeli.setText(tableBarangDialog.getValueAt(baris, 3).toString());
-                    txtDHrgJual.setText(tableBarangDialog.getValueAt(baris, 4).toString());
+                    txtDHrgbeli.setText(tableBarangDialog.getValueAt(baris, 4).toString());
+                    txtDHrgJual.setText(tableBarangDialog.getValueAt(baris, 5).toString());
                 }
             }
         });
@@ -626,18 +631,20 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-        if(kembaliPenerimaBarang == true){
+        if(tombolKembali == true){
             FormPenerimaanBarang fpb = new FormPenerimaanBarang(userLogin);
             JDesktopPane desktopPane = getDesktopPane();
             desktopPane.add(fpb);
             fpb.setVisible(true);
             this.dispose();
+        }else{
+            FormPurchaseOrder formPO = new FormPurchaseOrder(userLogin);
+            JDesktopPane desktopPane = getDesktopPane();
+            desktopPane.add(formPO);
+            formPO.setVisible(true);
+            this.dispose();
         }
-        FormPurchaseOrder formPO = new FormPurchaseOrder(userLogin);
-        JDesktopPane desktopPane = getDesktopPane();
-        desktopPane.add(formPO);
-        formPO.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed

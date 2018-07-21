@@ -30,6 +30,8 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
     
     DefaultTableModel model;
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
+    
+    boolean tombolKembali;
     /**
      * Creates new form FormPenerimaanBarang
      */
@@ -88,10 +90,10 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
     }
     
     private void comboBoxPO(){
-        List<PurchaseOrder> listPO = poCont.findAllPONotExistInTerimaBarang();
-        List<String> list = new ArrayList<>();
-        for (PurchaseOrder po : listPO) {
-            list.add(po.getNoPO());
+        List<Object[]> listPO = poCont.findAllPONotExistInTerimaBarang();
+        List<Object> list = new ArrayList<>();
+        for (Object[] po : listPO) {
+            list.add(po[0]);
         }
         cmbNoPo.setModel(new DefaultComboBoxModel(list.toArray()));
     }
@@ -266,8 +268,9 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
         if(baris == -1){
             JOptionPane.showMessageDialog(null, "Tidak ada data yang dipilih!");
         }else{
-            purchaseOrder = poCont.findPurchaseOrder(tablePO.getValueAt(baris, 3).toString());
-            FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, purchaseOrder);
+            tombolKembali = true;
+            purchaseOrder = poCont.findPurchaseOrder(tablePO.getValueAt(baris, 2).toString());
+            FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, purchaseOrder, tombolKembali);
             JDesktopPane desktopPane = getDesktopPane();
             desktopPane.add(formDetail);
             formDetail.setVisible(true);

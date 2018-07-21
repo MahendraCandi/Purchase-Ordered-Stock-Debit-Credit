@@ -18,7 +18,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
     PurchaseOrderController poCont = new PurchaseOrderController(FladeoApp.emf);
     User userLogin = new User();
     DefaultTableModel model;
-    
+    boolean tombolKembali = false;
     
     /**
      * Creates new form FormPurchaseOrder
@@ -341,7 +341,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
 
     private void btnBuatPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuatPOActionPerformed
         po = null;
-        FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, po);
+        FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, po, tombolKembali);
         JDesktopPane desktopPane = getDesktopPane();
         desktopPane.add(formDetail);
         formDetail.setVisible(true);
@@ -350,7 +350,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
 
     private void btnDetailPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailPOActionPerformed
         po = poCont.findPurchaseOrder(txtNoPO.getText());
-        FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, po);
+        FormDetailPurchaseOrder formDetail = new FormDetailPurchaseOrder(userLogin, po, tombolKembali);
         JDesktopPane desktopPane = getDesktopPane();
         desktopPane.add(formDetail);
         formDetail.setVisible(true);
