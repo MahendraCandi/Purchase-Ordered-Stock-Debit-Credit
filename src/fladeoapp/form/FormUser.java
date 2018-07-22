@@ -16,6 +16,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
     User user = new User();
     DefaultTableModel model;
     String hakAkses;
+    FormUtama formUtama = FormUtama.staticUtama;
     
     /**
      * Creates new form FormUser
@@ -32,6 +33,14 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         tableUser.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         hakAkses = userLogin.getHakAkses();
         tidakAktif();
+        formUtama.buttonOff();
+        formUtama.getTambahBtn().setEnabled(true);
+        panjangKarakter();
+    }
+    
+    private void panjangKarakter(){
+        txtNama.setDocument(new JTextFieldLimit((50)));
+        txtPassword.setDocument(new JTextFieldLimit((10)));
     }
     
     private void tidakAktif(){
@@ -285,6 +294,8 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         bersih();
         txtNama.requestFocus();
         seleksiBaris();
+        formUtama.getSimpanBtn().setEnabled(true);
+        formUtama.getDeleteBtn().setEnabled(true);
     }
 
     @Override

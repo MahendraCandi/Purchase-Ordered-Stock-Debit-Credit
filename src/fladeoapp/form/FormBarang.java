@@ -34,6 +34,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     SupplierController supCont = new SupplierController(FladeoApp.emf);
     DefaultTableModel model;
     Image imageBarang;
+    FormUtama formUtama = FormUtama.staticUtama;
     /**
      * Creates new form FormBarang
      */
@@ -53,6 +54,15 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         model.addColumn("Kota");
         tableBarang.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
+        formUtama.buttonOff();
+        formUtama.getTambahBtn().setEnabled(true);
+        panjangKarakter();
+    }
+    
+    private void panjangKarakter(){
+        txtWarna.setDocument(new JTextFieldLimit((20)));
+        txtBeli.setDocument(new JTextFieldLimit((8)));
+        txtJual.setDocument(new JTextFieldLimit((8)));
     }
     
     private void tidakAktif(){
@@ -236,6 +246,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
         txtBeli.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtBeli.setForeground(new java.awt.Color(51, 51, 51));
+        txtBeli.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBeliKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -243,6 +258,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
         txtJual.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtJual.setForeground(new java.awt.Color(51, 51, 51));
+        txtJual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtJualKeyTyped(evt);
+            }
+        });
 
         cmbSupplier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -524,6 +544,22 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
+    private void txtBeliKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBeliKeyTyped
+        char c=evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBeliKeyTyped
+
+    private void txtJualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtJualKeyTyped
+        char c=evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtJualKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFoto;
@@ -570,6 +606,8 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         bersih();
         seleksiBaris();
         cmbSupplierActionPerformed(null);
+        formUtama.getSimpanBtn().setEnabled(true);
+        formUtama.getDeleteBtn().setEnabled(true);
     }
 
     @Override

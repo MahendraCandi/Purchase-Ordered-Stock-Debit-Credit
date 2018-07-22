@@ -5,12 +5,15 @@ import fladeoapp.data.PurchaseOrder;
 import fladeoapp.data.User;
 import fladeoapp.FladeoApp;
 import fladeoapp.controller.BarangController;
+import fladeoapp.controller.CetakLaporanController;
 import fladeoapp.controller.DetailPurchaseOrderController;
 import fladeoapp.controller.SupplierController;
 import fladeoapp.data.Barang;
 import fladeoapp.data.Supplier;
 import fladeoapp.data.DetailPurchaseOrder;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +32,7 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     DetailPurchaseOrderController detailCont = new DetailPurchaseOrderController(FladeoApp.emf);
     BarangController bCont = new BarangController(FladeoApp.emf);
     SupplierController sCont = new SupplierController(FladeoApp.emf);
+    CetakLaporanController cetakCont = new CetakLaporanController(FladeoApp.emf);
     
     User userLogin = new User();
     PurchaseOrder poSession = new PurchaseOrder();
@@ -39,10 +43,9 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
     DefaultTableModel model; // tableBarang
     DefaultTableModel modelDetail; // tableDetail
-    
     int qty=0, totalQty=0;
-    
     boolean tombolKembali;
+    FormUtama formUtama = FormUtama.staticUtama;
     
     /**
      * Creates new form FormDetailPurchaseOrder
@@ -64,6 +67,11 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         barangDialog.setLocationRelativeTo(null);
         seleksiTableBarang();
         tombolKembali = kembali;
+        panjangKarakter();
+    }
+    
+    private void panjangKarakter(){
+        txtDQty.setDocument(new JTextFieldLimit((4)));
     }
     
     private void tidakAktif(){
@@ -79,14 +87,17 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
     
     private void validasiPO(){
         if(poSession == null){
-            txtTitleDetailPO.setText("Buat PO Baru");
+            txtTitleDetailPO.setText("Tambah Purchase Order");
             txtNoPO.setText(poCont.nomorOtomatis());
             txtTglBuat.setText(sdf.format(new Date()));
             getTglKirim();
             btnTambah.setEnabled(true);
             btnHapusDetail.setEnabled(true);
+            formUtama.buttonOff();
+            formUtama.getSimpanBtn().setEnabled(true);
+            btnCetakPO.setVisible(false);
         }else{
-            txtTitleDetailPO.setText("Detail PO");
+            txtTitleDetailPO.setText("Detail Purchase Order");
             txtNoPO.setText(poSession.getNoPO());
             dataNamaSupplier();
             txtTglBuat.setText(sdf.format(poSession.getTglPO()));
@@ -95,6 +106,8 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
             totalQty();
             cmbSupplier.setEnabled(false);
             jdcTglKirim.setEnabled(false);
+            formUtama.buttonOff();
+            btnCetakPO.setVisible(true);
         }
     }
     
@@ -259,6 +272,7 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         jLabel5 = new javax.swing.JLabel();
         cmbSupplier = new javax.swing.JComboBox<>();
         btnKembali = new javax.swing.JButton();
+        btnCetakPO = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDetailBarang = new javax.swing.JTable();
         btnTambah = new javax.swing.JButton();
@@ -291,6 +305,11 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
 
         txtDQty.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtDQty.setForeground(new java.awt.Color(51, 51, 51));
+        txtDQty.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDQtyKeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -483,6 +502,15 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
             }
         });
 
+        btnCetakPO.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        btnCetakPO.setText("Cetak Purchase Order");
+        btnCetakPO.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCetakPO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCetakPOActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -512,8 +540,11 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jdcTglKirim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKembali))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnKembali)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCetakPO)))
+                .addContainerGap(289, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,7 +554,9 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnKembali)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnKembali)
+                    .addComponent(btnCetakPO))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -707,10 +740,23 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
         totalQty();
     }//GEN-LAST:event_btnHapusDetailActionPerformed
 
+    private void txtDQtyKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDQtyKeyTyped
+        char c=evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDQtyKeyTyped
+
+    private void btnCetakPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakPOActionPerformed
+        cetakCont.cetakPurchaseOrder(txtNoPO.getText());
+    }//GEN-LAST:event_btnCetakPOActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton PilihBarang;
     private javax.swing.JDialog barangDialog;
+    private javax.swing.JButton btnCetakPO;
     private javax.swing.JButton btnHapusDetail;
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnTambah;

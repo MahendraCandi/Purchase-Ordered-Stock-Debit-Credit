@@ -42,7 +42,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         txtLogin.setForeground((new Color(204, 204, 204)));
-        txtLogin.setText("Username");
+        txtLogin.setText("pch1");
     }
     
     public void password(){
@@ -54,7 +54,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         txtLogin.setForeground((new Color(204, 204, 204)));
-        txtPassword.setText("Password");
+        txtPassword.setText("1234");
     }
     
     private void login(){
@@ -78,8 +78,6 @@ public class FormLogin extends javax.swing.JFrame {
                     userLogin.setNama(nama);
                     
                     FormUtama formUtama = new FormUtama(userLogin);
-                    System.out.println(formUtama.getUsername());
-                    
                     JOptionPane.showMessageDialog(this, "Selamat datang, "+nama+"","Welcome", JOptionPane.INFORMATION_MESSAGE);
                     if(hakAkses.equalsIgnoreCase("FINANCE")){
                         formUtama.getMasterItemAkun().setVisible(true);

@@ -4,6 +4,7 @@ import fladeoapp.data.PenerimaanBarang;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -87,6 +88,32 @@ public class PenerimaanBarangController implements Serializable{
         return list;
     }
     
+    public List<Object[]> findAllPenerimaanBarang(Date tgl1, Date tgl2){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT \n" +
+                "pb.No_Tanda_Terima, \n" +
+                "pb.Tgl_Terima_Barang,	\n" +
+                "pb.No_PO, \n" +
+                "po.Tgl_PO,\n" +
+                "po.Tgl_Kirim,\n" +
+                "s.Nm_Supplier,\n" +
+                "po.Total_Qty,\n" +
+                "po.Username\n" +
+                "FROM penerimaan_barang pb\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier "
+                    + "WHERE pb.Tgl_Terima_Barang BETWEEN ?tgl1 AND ?tgl2");
+            q.setParameter("tgl1", tgl1);
+            q.setParameter("tgl2", tgl2);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public List<Object[]> searchPenerimaanBarang(String cari){
         EntityManager em = getEntityManager();
         List<Object[]> list = new ArrayList<>();
@@ -114,6 +141,22 @@ public class PenerimaanBarangController implements Serializable{
             e.printStackTrace();
         }
         return list;
+    }
+    
+    public Object[] firstDateLastDate(){
+        EntityManager em=getEntityManager();
+        Object[] obj=new Object[2];
+        try{
+            Query q = em.createQuery("SELECT MIN(pb.tglTerimaBarang) AS MinTgl, MAX(pb.tglTerimaBarang) AS MaxTgl FROM PenerimaanBarang pb");
+            List<Object[]> list = q.getResultList();
+            for(Object[] o : list){
+                obj[0] = o[0];
+                obj[1] = o[1];
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return obj;
     }
     
     public String nomorOtomatis(){

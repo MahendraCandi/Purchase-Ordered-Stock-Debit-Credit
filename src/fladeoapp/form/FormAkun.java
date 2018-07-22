@@ -17,6 +17,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
     DataPerkiraanController perkiraanCont = new DataPerkiraanController(FladeoApp.emf);
     DefaultTableModel model;
     
+    FormUtama formUtama = FormUtama.staticUtama;
     /**
      * Creates new form FormAkun
      */
@@ -25,9 +26,9 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
         model=new DefaultTableModel();
-        model.addColumn("Kode Akun");
-        model.addColumn("Nama Akun");
-        tableAkun.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        model.addColumn("Kode Perkiraan");
+        model.addColumn("Nama Perkiraan");
+        tableAkun.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
     }
     
@@ -35,6 +36,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         txtKdAkun.setEnabled(false);
         txtNamaAkun.setEnabled(false);
         txtCari.setEnabled(false);
+        formUtama.getTambahBtn().setEnabled(true);
     }
     
     private void showTable(){
@@ -93,7 +95,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nama Akun");
+        jLabel3.setText("Nama Perkiraan");
 
         txtNamaAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtNamaAkun.setForeground(new java.awt.Color(51, 51, 51));
@@ -106,7 +108,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Kode Akun");
+        jLabel2.setText("Kode Perkiraan");
 
         txtKdAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtKdAkun.setForeground(new java.awt.Color(51, 51, 51));
@@ -118,18 +120,18 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(661, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(633, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +151,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
-        tableAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableAkun.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tableAkun.setForeground(new java.awt.Color(51, 51, 51));
         tableAkun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,11 +169,10 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(51, 51, 51));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Cari Akun");
+        jLabel6.setText("Cari");
 
         txtCari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtCari.setForeground(new java.awt.Color(51, 51, 51));
-        txtCari.setText("Cari Akun");
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCariKeyPressed(evt);
@@ -239,6 +240,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         bersih();
         txtNamaAkun.requestFocus();
         seleksiBaris();
+        formUtama.buttonOn();
     }
 
     @Override

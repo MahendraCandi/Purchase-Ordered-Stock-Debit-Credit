@@ -19,6 +19,7 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
     User userLogin = new User();
     DefaultTableModel model;
     boolean tombolKembali = false;
+    FormUtama formUtama = FormUtama.staticUtama;
     
     /**
      * Creates new form FormPurchaseOrder
@@ -37,6 +38,8 @@ public class FormPurchaseOrder extends javax.swing.JInternalFrame implements Nav
         tablePO.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
         userLogin = user;
+        formUtama.buttonOff();
+        formUtama.getTambahBtn().setEnabled(true);
     }
     
     private void tidakAktif(){

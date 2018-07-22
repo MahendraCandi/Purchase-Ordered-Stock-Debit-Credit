@@ -15,6 +15,7 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
     Supplier supplier = new Supplier();
     SupplierController supCont = new SupplierController(FladeoApp.emf);
     DefaultTableModel model;
+    FormUtama formUtama = FormUtama.staticUtama;
     /**
      * Creates new form FormSupplier
      */
@@ -30,8 +31,21 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         model.addColumn("Alamat");
         tableSupplier.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
+        formUtama.buttonOff();
+        formUtama.getTambahBtn().setEnabled(true);
+        panjangKarakter();
     }
 
+    private void panjangKarakter(){
+        txtKode.setDocument(new JTextFieldLimit((3)));
+        txtNmSupplier.setDocument(new JTextFieldLimit((50)));
+        txtAlamat.setDocument(new JTextFieldLimit((100)));
+        txtTelp.setDocument(new JTextFieldLimit((20)));
+        txtKota.setDocument(new JTextFieldLimit((20)));
+        
+        
+    }
+    
     private void tidakAktif(){
         txtKode.setEnabled(false);
         txtNmSupplier.setEnabled(false);
@@ -140,6 +154,11 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
         txtTelp.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTelp.setForeground(new java.awt.Color(51, 51, 51));
+        txtTelp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelpKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,8 +192,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         txtKode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtKode.setForeground(new java.awt.Color(51, 51, 51));
         txtKode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtKodeKeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKodeKeyTyped(evt);
             }
         });
 
@@ -197,8 +216,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(148, 148, 148)
+                                .addComponent(txtKode, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(188, 188, 188)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,15 +326,20 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
-    private void txtKodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeKeyPressed
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-           if(!txtKode.getText().isEmpty()){
-               validasiKodeSupplier();
-           }else{
-               txtNmSupplier.requestFocus();
-           }
+    private void txtTelpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelpKeyTyped
+        char c=evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)){
+            getToolkit().beep();
+            evt.consume();
         }
-    }//GEN-LAST:event_txtKodeKeyPressed
+    }//GEN-LAST:event_txtTelpKeyTyped
+
+    private void txtKodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKodeKeyTyped
+        char keyChar = evt.getKeyChar();
+        if (Character.isLowerCase(keyChar)) {
+          evt.setKeyChar(Character.toUpperCase(keyChar));
+        }
+    }//GEN-LAST:event_txtKodeKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -350,6 +374,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         bersih();
         txtKode.requestFocus();
         seleksiBaris();
+        formUtama.getSimpanBtn().setEnabled(true);
+        formUtama.getDeleteBtn().setEnabled(true);
     }
 
     @Override

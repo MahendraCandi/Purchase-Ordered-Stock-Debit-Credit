@@ -14,10 +14,11 @@ public class FormUtama extends javax.swing.JFrame {
     private String hakAkses;
     private String username;
     private User userLogin = new User();
+    public String tampilLaporan = "Other";
     
     int xx;
     int xy;
-    
+    public static FormUtama staticUtama;
     /**
      * Creates new form FormUtama
      */
@@ -34,6 +35,21 @@ public class FormUtama extends javax.swing.JFrame {
         txtUsername.setText(user.getNama());
         txtHakAkses.setText(user.getHakAkses());
         userLogin = user;
+        buttonOff();
+        staticUtama = this;
+    }
+    
+    
+    public void buttonOn(){
+        getTambahBtn().setEnabled(true);
+        getDeleteBtn().setEnabled(true);
+        getSimpanBtn().setEnabled(true);
+    }
+    
+    public void buttonOff(){
+        getTambahBtn().setEnabled(false);
+        getDeleteBtn().setEnabled(false);
+        getSimpanBtn().setEnabled(false);
     }
 
     /**
@@ -311,6 +327,11 @@ public class FormUtama extends javax.swing.JFrame {
         MenuLaporan.add(lapItemKas);
 
         lapItemTerimaBarang.setText("Laporan Penerimaan Barang");
+        lapItemTerimaBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lapItemTerimaBarangActionPerformed(evt);
+            }
+        });
         MenuLaporan.add(lapItemTerimaBarang);
 
         jMenuBar1.add(MenuLaporan);
@@ -415,6 +436,15 @@ public class FormUtama extends javax.swing.JFrame {
        FormPenerimaanBarang fpb = new FormPenerimaanBarang(userLogin);
        showForm(fpb);
     }//GEN-LAST:event_transItemPBActionPerformed
+
+    private void lapItemTerimaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapItemTerimaBarangActionPerformed
+        String tampil = "PenerimaanBarang";
+        FormLaporan fl = new FormLaporan(tampil);
+        fl.getPanelOther().setVisible(false);
+        fl.getPanelPenerimaanBarang().setVisible(true);
+        showForm(fl);
+        
+    }//GEN-LAST:event_lapItemTerimaBarangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -611,6 +641,38 @@ public class FormUtama extends javax.swing.JFrame {
 
     public void setTransItemPembelian(javax.swing.JMenuItem transItemPembelian) {
         this.transItemPembelian = transItemPembelian;
+    }
+
+    public javax.swing.JButton getDeleteBtn() {
+        return deleteBtn;
+    }
+
+    public void setDeleteBtn(javax.swing.JButton deleteBtn) {
+        this.deleteBtn = deleteBtn;
+    }
+
+    public javax.swing.JButton getSimpanBtn() {
+        return simpanBtn;
+    }
+
+    public void setSimpanBtn(javax.swing.JButton simpanBtn) {
+        this.simpanBtn = simpanBtn;
+    }
+
+    public javax.swing.JButton getTambahBtn() {
+        return tambahBtn;
+    }
+
+    public void setTambahBtn(javax.swing.JButton tambahBtn) {
+        this.tambahBtn = tambahBtn;
+    }
+
+    public String getTampilLaporan() {
+        return tampilLaporan;
+    }
+
+    public void setTampilLaporan(String tampilLaporan) {
+        this.tampilLaporan = tampilLaporan;
     }
     
     

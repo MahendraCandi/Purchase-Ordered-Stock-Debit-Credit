@@ -20,8 +20,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
-    // BUAT BUTTON KEMBALI DI DETAIL PO, KEMBLI KE SINI
-    
     PenerimaanBarang terimaBarang = new PenerimaanBarang();
     PurchaseOrder purchaseOrder = new PurchaseOrder();
     User userLogin = new User();
@@ -32,6 +30,8 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
     
     boolean tombolKembali;
+    
+    FormUtama formUtama = FormUtama.staticUtama;
     /**
      * Creates new form FormPenerimaanBarang
      */
@@ -48,9 +48,12 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
         model.addColumn("Supplier");
         model.addColumn("Total Qty");
         model.addColumn("Username");
-        tablePO.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tablePO.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
         userLogin = user;
+        formUtama.buttonOff();
+        formUtama.getTambahBtn().setEnabled(true);
+        
     }
     
     private void tidakAktif(){
@@ -122,6 +125,8 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
         jLabel6 = new javax.swing.JLabel();
         txtCari = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         jPanel1.setBackground(new java.awt.Color(255, 118, 117));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -130,7 +135,7 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Penerimaan Barang");
+        jLabel1.setText("Form Penerimaan Barang");
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -205,7 +210,7 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
                 .addContainerGap())
         );
 
-        tablePO.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablePO.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tablePO.setForeground(new java.awt.Color(51, 51, 51));
         tablePO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -309,7 +314,7 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
         cmbNoPo.setEnabled(true);
         btnDetailPO.setEnabled(true);
         bersih();
-        
+        formUtama.getSimpanBtn().setEnabled(true);
     }
 
     @Override
@@ -333,7 +338,7 @@ public class FormPenerimaanBarang extends javax.swing.JInternalFrame implements 
                 terimaBarang.setNoTandaTerima(txtNoTandaTerima.getText());
                 terimaBarang.setTglTerimaBarang(sdf.parse(txtTglTerima.getText()));
                 pbCont.save(terimaBarang);
-                JOptionPane.showMessageDialog(null, "Dasta berhasil disimpan!");
+                JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
                 bersih();
             } catch (Exception e) {
                 e.printStackTrace();
