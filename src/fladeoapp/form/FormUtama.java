@@ -310,6 +310,11 @@ public class FormUtama extends javax.swing.JFrame {
         transItemPembayaran.setBackground(new java.awt.Color(255, 255, 255));
         transItemPembayaran.setText("Pelunasan Pembayaran");
         transItemPembayaran.setOpaque(true);
+        transItemPembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transItemPembayaranActionPerformed(evt);
+            }
+        });
         MenuTransaksi.add(transItemPembayaran);
 
         transItemJurnal.setBackground(new java.awt.Color(255, 255, 255));
@@ -457,6 +462,11 @@ public class FormUtama extends javax.swing.JFrame {
         FormTransaksiPembelian ftb = new FormTransaksiPembelian();
         showForm(ftb);
     }//GEN-LAST:event_transItemPembelianActionPerformed
+
+    private void transItemPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemPembayaranActionPerformed
+        FormPembayaran fp = new FormPembayaran();
+        showForm(fp);
+    }//GEN-LAST:event_transItemPembayaranActionPerformed
 
     /**
      * @param args the command line arguments

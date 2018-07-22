@@ -63,7 +63,7 @@ public class PelunasanPembayaranController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="BYR-001";
+        String kode="Byr-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -71,11 +71,13 @@ public class PelunasanPembayaranController implements Serializable{
             q.setMaxResults(1);
             PelunasanPembayaran pelunasanPembayaran=(PelunasanPembayaran) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("BYR-000");
+                DecimalFormat formatnomor = new DecimalFormat("Byr-000");
                 String nomorurut = pelunasanPembayaran.getNoPembayaran().substring(4);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
-        }catch(NoResultException ex){}
+        }catch(NoResultException ex){
+            return kode;
+        }
         return kode;
     }
 }

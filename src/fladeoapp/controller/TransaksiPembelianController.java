@@ -76,6 +76,57 @@ public class TransaksiPembelianController implements Serializable{
         return list;
     }
     
+    // form pembayaran
+    public List<Object[]> findAllTransaksiBySupplier(String namaSupplier){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT tbl.No_Transaksi, tbl.No_Tanda_Terima, tbl.No_Invoice,  tbl.No_PO, tbl.Kd_Supplier, tbl.Nm_Supplier, tbl.Total_Transaksi \n" +
+                "FROM\n" +
+                "(\n" +
+                "SELECT tr.No_Transaksi, tr.No_Tanda_Terima, tr.No_Invoice,  pb.No_PO, po.Kd_Supplier, s.Nm_Supplier, tr.Total_Transaksi\n" +
+                "FROM transaksi_pembelian tr\n" +
+                "INNER JOIN penerimaan_barang pb ON tr.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier\n" +
+                "WHERE s.Nm_Supplier = ?namaSupplier\n" +
+                ") tbl\n" +
+                "WHERE NOT EXISTS (\n" +
+                "SELECT * FROM detail_pelunasan_pembayaran dt\n" +
+                "WHERE tbl.No_Transaksi = dt.No_Transaksi\n" +
+                ")");
+            q.setParameter("namaSupplier", namaSupplier);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    //form Pembayaran
+    public List<Object[]> findDetailTransaksiByNoTrans(String noTrans){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT tr.No_Transaksi, tr.No_Invoice, pb.No_Tanda_Terima, pb.Tgl_Terima_Barang, pb.No_PO, sp.Nm_Supplier, po.Tgl_PO, po.Tgl_Kirim, po.Total_Qty,\n" +
+                "(\n" +
+                "	SELECT SUM(dpo.Harga_Beli) \n" +
+                "    FROM detail_purchase_order dpo \n" +
+                "    WHERE po.No_PO = dpo.No_PO\n" +
+                ") totalBeli,  tr.Total_Transaksi\n" +
+                "FROM  transaksi_pembelian tr \n" +
+                "INNER JOIN penerimaan_barang pb ON tr.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier sp ON po.Kd_Supplier = sp.Kd_Supplier\n" +
+                "WHERE tr.No_Transaksi = ?noTrans");
+            q.setParameter("noTrans", noTrans);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public List<Object[]> searchTransaksiPembelian(String cari){
         EntityManager em = getEntityManager();
         List<Object[]> list = new ArrayList<>();

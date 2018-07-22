@@ -118,6 +118,9 @@
                 <Property name="text" type="java.lang.String" value="Pelunasan Pembayaran"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transItemPembayaranActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="transItemJurnal">
               <Properties>
