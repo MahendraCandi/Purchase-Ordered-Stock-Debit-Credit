@@ -42,7 +42,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         txtLogin.setForeground((new Color(204, 204, 204)));
-        txtLogin.setText("pch1");
+        txtLogin.setText("fnc1");
     }
     
     public void password(){

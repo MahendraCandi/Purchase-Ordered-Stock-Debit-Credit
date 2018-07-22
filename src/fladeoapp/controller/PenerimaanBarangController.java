@@ -159,6 +159,51 @@ public class PenerimaanBarangController implements Serializable{
         return obj;
     }
     
+    //form transaksi
+    public List<Object[]> findAllNomorNotExistInTransaksiPembelian(){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("SELECT * FROM penerimaan_barang pb\n" +
+                "WHERE NOT EXISTS (\n" +
+                "	SELECT * FROM transaksi_pembelian tp\n" +
+                "    WHERE pb.No_Tanda_Terima = tp.No_Tanda_Terima\n" +
+                ")");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    // form transaksi
+    public List<Object[]> findTotalPenerimaanBarang(String nomor){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT pb.No_Tanda_Terima, pb.Tgl_Terima_Barang, pb.No_PO, sp.Nm_Supplier, po.Tgl_PO, po.Tgl_Kirim, po.Total_Qty, \n" +
+                "(\n" +
+                "    SELECT SUM(dpo.Harga_Beli) \n" +
+                "    FROM detail_purchase_order dpo\n" +
+                "    WHERE po.No_PO = dpo.No_PO\n" +
+                ") totalBeli,\n" +
+                "(\n" +
+                "    SELECT SUM(dpo.Qty_Order * dpo.Harga_Beli) \n" +
+                "    FROM detail_purchase_order dpo\n" +
+                "    WHERE po.No_PO = dpo.No_PO\n" +
+                ") totalPerPO\n" +
+                "FROM penerimaan_barang pb\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier sp ON po.Kd_Supplier = sp.Kd_Supplier\n" +
+                "WHERE pb.No_Tanda_Terima = ?nomor");
+            q.setParameter("nomor", nomor);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public String nomorOtomatis(){
         String kode="00001";
         EntityManager em=null;

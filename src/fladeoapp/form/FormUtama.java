@@ -75,8 +75,8 @@ public class FormUtama extends javax.swing.JFrame {
         MenuMaster = new javax.swing.JMenu();
         masterItemSupplier = new javax.swing.JMenuItem();
         masterItemBarang = new javax.swing.JMenuItem();
-        masterItemUser = new javax.swing.JMenuItem();
         masterItemAkun = new javax.swing.JMenuItem();
+        masterItemUser = new javax.swing.JMenuItem();
         MenuTransaksi = new javax.swing.JMenu();
         transItemPO = new javax.swing.JMenuItem();
         transItemPB = new javax.swing.JMenuItem();
@@ -251,17 +251,6 @@ public class FormUtama extends javax.swing.JFrame {
         });
         MenuMaster.add(masterItemBarang);
 
-        masterItemUser.setBackground(new java.awt.Color(255, 255, 255));
-        masterItemUser.setText("Data User");
-        masterItemUser.setContentAreaFilled(false);
-        masterItemUser.setOpaque(true);
-        masterItemUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                masterItemUserActionPerformed(evt);
-            }
-        });
-        MenuMaster.add(masterItemUser);
-
         masterItemAkun.setBackground(new java.awt.Color(255, 255, 255));
         masterItemAkun.setText("Data Akun");
         masterItemAkun.setContentAreaFilled(false);
@@ -272,6 +261,17 @@ public class FormUtama extends javax.swing.JFrame {
             }
         });
         MenuMaster.add(masterItemAkun);
+
+        masterItemUser.setBackground(new java.awt.Color(255, 255, 255));
+        masterItemUser.setText("Data User");
+        masterItemUser.setContentAreaFilled(false);
+        masterItemUser.setOpaque(true);
+        masterItemUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                masterItemUserActionPerformed(evt);
+            }
+        });
+        MenuMaster.add(masterItemUser);
 
         jMenuBar1.add(MenuMaster);
 
@@ -300,6 +300,11 @@ public class FormUtama extends javax.swing.JFrame {
         transItemPembelian.setBackground(new java.awt.Color(255, 255, 255));
         transItemPembelian.setText("Transaksi Pembelian");
         transItemPembelian.setOpaque(true);
+        transItemPembelian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transItemPembelianActionPerformed(evt);
+            }
+        });
         MenuTransaksi.add(transItemPembelian);
 
         transItemPembayaran.setBackground(new java.awt.Color(255, 255, 255));
@@ -326,7 +331,9 @@ public class FormUtama extends javax.swing.JFrame {
         lapItemKas.setOpaque(true);
         MenuLaporan.add(lapItemKas);
 
+        lapItemTerimaBarang.setBackground(new java.awt.Color(255, 255, 255));
         lapItemTerimaBarang.setText("Laporan Penerimaan Barang");
+        lapItemTerimaBarang.setOpaque(true);
         lapItemTerimaBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lapItemTerimaBarangActionPerformed(evt);
@@ -418,7 +425,7 @@ public class FormUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuLogoutMouseClicked
 
     private void masterItemAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterItemAkunActionPerformed
-        FormAkun fa = new FormAkun();
+        FormPerkiraan fa = new FormPerkiraan();
         showForm(fa);
     }//GEN-LAST:event_masterItemAkunActionPerformed
 
@@ -445,6 +452,11 @@ public class FormUtama extends javax.swing.JFrame {
         showForm(fl);
         
     }//GEN-LAST:event_lapItemTerimaBarangActionPerformed
+
+    private void transItemPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemPembelianActionPerformed
+        FormTransaksiPembelian ftb = new FormTransaksiPembelian();
+        showForm(ftb);
+    }//GEN-LAST:event_transItemPembelianActionPerformed
 
     /**
      * @param args the command line arguments

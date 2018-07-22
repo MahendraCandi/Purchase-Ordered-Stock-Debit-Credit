@@ -3,6 +3,8 @@ package fladeoapp.controller;
 import fladeoapp.data.TransaksiPembelian;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -60,6 +62,34 @@ public class TransaksiPembelianController implements Serializable{
         try{
             return em.find(TransaksiPembelian.class, kode);
         }finally{}
+    }
+    
+    public List<TransaksiPembelian> findAllTransaksiPembelian(){
+        EntityManager em = getEntityManager();
+        List<TransaksiPembelian> list = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT tp FROM TransaksiPembelian tp");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public List<Object[]> searchTransaksiPembelian(String cari){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT tp FROM TransaksiPembelian tp "
+                    + "WHERE tp.noTransaksi LIKE :cari "
+                    + "OR tp.noInvoice LIKE :cari "
+                    + "OR tp.noTandaTerima LIKE :cari");
+            q.setParameter("cari", cari);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
     
     public String nomorOtomatis(){

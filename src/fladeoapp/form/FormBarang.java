@@ -649,15 +649,17 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     brg.setHrgJual(Double.parseDouble(txtJual.getText()));
                     brg.setKdSupplier(txtKdSupplier.getText());
                 
-                    ObjectOutputStream objectoutputstream=null;
-                    ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
-                    objectoutputstream=new ObjectOutputStream(outputstream);
-                    ImageIcon icon=new ImageIcon(imageBarang);
-                    objectoutputstream.writeObject(icon);
-                    objectoutputstream.flush();
-                    objectoutputstream.close();
-                    System.out.println(outputstream.size());
-                    brg.setFoto(outputstream.toByteArray());
+                    if(imageBarang!=null){
+                        ObjectOutputStream objectoutputstream=null;
+                        ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
+                        objectoutputstream=new ObjectOutputStream(outputstream);
+                        ImageIcon icon=new ImageIcon(imageBarang);
+                        objectoutputstream.writeObject(icon);
+                        objectoutputstream.flush();
+                        objectoutputstream.close();
+                        brg.setFoto(outputstream.toByteArray());
+                    }
+                    
                     
                     brgCont.save(brg);
                 }catch(Exception ex){
@@ -674,15 +676,16 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     barang.setHrgJual(Double.parseDouble(txtJual.getText()));
                     barang.setKdSupplier(txtKdSupplier.getText());
                     
-                    ObjectOutputStream objectoutputstream=null;
-                    ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
-                    objectoutputstream=new ObjectOutputStream(outputstream);
-                    ImageIcon icon=new ImageIcon(imageBarang);
-                    objectoutputstream.writeObject(icon);
-                    objectoutputstream.flush();
-                    objectoutputstream.close();
-                    System.out.println(outputstream.size());
-                    barang.setFoto(outputstream.toByteArray());
+                    if(imageBarang!=null){
+                        ObjectOutputStream objectoutputstream=null;
+                        ByteArrayOutputStream outputstream=new ByteArrayOutputStream();
+                        objectoutputstream=new ObjectOutputStream(outputstream);
+                        ImageIcon icon=new ImageIcon(imageBarang);
+                        objectoutputstream.writeObject(icon);
+                        objectoutputstream.flush();
+                        objectoutputstream.close();
+                        barang.setFoto(outputstream.toByteArray());
+                    }
                 
                     brgCont.update(barang);
                 }catch(Exception ex){

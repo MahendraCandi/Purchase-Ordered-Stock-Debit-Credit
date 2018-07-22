@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFormInterface{
+public class FormPerkiraan extends javax.swing.JInternalFrame implements NavigatorFormInterface{
 
     DataPerkiraan dataAkun = new DataPerkiraan();
     DataPerkiraanController perkiraanCont = new DataPerkiraanController(FladeoApp.emf);
@@ -21,7 +21,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
     /**
      * Creates new form FormAkun
      */
-    public FormAkun() {
+    public FormPerkiraan() {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -30,6 +30,12 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         model.addColumn("Nama Perkiraan");
         tableAkun.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tidakAktif();
+        panjangKarakter();
+    }
+    
+    private void panjangKarakter(){
+        txtKdAkun.setDocument(new JTextFieldLimit((8)));
+        txtNamaAkun.setDocument(new JTextFieldLimit((20)));
     }
     
     private void tidakAktif(){
@@ -112,6 +118,11 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
 
         txtKdAkun.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtKdAkun.setForeground(new java.awt.Color(51, 51, 51));
+        txtKdAkun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtKdAkunKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,7 +172,7 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
                 {null, null}
             },
             new String [] {
-                "Kode Akun", "Nama Akun"
+                "Kode Perkiraan", "Nama Perkiraan"
             }
         ));
         jScrollPane1.setViewportView(tableAkun);
@@ -217,6 +228,14 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
+    private void txtKdAkunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKdAkunKeyTyped
+        char c=evt.getKeyChar();
+        if(!(Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || c==KeyEvent.VK_DELETE)){
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtKdAkunKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -238,7 +257,6 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         txtNamaAkun.setEnabled(true);
         txtCari.setEnabled(true);
         bersih();
-        txtNamaAkun.requestFocus();
         seleksiBaris();
         formUtama.buttonOn();
     }
@@ -248,12 +266,13 @@ public class FormAkun extends javax.swing.JInternalFrame implements NavigatorFor
         txtNamaAkun.setText("");
         txtCari.setText("");
         txtKdAkun.setText("");
+        txtKdAkun.requestFocus();
         showTable();
     }
 
     @Override
     public void simpan() {
-        if(txtNamaAkun.getText().equalsIgnoreCase("")){
+        if(txtNamaAkun.getText().equalsIgnoreCase("") || txtKdAkun.getText().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(null, "Masukan nama perkiraan!");
         }else{
             dataAkun=perkiraanCont.findDataPerkiraan(txtKdAkun.getText());
