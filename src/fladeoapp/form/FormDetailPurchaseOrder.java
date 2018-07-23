@@ -837,6 +837,9 @@ public class FormDetailPurchaseOrder extends javax.swing.JInternalFrame implemen
                     poCont.save(poSession);
                     
                     JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                    if(JOptionPane.showConfirmDialog(null, "Cetak PO?", "Konfirmasi", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                        cetakCont.cetakPurchaseOrder(txtNoPO.getText());
+                    }
                     FormPurchaseOrder formPO = new FormPurchaseOrder(userLogin);
                     JDesktopPane desktopPane = getDesktopPane();
                     desktopPane.add(formPO);

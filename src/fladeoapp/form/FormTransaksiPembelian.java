@@ -599,7 +599,6 @@ public class FormTransaksiPembelian extends javax.swing.JInternalFrame implement
         txtTotalTrans.setText("");
         txtCari.setText("");
         comboBoxTandaTerima();
-        cmbTandaTerima.setSelectedIndex(0);
         showTable();
     }
 

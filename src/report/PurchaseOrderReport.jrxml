@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PurchaseOrderReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07cf4bbc-1ae6-4adf-8c47-046b949ae9ec">
-	<property name="ireport.zoom" value="1.3310000000000146"/>
+	<property name="ireport.zoom" value="1.2100000000000133"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="88"/>
+	<property name="ireport.y" value="74"/>
 	<parameter name="noPo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -435,7 +435,7 @@ WHERE
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="50">
+		<band height="193">
 			<staticText>
 				<reportElement mode="Opaque" x="320" y="10" width="186" height="20" backcolor="#99CCFF" uuid="aa70512c-8eb3-428a-ace2-7af4ad0dadfa"/>
 				<textElement verticalAlignment="Middle">
@@ -458,7 +458,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{purchase_order_Total_Qty}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="366" y="30" width="140" height="20" backcolor="#99CCFF" uuid="bcadf390-a2f5-4e32-9170-c6f55da6c79e"/>
+				<reportElement mode="Opaque" x="296" y="30" width="210" height="20" backcolor="#99CCFF" uuid="bcadf390-a2f5-4e32-9170-c6f55da6c79e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8" isBold="true" isUnderline="false"/>
 				</textElement>
@@ -468,7 +468,7 @@ WHERE
 				<reportElement x="320" y="29" width="186" height="1" uuid="3966f136-e4e7-4ee2-9b66-554e863d1700"/>
 			</line>
 			<line>
-				<reportElement x="366" y="49" width="140" height="1" uuid="539eff47-95ad-499b-9f65-c585d95f231e"/>
+				<reportElement x="296" y="49" width="210" height="1" uuid="539eff47-95ad-499b-9f65-c585d95f231e"/>
 			</line>
 			<textField pattern="###,###">
 				<reportElement x="419" y="29" width="68" height="20" uuid="0ec802e2-2453-4c09-9467-ad2525b71893"/>
@@ -479,6 +479,26 @@ WHERE
 			</textField>
 			<line>
 				<reportElement x="320" y="10" width="186" height="1" uuid="a667d1c9-7718-4fba-9d07-cb84ecb320e5"/>
+			</line>
+			<staticText>
+				<reportElement x="239" y="104" width="68" height="20" uuid="b476e2f0-dac8-4ba4-bc6c-6d6461bfc6e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="205" y="185" width="139" height="1" uuid="10f11896-d076-4cc7-b5c5-5a891c633a1f"/>
+			</line>
+			<staticText>
+				<reportElement x="414" y="104" width="68" height="20" uuid="d8c32f27-6e90-4aad-9e05-58c87792767f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Approve by,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="380" y="185" width="139" height="1" uuid="e3986cb8-ef34-41f5-950c-58a812f7bfe1"/>
 			</line>
 		</band>
 	</summary>
