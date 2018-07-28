@@ -4,6 +4,7 @@ import fladeoapp.data.TransaksiPembelian;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -125,6 +126,53 @@ public class TransaksiPembelianController implements Serializable{
             e.printStackTrace();
         }
         return list;
+    }
+    
+    //form laporan
+    public List<Object[]> findAllTransaksiPembelianByDate(Date tgl1, Date tgl2){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q=em.createNativeQuery("SELECT tr.No_Transaksi, tr.No_Invoice, pb.No_Tanda_Terima, pb.Tgl_Terima_Barang, pb.No_PO, sp.Nm_Supplier, po.Tgl_PO, po.Tgl_Kirim, po.Total_Qty,\n" +
+                "(\n" +
+                "	SELECT SUM(dpo.Harga_Beli) \n" +
+                "    FROM detail_purchase_order dpo \n" +
+                "    WHERE po.No_PO = dpo.No_PO\n" +
+                ") totalBeli,  tr.Total_Transaksi\n" +
+                "FROM  transaksi_pembelian tr \n" +
+                "INNER JOIN penerimaan_barang pb ON tr.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier sp ON po.Kd_Supplier = sp.Kd_Supplier\n" +
+                "WHERE pb.Tgl_Terima_Barang BETWEEN ?tgl1 AND ?tgl2");
+            q.setParameter("tgl1", tgl1);
+            q.setParameter("tgl2", tgl2);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    // forma laporan
+    public Object[] firstDateLastDate(){
+        EntityManager em=getEntityManager();
+        Object[] obj=new Object[2];
+        try{
+            Query q=em.createNativeQuery("SELECT MIN(pb.Tgl_Terima_Barang), MAX(pb.Tgl_Terima_Barang)\n" +
+                "FROM  transaksi_pembelian tr \n" +
+                "INNER JOIN penerimaan_barang pb ON tr.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+                "INNER JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "INNER JOIN supplier sp ON po.Kd_Supplier = sp.Kd_Supplier");
+            List<Object[]> list = q.getResultList();
+            for(Object[] o : list){
+                obj[0] = o[0];
+                obj[1] = o[1];
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        return obj;
     }
     
     public List<Object[]> searchTransaksiPembelian(String cari){

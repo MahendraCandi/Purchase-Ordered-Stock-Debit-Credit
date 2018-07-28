@@ -49,6 +49,31 @@ public class CetakLaporanController implements Serializable{
         }
     }
     
+    public void cetakTransaksi(Date tgl1, Date tgl2){
+    EntityManager em=null;
+        try{
+            em=emf.createEntityManager();
+            em.getTransaction().begin();
+            Connection connect=em.unwrap(Connection.class);
+            File file=new File("");
+            String namafile=file.getAbsolutePath()+"\\src\\report\\TransaksiReport.jasper";
+            HashMap param = new HashMap();
+            Locale local=new Locale("id", "ID");
+            param.put(JRParameter.REPORT_LOCALE, local);
+            param.put("tgl1", tgl1);
+            param.put("tgl2", tgl2);
+            JasperPrint jprint=JasperFillManager.fillReport (namafile, param,connect);
+            JasperViewer viewer=new JasperViewer(jprint, false);
+            viewer.setFitPageZoomRatio();
+            viewer.setVisible(true);
+            connect.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            em.close();
+        }
+    }
+    
     public void cetakPurchaseOrder(String po){
         EntityManager em=null;
         try{

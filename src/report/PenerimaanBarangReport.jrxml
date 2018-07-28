@@ -217,8 +217,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", $P{REPORT_LOCALE}).format($F{penerimaan_barang_Tgl_Terima_Barang})
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", $P{REPORT_LOCALE}).format($F{penerimaan_barang_Tgl_Terima_Barang})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="132" y="1" width="75" height="20" uuid="2fdfcbc2-80cb-4f02-b6e8-758807f21887"/>
@@ -239,8 +238,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", $P{REPORT_LOCALE}).format($F{purchase_order_Tgl_Kirim})
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", $P{REPORT_LOCALE}).format($F{purchase_order_Tgl_Kirim})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="377" y="1" width="125" height="20" uuid="f84742a4-5667-4a70-94ca-406f424a5a08"/>

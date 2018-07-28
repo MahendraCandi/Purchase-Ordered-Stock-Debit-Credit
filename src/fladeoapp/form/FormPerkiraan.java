@@ -6,6 +6,7 @@ import fladeoapp.data.DataPerkiraan;
 import fladeoapp.FladeoApp;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,7 +47,16 @@ public class FormPerkiraan extends javax.swing.JInternalFrame implements Navigat
     }
     
     private void showTable(){
-        tableAkun.setModel(perkiraanCont.findAllAkun(model));
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        List<DataPerkiraan> listPerkiraan = perkiraanCont.findAllPerkiraan();
+        for(DataPerkiraan perkiraan : listPerkiraan){
+            Object[] obj = new Object[2];
+            obj[0] = perkiraan.getKdPerkiraan();
+            obj[1] = perkiraan.getNmPerkiraan();
+            model.addRow(obj);
+        }
+        tableAkun.setModel(model);
     }
     
     private void cariTable(String cari){

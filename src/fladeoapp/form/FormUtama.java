@@ -320,6 +320,11 @@ public class FormUtama extends javax.swing.JFrame {
         transItemJurnal.setBackground(new java.awt.Color(255, 255, 255));
         transItemJurnal.setText("Jurnal");
         transItemJurnal.setOpaque(true);
+        transItemJurnal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transItemJurnalActionPerformed(evt);
+            }
+        });
         MenuTransaksi.add(transItemJurnal);
 
         jMenuBar1.add(MenuTransaksi);
@@ -329,6 +334,11 @@ public class FormUtama extends javax.swing.JFrame {
         lapItemPembelian.setBackground(new java.awt.Color(255, 255, 255));
         lapItemPembelian.setText("Laporan Pembelian");
         lapItemPembelian.setOpaque(true);
+        lapItemPembelian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lapItemPembelianActionPerformed(evt);
+            }
+        });
         MenuLaporan.add(lapItemPembelian);
 
         lapItemKas.setBackground(new java.awt.Color(255, 255, 255));
@@ -413,8 +423,8 @@ public class FormUtama extends javax.swing.JFrame {
 
     private void tambahBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tambahBtnActionPerformed
         nav = (NavigatorFormInterface) desktopPane.getSelectedFrame();
-        nav.bersih();
         nav.aktif();
+        nav.bersih();
     }//GEN-LAST:event_tambahBtnActionPerformed
 
     private void masterItemUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masterItemUserActionPerformed
@@ -453,6 +463,7 @@ public class FormUtama extends javax.swing.JFrame {
         String tampil = "PenerimaanBarang";
         FormLaporan fl = new FormLaporan(tampil);
         fl.getPanelOther().setVisible(false);
+        fl.getPanelTransaksi().setVisible(false);
         fl.getPanelPenerimaanBarang().setVisible(true);
         showForm(fl);
         
@@ -467,6 +478,20 @@ public class FormUtama extends javax.swing.JFrame {
         FormPembayaran fp = new FormPembayaran();
         showForm(fp);
     }//GEN-LAST:event_transItemPembayaranActionPerformed
+
+    private void transItemJurnalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemJurnalActionPerformed
+        FormJurnal fj = new FormJurnal();
+        showForm(fj);
+    }//GEN-LAST:event_transItemJurnalActionPerformed
+
+    private void lapItemPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapItemPembelianActionPerformed
+        String tampil = "Transaksi";
+        FormLaporan fl = new FormLaporan(tampil);
+        fl.getPanelOther().setVisible(false);
+        fl.getPanelTransaksi().setVisible(true);
+        fl.getPanelPenerimaanBarang().setVisible(false);
+        showForm(fl);
+    }//GEN-LAST:event_lapItemPembelianActionPerformed
 
     /**
      * @param args the command line arguments

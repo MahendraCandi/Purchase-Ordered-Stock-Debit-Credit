@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import fladeoapp.data.DataPerkiraan;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -64,23 +65,29 @@ public class DataPerkiraanController implements Serializable{
         }finally{}
     }
     
-    public DefaultTableModel findAllAkun(DefaultTableModel model){
+    public List<DataPerkiraan> findAllPerkiraan(){
         EntityManager em = getEntityManager();
-        model.getDataVector().removeAllElements();
-        model.fireTableDataChanged();
+        List<DataPerkiraan> list = new ArrayList<>();
         try {
             Query q = em.createQuery("SELECT da FROM DataPerkiraan da");
-            List<DataPerkiraan> listAkun = q.getResultList();
-            for(DataPerkiraan perkiraan : listAkun){
-                Object[] obj = new Object[2];
-                obj[0] = perkiraan.getKdPerkiraan();
-                obj[1] = perkiraan.getNmPerkiraan();
-                model.addRow(obj);
-            }
+            list = q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return model;
+        return list;
+    }
+    
+    public DataPerkiraan findOneDataPerkiraanByNama(String nama){
+        EntityManager em = getEntityManager();
+        DataPerkiraan dp = new DataPerkiraan();
+        try {
+            Query q = em.createQuery("SELECT da FROM DataPerkiraan da WHERE da.nmPerkiraan = :nama");
+            q.setParameter("nama", nama);
+            dp = (DataPerkiraan) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return dp;
     }
     
     public DefaultTableModel findOneAkunToTable(DefaultTableModel model, String cari){

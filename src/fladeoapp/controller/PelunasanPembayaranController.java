@@ -3,6 +3,8 @@ package fladeoapp.controller;
 import fladeoapp.data.PelunasanPembayaran;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -79,5 +81,29 @@ public class PelunasanPembayaranController implements Serializable{
             return kode;
         }
         return kode;
+    }
+    
+    public List<PelunasanPembayaran> findAllPembayaranToList(){
+        EntityManager em = getEntityManager();
+        List<PelunasanPembayaran> listPembayaran = new ArrayList<>();
+        try {
+            Query q = em.createQuery("SELECT pp From PelunasanPembayaran pp");
+            listPembayaran = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPembayaran;
+    }
+    
+    public List<PelunasanPembayaran> findAllPembayaranNotExistInJurnal(){
+        EntityManager em = getEntityManager();
+        List<PelunasanPembayaran> listPembayaran = new ArrayList<>();
+        try {
+            Query q = em.createQuery("SELECT pp From PelunasanPembayaran pp WHERE NOT EXISTS (SELECT j FROM Jurnal j WHERE pp.noPembayaran = j.noPembayaran )");
+            listPembayaran = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPembayaran;
     }
 }
