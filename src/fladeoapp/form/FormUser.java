@@ -32,20 +32,33 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         model.addColumn("Password");
         tableUser.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         hakAkses = userLogin.getHakAkses();
+        cmbHakAkses.addItem("Purchasing");
+        cmbHakAkses.addItem("Finance");
         tidakAktif();
+        validasiHakAkses();
         formUtama.buttonOff();
         formUtama.getTambahBtn().setEnabled(true);
         panjangKarakter();
     }
     
+    private void validasiHakAkses(){
+        if(hakAkses.equalsIgnoreCase("Root")){
+            cmbHakAkses.setEnabled(true);
+            showTableRoot();
+        }else{
+            cmbHakAkses.setSelectedItem(hakAkses);
+            cmbHakAkses.setEnabled(false);
+        }
+    }
+    
     private void panjangKarakter(){
-        txtNama.setDocument(new JTextFieldLimit((50)));
+        txtNama.setDocument(new JTextFieldLimit((15)));
         txtPassword.setDocument(new JTextFieldLimit((10)));
     }
     
     private void tidakAktif(){
         txtUsername.setEnabled(false);
-        txtAkses.setEnabled(false);
+        cmbHakAkses.setEnabled(false);
         txtNama.setEnabled(false);
         txtPassword.setEnabled(false);
         txtCari.setEnabled(false);
@@ -53,6 +66,10 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
     
     private void showTable(){
         tableUser.setModel(uCont.findAllUser(model, hakAkses));
+    }
+    
+    private void showTableRoot(){
+        tableUser.setModel(uCont.findAllUserRoot(model));
     }
     
     private void cariTable(String cari){
@@ -76,7 +93,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                 if(baris != -1){                        
                     txtUsername.setText(tableUser.getValueAt(baris, 0).toString());
                     txtNama.setText(tableUser.getValueAt(baris, 1).toString());
-                    txtAkses.setText(tableUser.getValueAt(baris, 2).toString());
+                    cmbHakAkses.setSelectedItem(tableUser.getValueAt(baris, 2));
                     txtPassword.setText(tableUser.getValueAt(baris, 3).toString());
                 }
             }
@@ -98,13 +115,13 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         jLabel3 = new javax.swing.JLabel();
         txtNama = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtAkses = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
+        cmbHakAkses = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableUser = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -124,9 +141,6 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Hak Akses");
-
-        txtAkses.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtAkses.setForeground(new java.awt.Color(51, 51, 51));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -148,13 +162,20 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(51, 51, 51));
 
+        cmbHakAkses.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbHakAkses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbHakAksesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,7 +188,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtAkses, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbHakAkses, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,7 +214,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtAkses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbHakAkses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -254,7 +275,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
                     .addComponent(jLabel6)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -267,8 +288,13 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         }
     }//GEN-LAST:event_txtCariKeyPressed
 
+    private void cmbHakAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHakAksesActionPerformed
+        txtUsername.setText(uCont.nomorOtomatis(cmbHakAkses.getSelectedItem().toString()));
+    }//GEN-LAST:event_cmbHakAksesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbHakAkses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -279,7 +305,6 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tableUser;
-    private javax.swing.JTextField txtAkses;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtNama;
     private javax.swing.JTextField txtPassword;
@@ -303,9 +328,14 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         txtCari.setText("");
         txtNama.setText("");
         txtPassword.setText("");
-        txtAkses.setText(hakAkses);
-        txtUsername.setText(uCont.nomorOtomatis(hakAkses));
-        showTable();
+        if(hakAkses.equalsIgnoreCase("Root")){
+            txtUsername.setText(uCont.nomorOtomatis(cmbHakAkses.getSelectedItem().toString()));
+            showTableRoot();
+        }else{
+            txtUsername.setText(uCont.nomorOtomatis(hakAkses));
+            showTable();
+        }
+        
     }
     
 
@@ -319,7 +349,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             if(user==null){
                 us.setUsername(txtUsername.getText());
                 us.setNama(txtNama.getText());
-                us.setHakAkses(txtAkses.getText());
+                us.setHakAkses(cmbHakAkses.getSelectedItem().toString());
                 us.setPassword(txtPassword.getText());
                 try{
                     uCont.save(us);
@@ -330,7 +360,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             }else{
                 user.setUsername(txtUsername.getText());
                 user.setNama(txtNama.getText());
-                user.setHakAkses(txtAkses.getText());
+                user.setHakAkses(cmbHakAkses.getSelectedItem().toString());
                 user.setPassword(txtPassword.getText());
                 try{
                     uCont.update(user);
@@ -351,7 +381,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
         try{
-            User userPK = uCont.findOneUser(txtUsername.getText(), txtAkses.getText());
+            User userPK = uCont.findOneUser(txtUsername.getText(), cmbHakAkses.getSelectedItem().toString());
             uCont.delete(userPK.getUsername());
              JOptionPane.showMessageDialog(null, "Data telah dihapus!");
             }catch(Exception ex){

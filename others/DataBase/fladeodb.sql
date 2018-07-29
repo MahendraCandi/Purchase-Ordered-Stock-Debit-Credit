@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2018 at 01:18 AM
+-- Generation Time: Jul 29, 2018 at 11:38 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -28,11 +28,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `barang` (
   `Kd_Barang` varchar(8) NOT NULL,
-  `Jenis_Barang` varchar(20) NOT NULL,
+  `Nama_Barang` varchar(20) NOT NULL,
   `Hrg_Beli` double NOT NULL,
   `Hrg_Jual` double NOT NULL,
   `Kd_Supplier` varchar(7) NOT NULL,
-  `size` varchar(15) NOT NULL,
+  `Warna` varchar(10) NOT NULL,
+  `size` varchar(5) NOT NULL,
   `foto` mediumblob
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -43,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `barang` (
 --
 
 CREATE TABLE IF NOT EXISTS `data_perkiraan` (
-  `Kd_Perkiraan` varchar(8) NOT NULL,
-  `Nm_Perkiraan` varchar(20) NOT NULL
+  `Kd_Perkiraan` varchar(4) NOT NULL,
+  `Nm_Perkiraan` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -55,11 +56,11 @@ CREATE TABLE IF NOT EXISTS `data_perkiraan` (
 
 CREATE TABLE IF NOT EXISTS `detail_jurnal` (
   `Id` int(11) NOT NULL,
-  `No_Jurnal` varchar(10) NOT NULL,
-  `Kd_Akun` varchar(8) NOT NULL,
+  `No_Jurnal` varchar(6) NOT NULL,
+  `Kd_Perkiraan` varchar(4) NOT NULL,
   `Debet` double NOT NULL,
   `Kredit` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `detail_pelunasan_pembayaran` (
   `Id` int(11) NOT NULL,
   `No_Pembayaran` varchar(7) NOT NULL,
   `No_Transaksi` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `detail_purchase_order` (
   `Qty_Order` int(11) NOT NULL,
   `Harga_Beli` double NOT NULL,
   `Harga_Jual` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -95,10 +96,10 @@ CREATE TABLE IF NOT EXISTS `detail_purchase_order` (
 --
 
 CREATE TABLE IF NOT EXISTS `jurnal` (
-  `No_Jurnal` varchar(10) NOT NULL,
+  `No_Jurnal` varchar(6) NOT NULL,
   `No_Pembayaran` varchar(7) NOT NULL,
   `Tgl_Jurnal` date NOT NULL,
-  `Ket` varchar(100) NOT NULL
+  `Ket` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `pelunasan_pembayaran` (
 --
 
 CREATE TABLE IF NOT EXISTS `penerimaan_barang` (
-  `No_Tanda_Terima` varchar(7) NOT NULL,
+  `No_Tanda_Terima` varchar(5) NOT NULL,
   `No_PO` varchar(12) NOT NULL,
   `Tgl_Terima_Barang` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -135,9 +136,9 @@ CREATE TABLE IF NOT EXISTS `purchase_order` (
   `No_PO` varchar(12) NOT NULL,
   `Tgl_PO` date NOT NULL,
   `Tgl_Kirim` date NOT NULL,
-  `Kd_Supplier` varchar(7) NOT NULL,
+  `Kd_Supplier` varchar(3) NOT NULL,
   `Total_Qty` int(11) NOT NULL,
-  `Username` varchar(7) NOT NULL
+  `Username` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -148,10 +149,10 @@ CREATE TABLE IF NOT EXISTS `purchase_order` (
 
 CREATE TABLE IF NOT EXISTS `supplier` (
   `Kd_Supplier` varchar(7) NOT NULL,
-  `Nm_Supplier` varchar(50) NOT NULL,
-  `Alamat` varchar(100) NOT NULL,
-  `Telepon` varchar(20) NOT NULL,
-  `Kota` varchar(20) NOT NULL
+  `Nm_Supplier` varchar(25) NOT NULL,
+  `Alamat` varchar(50) NOT NULL,
+  `Telepon` varchar(12) NOT NULL,
+  `Kota` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -163,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 CREATE TABLE IF NOT EXISTS `transaksi_pembelian` (
   `No_Transaksi` varchar(9) NOT NULL,
   `No_Tanda_Terima` varchar(7) NOT NULL,
-  `No_Invoice` varchar(10) NOT NULL,
+  `No_Invoice` varchar(8) NOT NULL,
   `Total_Transaksi` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -264,17 +265,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `detail_jurnal`
 --
 ALTER TABLE `detail_jurnal`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `detail_pelunasan_pembayaran`
 --
 ALTER TABLE `detail_pelunasan_pembayaran`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `detail_purchase_order`
 --
 ALTER TABLE `detail_purchase_order`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

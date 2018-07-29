@@ -96,6 +96,27 @@ public class UserController implements Serializable{
         return model;
     }
     
+    public DefaultTableModel findAllUserRoot(DefaultTableModel model){
+        EntityManager em = getEntityManager();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        try {
+            Query q = em.createQuery("SELECT u FROM User u");
+            List<User> listUser = q.getResultList();
+            for(User u : listUser){
+                Object[] obj = new Object[4];
+                obj[0] = u.getUsername();
+                obj[1] = u.getNama();
+                obj[2] = u.getHakAkses();
+                obj[3] = u.getPassword();
+                model.addRow(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return model;
+    }
+    
     public DefaultTableModel findUserToTable(DefaultTableModel model, String hakAkses, String cari){
         EntityManager em = getEntityManager();
         model.getDataVector().removeAllElements();

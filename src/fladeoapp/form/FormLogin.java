@@ -58,6 +58,22 @@ public class FormLogin extends javax.swing.JFrame {
     }
     
     private void login(){
+        if(txtLogin.getText().equals("Root") && txtPassword.getText().equals("Root")){
+            User userLogin = new User();
+            userLogin.setNama("Root");
+            userLogin.setHakAkses("Root");
+            FormUtama formUtama = new FormUtama(userLogin);
+            formUtama.getMenuTransaksi().setEnabled(false);
+            formUtama.getMenuLaporan().setEnabled(false);
+            formUtama.getMenuMasterUtility().setEnabled(false);
+            formUtama.getMasterItemAkun().setVisible(false);
+            formUtama.getMasterItemBarang().setVisible(false);
+            formUtama.getMasterItemSupplier().setVisible(false);
+            JOptionPane.showMessageDialog(null, "Login sebagai Root!");
+            this.dispose();
+            formUtama.setVisible(true);
+            return;
+        }
         EntityManager em=null;
         try {
             em=FladeoApp.emf.createEntityManager();

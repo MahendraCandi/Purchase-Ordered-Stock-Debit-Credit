@@ -87,6 +87,8 @@ public class FormUtama extends javax.swing.JFrame {
         lapItemPembelian = new javax.swing.JMenuItem();
         lapItemKas = new javax.swing.JMenuItem();
         lapItemTerimaBarang = new javax.swing.JMenuItem();
+        MenuMasterUtility = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         MenuLogout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -252,7 +254,7 @@ public class FormUtama extends javax.swing.JFrame {
         MenuMaster.add(masterItemBarang);
 
         masterItemAkun.setBackground(new java.awt.Color(255, 255, 255));
-        masterItemAkun.setText("Data Akun");
+        masterItemAkun.setText("Data Perkiraan");
         masterItemAkun.setContentAreaFilled(false);
         masterItemAkun.setOpaque(true);
         masterItemAkun.addActionListener(new java.awt.event.ActionListener() {
@@ -362,6 +364,20 @@ public class FormUtama extends javax.swing.JFrame {
         MenuLaporan.add(lapItemTerimaBarang);
 
         jMenuBar1.add(MenuLaporan);
+
+        MenuMasterUtility.setText("Utility");
+
+        jMenuItem1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem1.setText("Backup Database");
+        jMenuItem1.setOpaque(true);
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuMasterUtility.add(jMenuItem1);
+
+        jMenuBar1.add(MenuMasterUtility);
 
         MenuLogout.setText("Logout");
         MenuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -510,6 +526,11 @@ public class FormUtama extends javax.swing.JFrame {
         showForm(fl);
     }//GEN-LAST:event_lapItemKasActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FormBackupDatabase fbd = new FormBackupDatabase();
+        showForm(fbd);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -549,11 +570,13 @@ public class FormUtama extends javax.swing.JFrame {
     private javax.swing.JMenu MenuLaporan;
     private javax.swing.JMenu MenuLogout;
     private javax.swing.JMenu MenuMaster;
+    private javax.swing.JMenu MenuMasterUtility;
     private javax.swing.JMenu MenuTransaksi;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem lapItemKas;
@@ -738,6 +761,23 @@ public class FormUtama extends javax.swing.JFrame {
     public void setTampilLaporan(String tampilLaporan) {
         this.tampilLaporan = tampilLaporan;
     }
+
+    public javax.swing.JMenu getMenuLaporan() {
+        return MenuLaporan;
+    }
+
+    public javax.swing.JMenu getMenuTransaksi() {
+        return MenuTransaksi;
+    }
+
+    public javax.swing.JMenu getMenuMasterUtility() {
+        return MenuMasterUtility;
+    }
+
+    public void setMenuMasterUtility(javax.swing.JMenu MenuMasterUtility) {
+        this.MenuMasterUtility = MenuMasterUtility;
+    }
+    
     
     
 }
