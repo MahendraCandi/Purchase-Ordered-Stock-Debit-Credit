@@ -247,7 +247,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplier_Nm_Supplier}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###,###.##">
 				<reportElement x="502" y="1" width="53" height="20" uuid="ef58340e-0ffb-48ba-9190-00c0660f7acc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8"/>
@@ -293,7 +293,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 				</textElement>
 				<text><![CDATA[ Grand Total :]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="###,###.##">
 				<reportElement x="502" y="11" width="53" height="20" forecolor="#FFFFFF" uuid="48c72301-2e9e-4269-8684-4641c961c7d1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8" isBold="true" isUnderline="true"/>

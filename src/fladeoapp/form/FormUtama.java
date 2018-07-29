@@ -344,6 +344,11 @@ public class FormUtama extends javax.swing.JFrame {
         lapItemKas.setBackground(new java.awt.Color(255, 255, 255));
         lapItemKas.setText("Laporan Pengeluaran Kas");
         lapItemKas.setOpaque(true);
+        lapItemKas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lapItemKasActionPerformed(evt);
+            }
+        });
         MenuLaporan.add(lapItemKas);
 
         lapItemTerimaBarang.setBackground(new java.awt.Color(255, 255, 255));
@@ -465,6 +470,7 @@ public class FormUtama extends javax.swing.JFrame {
         fl.getPanelOther().setVisible(false);
         fl.getPanelTransaksi().setVisible(false);
         fl.getPanelPenerimaanBarang().setVisible(true);
+        fl.getPanelJurnal().setVisible(false);
         showForm(fl);
         
     }//GEN-LAST:event_lapItemTerimaBarangActionPerformed
@@ -490,8 +496,19 @@ public class FormUtama extends javax.swing.JFrame {
         fl.getPanelOther().setVisible(false);
         fl.getPanelTransaksi().setVisible(true);
         fl.getPanelPenerimaanBarang().setVisible(false);
+        fl.getPanelJurnal().setVisible(false);
         showForm(fl);
     }//GEN-LAST:event_lapItemPembelianActionPerformed
+
+    private void lapItemKasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapItemKasActionPerformed
+        String tampil = "Jurnal";
+        FormLaporan fl = new FormLaporan(tampil);
+        fl.getPanelOther().setVisible(false);
+        fl.getPanelTransaksi().setVisible(false);
+        fl.getPanelPenerimaanBarang().setVisible(false);
+        fl.getPanelJurnal().setVisible(true);
+        showForm(fl);
+    }//GEN-LAST:event_lapItemKasActionPerformed
 
     /**
      * @param args the command line arguments

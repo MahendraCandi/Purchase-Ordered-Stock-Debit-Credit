@@ -2,11 +2,14 @@ package fladeoapp.form;
 
 import fladeoapp.FladeoApp;
 import fladeoapp.controller.CetakLaporanController;
+import fladeoapp.controller.JurnalController;
 import fladeoapp.controller.PenerimaanBarangController;
 import fladeoapp.controller.TransaksiPembelianController;
+import fladeoapp.data.Jurnal;
 import java.awt.Component;
 import java.awt.Font;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -22,9 +25,11 @@ public class FormLaporan extends javax.swing.JInternalFrame {
     PenerimaanBarangController pbCont = new PenerimaanBarangController(FladeoApp.emf);
     TransaksiPembelianController trCont = new TransaksiPembelianController(FladeoApp.emf);
     CetakLaporanController laporanCont = new CetakLaporanController(FladeoApp.emf);
-    DefaultTableModel pbModel, trModel;
+    JurnalController jCont = new JurnalController(FladeoApp.emf);
+    DefaultTableModel pbModel, trModel, kasModel;
     String tampil;
     DecimalFormat myFormatter = new DecimalFormat("###,###.##");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
     /**
      * Creates new form FormLaporan
      */
@@ -46,6 +51,11 @@ public class FormLaporan extends javax.swing.JInternalFrame {
             formatTglTransaksi();
             showTableTransaksi();
             renderTableTransaksiTotal();
+        }else if(tampil.equalsIgnoreCase("Jurnal")){
+            tableKas();
+            formatTglKas();
+            showTableKas();
+            renderTableKas();
         }else if(tampil.equalsIgnoreCase("Other")){
             System.out.println("Boom");
         }
@@ -171,6 +181,73 @@ public class FormLaporan extends javax.swing.JInternalFrame {
     /*
         Akhir Transaksi
     */
+    
+    /*
+        Kas
+    */
+    private void tableKas(){
+        kasModel=new DefaultTableModel();
+        kasModel.addColumn("No.Jurnal");
+        kasModel.addColumn("No. Pembayaran");
+        kasModel.addColumn("Tgl. Jurnal");
+        kasModel.addColumn("Keterangan");
+        tableKas.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        
+    }
+    
+    private void showTableKas(){
+        kasModel.getDataVector().removeAllElements();
+        kasModel.fireTableDataChanged();
+        List<Jurnal> listKas = jCont.findAllTransaksiPembelianByDate(jdcKasMulai.getDate(), jdcKasAkhir.getDate());
+        for(Jurnal item : listKas){
+            Object[] obj = new Object[4];
+            obj[0] = item.getNoJurnal();
+            obj[1] = item.getNoPembayaran();
+            obj[2] = (Date) item.getTglJurnal();
+            obj[3] = item.getKet();
+            kasModel.addRow(obj);
+        }
+        tableKas.setModel(kasModel);
+    }
+//    
+    private void formatTglKas(){
+        jdcKasMulai.setMaxSelectableDate(new Date());
+        jdcKasAkhir.setMaxSelectableDate(new Date());
+        jdcKasMulai.setLocale(Locale.forLanguageTag("id-ID"));
+        jdcKasAkhir.setLocale(Locale.forLanguageTag("id-ID"));
+        firstDateLastDateKas();
+        jdcKasMulai.setDateFormatString("dd MMMM yyyy");
+        jdcKasAkhir.setDateFormatString("dd MMMM yyyy");
+    }
+    
+    private void firstDateLastDateKas(){
+        Object[] obj=jCont.firstDateLasDate();
+        if(obj[0]==null && obj[1]==null){
+            jdcKasMulai.setDate(new Date());
+            jdcKasAkhir.setDate(new Date());
+        }else{
+            jdcKasMulai.setDate((Date) obj[0]);
+            jdcKasAkhir.setDate((Date) obj[1]);
+        }
+    }
+    
+    private void renderTableKas(){
+        TableCellRenderer tbr = new DefaultTableCellRenderer(){
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus,
+                    int row, int column){
+                if(value instanceof Date){
+                    value = sdf.format(value);
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+        tableKas.getColumnModel().getColumn(2).setCellRenderer(tbr);
+    }
+    
+    /*
+        Akhir Kas
+    */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -216,13 +293,13 @@ public class FormLaporan extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
-        cetakLaporanTransaksi1 = new javax.swing.JButton();
+        cetakLaporanKas = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tableTransaksi1 = new javax.swing.JTable();
-        jdcTransaksiMulai1 = new com.toedter.calendar.JDateChooser();
+        tableKas = new javax.swing.JTable();
+        jdcKasMulai = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
-        jdcTransaksiAkhir1 = new com.toedter.calendar.JDateChooser();
-        btnTampilDataTransaksi1 = new javax.swing.JButton();
+        jdcKasAkhir = new com.toedter.calendar.JDateChooser();
+        btnTampilDataKas = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -519,17 +596,17 @@ public class FormLaporan extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Tanggal mulai");
 
-        cetakLaporanTransaksi1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cetakLaporanTransaksi1.setText("Cetak Laporan");
-        cetakLaporanTransaksi1.addActionListener(new java.awt.event.ActionListener() {
+        cetakLaporanKas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cetakLaporanKas.setText("Cetak Laporan");
+        cetakLaporanKas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cetakLaporanTransaksi1ActionPerformed(evt);
+                cetakLaporanKasActionPerformed(evt);
             }
         });
 
-        tableTransaksi1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tableTransaksi1.setForeground(new java.awt.Color(51, 51, 51));
-        tableTransaksi1.setModel(new javax.swing.table.DefaultTableModel(
+        tableKas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tableKas.setForeground(new java.awt.Color(51, 51, 51));
+        tableKas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -537,21 +614,21 @@ public class FormLaporan extends javax.swing.JInternalFrame {
                 "No. Transaksi", "No. Tanda Terima", "No. Invoice", "Total Transaksi"
             }
         ));
-        jScrollPane4.setViewportView(tableTransaksi1);
+        jScrollPane4.setViewportView(tableKas);
 
-        jdcTransaksiMulai1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jdcKasMulai.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Tanggal Akhir");
 
-        jdcTransaksiAkhir1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jdcKasAkhir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        btnTampilDataTransaksi1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTampilDataTransaksi1.setText("Tampil Data");
-        btnTampilDataTransaksi1.addActionListener(new java.awt.event.ActionListener() {
+        btnTampilDataKas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnTampilDataKas.setText("Tampil Data");
+        btnTampilDataKas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTampilDataTransaksi1ActionPerformed(evt);
+                btnTampilDataKasActionPerformed(evt);
             }
         });
 
@@ -568,15 +645,15 @@ public class FormLaporan extends javax.swing.JInternalFrame {
                     .addGroup(panelJurnalLayout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jdcTransaksiMulai1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdcKasMulai, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jdcTransaksiAkhir1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jdcKasAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTampilDataTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTampilDataKas, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cetakLaporanTransaksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cetakLaporanKas, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -592,12 +669,12 @@ public class FormLaporan extends javax.swing.JInternalFrame {
                     .addGroup(panelJurnalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(panelJurnalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jdcTransaksiMulai1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jdcKasMulai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jdcTransaksiAkhir1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jdcKasAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelJurnalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cetakLaporanTransaksi1)
-                        .addComponent(btnTampilDataTransaksi1)))
+                        .addComponent(cetakLaporanKas)
+                        .addComponent(btnTampilDataKas)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE))
         );
@@ -647,30 +724,43 @@ public class FormLaporan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cetakLaporanTransaksiActionPerformed
 
     private void btnTampilDataTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilDataTransaksiActionPerformed
-        if(jdcTransaksiMulai.getCalendar().before(jdcTransaksiAkhir.getCalendar())){
+        if(jdcTransaksiAkhir.getCalendar().before(jdcTransaksiMulai.getCalendar())){
             JOptionPane.showMessageDialog(null, "Tanggal Tidak Valid!");
         }else{
             showTableTransaksi();
         }
     }//GEN-LAST:event_btnTampilDataTransaksiActionPerformed
 
-    private void cetakLaporanTransaksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetakLaporanTransaksi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cetakLaporanTransaksi1ActionPerformed
+    private void cetakLaporanKasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetakLaporanKasActionPerformed
+        int baris = tableKas.getRowCount();
+        if(jdcKasAkhir.getCalendar().before(jdcKasMulai.getCalendar())){
+            JOptionPane.showMessageDialog(null, "Tanggal Tidak Valid!");
+        }else{
+            if(baris == -1){
+                JOptionPane.showMessageDialog(null, "Tidak ada data yang tampil!");
+            }else{
+                laporanCont.cetakPengeluaranKas(jdcKasMulai.getDate(), jdcKasAkhir.getDate());
+            }
+        }
+    }//GEN-LAST:event_cetakLaporanKasActionPerformed
 
-    private void btnTampilDataTransaksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilDataTransaksi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTampilDataTransaksi1ActionPerformed
+    private void btnTampilDataKasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilDataKasActionPerformed
+        if(jdcKasAkhir.getCalendar().before(jdcKasMulai.getCalendar())){
+            JOptionPane.showMessageDialog(null, "Tanggal Tidak Valid!");
+        }else{
+            showTableKas();
+        }
+    }//GEN-LAST:event_btnTampilDataKasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTampilDataKas;
     private javax.swing.JButton btnTampilDataPb;
     private javax.swing.JButton btnTampilDataTransaksi;
-    private javax.swing.JButton btnTampilDataTransaksi1;
     private javax.swing.JButton cetakLaporan1;
+    private javax.swing.JButton cetakLaporanKas;
     private javax.swing.JButton cetakLaporanPb;
     private javax.swing.JButton cetakLaporanTransaksi;
-    private javax.swing.JButton cetakLaporanTransaksi1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -692,21 +782,21 @@ public class FormLaporan extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private com.toedter.calendar.JDateChooser jdcAkhir1;
+    private com.toedter.calendar.JDateChooser jdcKasAkhir;
+    private com.toedter.calendar.JDateChooser jdcKasMulai;
     private com.toedter.calendar.JDateChooser jdcMulai1;
     private com.toedter.calendar.JDateChooser jdcPb1;
     private com.toedter.calendar.JDateChooser jdcPb2;
     private com.toedter.calendar.JDateChooser jdcTransaksiAkhir;
-    private com.toedter.calendar.JDateChooser jdcTransaksiAkhir1;
     private com.toedter.calendar.JDateChooser jdcTransaksiMulai;
-    private com.toedter.calendar.JDateChooser jdcTransaksiMulai1;
     private javax.swing.JPanel panelJurnal;
     private javax.swing.JPanel panelOther;
     private javax.swing.JPanel panelPenerimaanBarang;
     private javax.swing.JPanel panelTransaksi;
+    private javax.swing.JTable tableKas;
     private javax.swing.JTable tablePO;
     private javax.swing.JTable tablePO1;
     private javax.swing.JTable tableTransaksi;
-    private javax.swing.JTable tableTransaksi1;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JPanel getPanelOther() {
@@ -719,6 +809,10 @@ public class FormLaporan extends javax.swing.JInternalFrame {
 
     public JPanel getPanelTransaksi() {
         return panelTransaksi;
+    }
+
+    public JPanel getPanelJurnal() {
+        return panelJurnal;
     }
     
     

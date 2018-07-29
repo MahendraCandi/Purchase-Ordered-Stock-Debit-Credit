@@ -601,15 +601,15 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jdcTransaksiMulai1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="jdcKasMulai" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jdcTransaksiAkhir1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="jdcKasAkhir" min="-2" pref="200" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnTampilDataTransaksi1" min="-2" pref="143" max="-2" attributes="0"/>
+                          <Component id="btnTampilDataKas" min="-2" pref="143" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cetakLaporanTransaksi1" min="-2" pref="143" max="-2" attributes="0"/>
+                          <Component id="cetakLaporanKas" min="-2" pref="143" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -629,14 +629,14 @@
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jdcTransaksiMulai1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jdcKasMulai" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel12" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jdcTransaksiAkhir1" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="jdcKasAkhir" alignment="0" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="cetakLaporanTransaksi1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnTampilDataTransaksi1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cetakLaporanKas" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnTampilDataKas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -675,7 +675,7 @@
             <Property name="text" type="java.lang.String" value="Tanggal mulai"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="cetakLaporanTransaksi1">
+        <Component class="javax.swing.JButton" name="cetakLaporanKas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -683,7 +683,7 @@
             <Property name="text" type="java.lang.String" value="Cetak Laporan"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cetakLaporanTransaksi1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cetakLaporanKasActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane4">
@@ -693,7 +693,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tableTransaksi1">
+            <Component class="javax.swing.JTable" name="tableKas">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -740,7 +740,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.toedter.calendar.JDateChooser" name="jdcTransaksiMulai1">
+        <Component class="com.toedter.calendar.JDateChooser" name="jdcKasMulai">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -758,14 +758,14 @@
             <Property name="text" type="java.lang.String" value="Tanggal Akhir"/>
           </Properties>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jdcTransaksiAkhir1">
+        <Component class="com.toedter.calendar.JDateChooser" name="jdcKasAkhir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnTampilDataTransaksi1">
+        <Component class="javax.swing.JButton" name="btnTampilDataKas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -773,7 +773,7 @@
             <Property name="text" type="java.lang.String" value="Tampil Data"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTampilDataTransaksi1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTampilDataKasActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
