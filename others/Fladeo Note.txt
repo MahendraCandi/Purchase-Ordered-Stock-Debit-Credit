@@ -61,6 +61,31 @@ REVISI 1
 12. kd Akun jadi kd Perkiraan DONE
 13. nama akun jadi nama perkiraan DONE
 
+Warna = 10
+size 5
+---
+Nm_supplier = 25
+aAlamt 50
+telepon 12
+kota 15
+---
+Username 4
+nama 15
+---
+PO
+kdSupplier 3
+username 4
+--
+Tanda TErima
+No. Tanda Terima 5
+--
+Kd_perkiraan 4
+Nm_Perkiraan 15
+-- 
+No_Invoice 8
+--
+NoJurnal 6
+Ket 20
 
 
 

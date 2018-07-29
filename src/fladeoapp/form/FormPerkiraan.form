@@ -81,8 +81,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtKdAkun" min="-2" pref="250" max="-2" attributes="0"/>
                               <Component id="txtNamaAkun" min="-2" pref="250" max="-2" attributes="0"/>
+                              <Component id="txtKdAkun" min="-2" pref="115" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

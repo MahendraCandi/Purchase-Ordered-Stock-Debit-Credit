@@ -95,7 +95,7 @@ public class DataPerkiraanController implements Serializable{
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
         try {
-            Query q = em.createQuery("SELECT da FROM DataPerkiraan da WHERE da.kdAkun LIKE :cari OR da.nmAkun LIKE :cari");
+            Query q = em.createQuery("SELECT da FROM DataPerkiraan da WHERE da.kdPerkiraan LIKE :cari OR da.nmPerkiraan LIKE :cari");
             q.setParameter("cari", "%"+cari+"%");
             List<DataPerkiraan> listAkun = q.getResultList();
             for(DataPerkiraan perkiraan : listAkun){
@@ -108,22 +108,5 @@ public class DataPerkiraanController implements Serializable{
             e.printStackTrace();
         }
         return model;
-    }
-    
-    public String nomorOtomatis(){
-        String kode="AKUN-001";
-        EntityManager em=null;
-        try{
-            em=getEntityManager();
-            Query q=em.createQuery("SELECT d FROM DataPerkiraan d ORDER BY d.kdAkun DESC");
-            q.setMaxResults(1);
-            DataPerkiraan dataPerkiraan=(DataPerkiraan) q.getSingleResult();
-            if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("AKUN-000");
-                String nomorurut = dataPerkiraan.getKdPerkiraan().substring(5);
-                kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
-            }
-        }catch(NoResultException ex){}
-        return kode;
     }
 }

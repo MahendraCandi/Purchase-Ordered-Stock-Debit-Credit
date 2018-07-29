@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PengeluaranKasReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06a928bd-28c5-4d8d-bb98-63d58d7b5b55">
-	<property name="ireport.zoom" value="5.0544702849929655"/>
-	<property name="ireport.x" value="58"/>
-	<property name="ireport.y" value="489"/>
+	<property name="ireport.zoom" value="1.6105100000000099"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Zebra">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
@@ -57,7 +57,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 	<group name="Jurnal Header">
 		<groupExpression><![CDATA[$F{jurnal_No_Jurnal} + $F{jurnal_No_Pembayaran} + $F{jurnal_Tgl_Jurnal} + $F{jurnal_Ket}]]></groupExpression>
 		<groupHeader>
-			<band height="42">
+			<band height="62">
 				<line>
 					<reportElement x="0" y="0" width="555" height="1" forecolor="#D63031" uuid="a8c69d07-da1b-417a-b8db-25cc13cf0073"/>
 					<graphicElement>
@@ -129,6 +129,50 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 						<pen lineWidth="1.5"/>
 					</graphicElement>
 				</line>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="42" width="555" height="20" backcolor="#FF7675" uuid="6c4fd6c5-e798-41f2-a21b-7c5cc4c436b9"/>
+					<staticText>
+						<reportElement x="305" y="0" width="88" height="20" forecolor="#FFFFFF" uuid="26f3f317-3f62-4856-9b17-7c008b8715ef"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="Segoe UI" size="8" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Kredit]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="217" y="0" width="88" height="20" forecolor="#FFFFFF" uuid="33e8e28c-7903-4ff1-99cb-78b962fccfd5"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="Segoe UI" size="8" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Debit]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="95" y="0" width="122" height="20" forecolor="#FFFFFF" uuid="76a229d6-55a6-485c-9a5a-b6ff085bb5af"/>
+						<textElement verticalAlignment="Middle">
+							<font fontName="Segoe UI" size="8" isBold="true"/>
+						</textElement>
+						<text><![CDATA[ Nama Perkiraan]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="29" y="0" width="66" height="20" forecolor="#FFFFFF" uuid="b00d33b6-c8a5-4922-acca-0837ec52f8a6"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="Segoe UI" size="8" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Kode Perkiraan]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="0" y="0" width="29" height="20" forecolor="#FFFFFF" uuid="d90e9a85-cb64-4c3a-b8cd-45f6e4fdec6a"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="Segoe UI" size="8" isBold="true"/>
+						</textElement>
+						<text><![CDATA[No.]]></text>
+					</staticText>
+					<line>
+						<reportElement x="0" y="19" width="555" height="1" forecolor="#D63031" uuid="dcd7d529-167f-482d-8918-ed64203dedb6"/>
+						<graphicElement>
+							<pen lineWidth="1.5"/>
+						</graphicElement>
+					</line>
+				</frame>
 			</band>
 		</groupHeader>
 	</group>
@@ -192,58 +236,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#FF7675" uuid="da6dae2a-6f60-404c-8925-49696936f452"/>
-				<staticText>
-					<reportElement x="305" y="0" width="88" height="20" forecolor="#FFFFFF" uuid="364794fb-2ebd-4eb6-884d-7b85d41a1301"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Segoe UI" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Kredit]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="217" y="0" width="88" height="20" forecolor="#FFFFFF" uuid="53dfa0e3-f3df-4d5d-8a75-d0d8d6b4a136"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Segoe UI" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Debit]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="95" y="0" width="122" height="20" forecolor="#FFFFFF" uuid="cfce34a2-3079-4cac-90b2-5e6ad86fd9a2"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Segoe UI" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ Nama Perkiraan]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="29" y="0" width="66" height="20" forecolor="#FFFFFF" uuid="64e7ce80-7cc5-4b5d-ac5b-61308ac56024"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Segoe UI" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Kode Perkiraan]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="0" y="0" width="29" height="20" forecolor="#FFFFFF" uuid="c54aaebd-b65c-4805-bb87-1ac1dc52a191"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Segoe UI" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[No.]]></text>
-				</staticText>
-				<line>
-					<reportElement x="0" y="0" width="555" height="1" forecolor="#D63031" uuid="339a62ad-44db-43ef-a3b7-fe28db65887e"/>
-					<graphicElement>
-						<pen lineWidth="1.5"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement x="0" y="19" width="555" height="1" forecolor="#D63031" uuid="82fae85c-9b51-4292-b871-f7b5b5c2575b"/>
-					<graphicElement>
-						<pen lineWidth="1.5"/>
-					</graphicElement>
-				</line>
-			</frame>
-		</band>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
@@ -268,7 +261,7 @@ BETWEEN $P{tgl1} AND $P{tgl2}]]>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Segoe UI" size="8" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[ $F{Nm_Perkiraan}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{Nm_Perkiraan}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="29" y="1" width="66" height="20" uuid="05b75a2c-8086-4bf3-8d8d-19ea4a1e16c8"/>

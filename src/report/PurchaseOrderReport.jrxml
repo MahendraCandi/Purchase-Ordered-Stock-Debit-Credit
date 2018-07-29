@@ -495,7 +495,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Approve by,]]></text>
+				<text><![CDATA[Hormat Kami,]]></text>
 			</staticText>
 			<line>
 				<reportElement x="380" y="185" width="139" height="1" uuid="e3986cb8-ef34-41f5-950c-58a812f7bfe1"/>

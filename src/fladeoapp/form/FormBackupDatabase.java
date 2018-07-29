@@ -134,7 +134,7 @@ public class FormBackupDatabase extends javax.swing.JInternalFrame {
             }
             File file = fc.getSelectedFile();
             path = file.getAbsolutePath();
-            path = path.replace("\\", "/");
+            path = path.replace("\\", "\\");
             path = path + "-" + tgl + ".sql";
             txtPath.setText(path);
         } catch (Exception e) {
@@ -146,7 +146,7 @@ public class FormBackupDatabase extends javax.swing.JInternalFrame {
         Process process = null;
         String dbName = "fladeoDb";
         String user = "root";
-        String sqlDumpPath = "C:/xampp/mysql/bin/mysqldump.exe -u " + user + " -B " + dbName + " -r ";
+        String sqlDumpPath = "C:\\xampp\\mysql\\bin\\mysqldump.exe -u " + user + " -B " + dbName + " -r ";
         if(txtPath.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Pilih letak penyimpanan file!");
             return;

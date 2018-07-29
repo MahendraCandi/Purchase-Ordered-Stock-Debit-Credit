@@ -42,7 +42,12 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        model=new DefaultTableModel();
+        model=new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Kode Barang");
         model.addColumn("Jenis Barang");
         model.addColumn("size");
@@ -60,7 +65,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     }
     
     private void panjangKarakter(){
-        txtWarna.setDocument(new JTextFieldLimit((20)));
+        txtWarna.setDocument(new JTextFieldLimit((10)));
         txtBeli.setDocument(new JTextFieldLimit((8)));
         txtJual.setDocument(new JTextFieldLimit((8)));
     }
@@ -109,6 +114,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     private void dataComboBoxSupplier(){
         List<Supplier> listSupplier = supCont.findSupplierToList();
         List<String> listNamaSupplier = new ArrayList<>();
+        listNamaSupplier.add("Pilih");
         for(Supplier s : listSupplier){
             listNamaSupplier.add(s.getNmSupplier());
         }
@@ -116,9 +122,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     }
     
     private void dataSupplierByName(){
-        Supplier supplier = supCont.findSupplierByName(cmbSupplier.getSelectedItem().toString());
-        txtKdSupplier.setText(supplier.getKdSupplier());
-        txtKotaSupplier.setText(supplier.getKota());
+        if(!cmbSupplier.getSelectedItem().equals("Pilih")){
+            Supplier supplier = supCont.findSupplierByName(cmbSupplier.getSelectedItem().toString());
+            txtKdSupplier.setText(supplier.getKdSupplier());
+            txtKotaSupplier.setText(supplier.getKota());
+        }
     }
     
     private void showTable(){
@@ -150,7 +158,11 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     txtWarna.setText(tableBarang.getValueAt(baris, 3).toString()); 
                     txtBeli.setText(tableBarang.getValueAt(baris, 4).toString());
                     txtJual.setText(tableBarang.getValueAt(baris, 5).toString());
-                    cmbSupplier.setSelectedItem(tableBarang.getValueAt(baris, 6).toString());
+                    supplier = supCont.findSupplier(tableBarang.getValueAt(baris, 6).toString());
+                    Object[] obj = {supplier.getNmSupplier()};
+                    cmbSupplier.setModel(new DefaultComboBoxModel(obj));
+                    txtKdSupplier.setText(supplier.getKdSupplier());
+                    txtKotaSupplier.setText(supplier.getKota());
                     tampilFoto();
                 }
             }

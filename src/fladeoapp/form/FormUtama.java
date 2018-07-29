@@ -502,8 +502,8 @@ public class FormUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_transItemPembayaranActionPerformed
 
     private void transItemJurnalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemJurnalActionPerformed
-        FormJurnal fj = new FormJurnal();
-        showForm(fj);
+        FormJurnalHeader jh = new FormJurnalHeader();
+        showForm(jh);
     }//GEN-LAST:event_transItemJurnalActionPerformed
 
     private void lapItemPembelianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lapItemPembelianActionPerformed

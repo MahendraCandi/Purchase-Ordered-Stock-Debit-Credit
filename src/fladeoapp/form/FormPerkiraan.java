@@ -26,7 +26,12 @@ public class FormPerkiraan extends javax.swing.JInternalFrame implements Navigat
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        model=new DefaultTableModel();
+        model=new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Kode Perkiraan");
         model.addColumn("Nama Perkiraan");
         tableAkun.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -35,8 +40,8 @@ public class FormPerkiraan extends javax.swing.JInternalFrame implements Navigat
     }
     
     private void panjangKarakter(){
-        txtKdAkun.setDocument(new JTextFieldLimit((8)));
-        txtNamaAkun.setDocument(new JTextFieldLimit((20)));
+        txtKdAkun.setDocument(new JTextFieldLimit((4)));
+        txtNamaAkun.setDocument(new JTextFieldLimit((15)));
     }
     
     private void tidakAktif(){
@@ -150,8 +155,8 @@ public class FormPerkiraan extends javax.swing.JInternalFrame implements Navigat
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtNamaAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtKdAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(633, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

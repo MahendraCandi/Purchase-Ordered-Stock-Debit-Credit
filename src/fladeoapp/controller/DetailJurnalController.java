@@ -2,10 +2,10 @@ package fladeoapp.controller;
 
 import fladeoapp.data.DetailJurnal;
 import java.io.Serializable;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class DetailJurnalController implements Serializable{
@@ -60,5 +60,18 @@ public class DetailJurnalController implements Serializable{
         try{
             return em.find(DetailJurnal.class, kode);
         }finally{}
+    }
+    
+    public List<Object[]> findDetailToListByKode(String noJurnal){
+        EntityManager em = getEntityManager();
+        List<Object[]> list = new ArrayList<>();
+        try {
+            Query q = em.createQuery("SELECT dj, dp.nmPerkiraan FROM DetailJurnal dj, DataPerkiraan dp WHERE dj.kdPerkiraan = dp.kdPerkiraan AND dj.noJurnal = :noJurnal");
+            q.setParameter("noJurnal", noJurnal);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

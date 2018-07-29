@@ -1,6 +1,5 @@
 package fladeoapp.controller;
 
-import fladeoapp.data.DataPerkiraan;
 import fladeoapp.data.Jurnal;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -67,7 +66,7 @@ public class JurnalController implements Serializable{
     }
     
     public String nomorOtomatis(){
-        String kode="Ju-001";
+        String kode="JU-001";
         EntityManager em=null;
         try{
             em=getEntityManager();
@@ -75,7 +74,7 @@ public class JurnalController implements Serializable{
             q.setMaxResults(1);
             Jurnal jurnal=(Jurnal) q.getSingleResult();
             if(q!=null){
-                DecimalFormat formatnomor = new DecimalFormat("Ju-000");
+                DecimalFormat formatnomor = new DecimalFormat("JU-000");
                 String nomorurut = jurnal.getNoJurnal().substring(3);
                 kode=formatnomor.format(Double.parseDouble(nomorurut)+1);
             }
@@ -83,6 +82,31 @@ public class JurnalController implements Serializable{
             return kode;
         }
         return kode;
+    }
+    
+    public List<Jurnal> findAllTransaksiPembelian(){
+        EntityManager em = getEntityManager();
+        List<Jurnal> list = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT j FROM Jurnal j ");
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public List<Jurnal> searchTransaksiPembelian(String cari){
+        EntityManager em = getEntityManager();
+        List<Jurnal> list = new ArrayList<>();
+        try {
+            Query q=em.createQuery("SELECT j FROM Jurnal j WHERE j.noJurnal LIKE :cari OR j.noPembayaran LIKE :cari");
+            q.setParameter("cari", cari);
+            list = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
     
     public List<Jurnal> findAllTransaksiPembelianByDate(Date tgl1, Date tgl2){

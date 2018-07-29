@@ -25,7 +25,12 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        model=new DefaultTableModel();
+        model=new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Username");
         model.addColumn("Nama");
         model.addColumn("Hak Akses");
@@ -100,8 +105,6 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
         });
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -289,7 +292,11 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
     }//GEN-LAST:event_txtCariKeyPressed
 
     private void cmbHakAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHakAksesActionPerformed
-        txtUsername.setText(uCont.nomorOtomatis(cmbHakAkses.getSelectedItem().toString()));
+        
+        if(tableUser.getSelectedColumnCount() == 0){
+            txtUsername.setText(uCont.nomorOtomatis(cmbHakAkses.getSelectedItem().toString()));
+        }
+        
     }//GEN-LAST:event_cmbHakAksesActionPerformed
 
 
@@ -381,6 +388,7 @@ public class FormUser extends javax.swing.JInternalFrame implements NavigatorFor
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dihapus!");
         }else{
         try{
+            
             User userPK = uCont.findOneUser(txtUsername.getText(), cmbHakAkses.getSelectedItem().toString());
             uCont.delete(userPK.getUsername());
              JOptionPane.showMessageDialog(null, "Data telah dihapus!");

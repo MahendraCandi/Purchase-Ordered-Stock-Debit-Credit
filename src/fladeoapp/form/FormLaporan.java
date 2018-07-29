@@ -30,6 +30,7 @@ public class FormLaporan extends javax.swing.JInternalFrame {
     String tampil;
     DecimalFormat myFormatter = new DecimalFormat("###,###.##");
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
+    FormUtama formUtama = FormUtama.staticUtama;
     /**
      * Creates new form FormLaporan
      */
@@ -38,6 +39,7 @@ public class FormLaporan extends javax.swing.JInternalFrame {
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
         this.tampil = tampil;
+        formUtama.buttonOff();
         tampilTable();
     }
     

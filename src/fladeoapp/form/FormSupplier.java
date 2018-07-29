@@ -16,6 +16,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
     SupplierController supCont = new SupplierController(FladeoApp.emf);
     DefaultTableModel model;
     FormUtama formUtama = FormUtama.staticUtama;
+    boolean update = false;
+    String updateKode = "";
     /**
      * Creates new form FormSupplier
      */
@@ -23,7 +25,12 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        model=new DefaultTableModel();
+        model=new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Kode Supplier");
         model.addColumn("Nama");
         model.addColumn("Telepon");
@@ -38,10 +45,10 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
 
     private void panjangKarakter(){
         txtKode.setDocument(new JTextFieldLimit((3)));
-        txtNmSupplier.setDocument(new JTextFieldLimit((50)));
-        txtAlamat.setDocument(new JTextFieldLimit((100)));
-        txtTelp.setDocument(new JTextFieldLimit((20)));
-        txtKota.setDocument(new JTextFieldLimit((20)));
+        txtNmSupplier.setDocument(new JTextFieldLimit((25)));
+        txtAlamat.setDocument(new JTextFieldLimit((50)));
+        txtTelp.setDocument(new JTextFieldLimit((12)));
+        txtKota.setDocument(new JTextFieldLimit((15)));
         
         
     }
@@ -108,6 +115,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
             }
         }
     }
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -273,6 +282,11 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 "Kode Supplier", "Nama", "Telepon", "Kota", "Alamat"
             }
         ));
+        tableSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableSupplierMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableSupplier);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -341,6 +355,23 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         }
     }//GEN-LAST:event_txtKodeKeyTyped
 
+    private void tableSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSupplierMouseClicked
+        if(evt.getClickCount() == 2){
+            if(JOptionPane.showConfirmDialog(null, "Edit data ini?", "Warning", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                int row = tableSupplier.getSelectedRow();
+                supplier = supCont.findSupplier(tableSupplier.getValueAt(row, 0).toString());
+                txtKode.setText(supplier.getKdSupplier());
+                txtNmSupplier.setText(supplier.getNmSupplier());
+                txtTelp.setText(supplier.getTelepon());
+                txtKota.setText(supplier.getKota());
+                txtAlamat.setText(supplier.getAlamat());
+                txtNmSupplier.requestFocus();
+                update = true;
+                updateKode = supplier.getKdSupplier();
+            }
+        }
+    }//GEN-LAST:event_tableSupplierMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -387,7 +418,8 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         txtAlamat.setText("");
         txtCari.setText("");
         txtKode.requestFocus();
-        showTable();    
+        showTable();
+        update = false;
     }
 
     @Override
@@ -395,6 +427,10 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
         if(txtNmSupplier.getText().isEmpty() || txtTelp.getText().isEmpty() ||
                 txtKota.getText().isEmpty() || txtAlamat.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Data belum lengkap!");
+        }else if(txtKode.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Kode harus diisi!");
+        }else if(txtKode.getText().length() < 3){
+            JOptionPane.showMessageDialog(null, "Kode harus 3 digit!");
         }else{
             supplier=supCont.findSupplier(txtKode.getText());
             Supplier Sup=new Supplier();
@@ -410,20 +446,26 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                     ex.printStackTrace();
                 }
                 JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                bersih();
             }else{
-                Sup.setKdSupplier(txtKode.getText());
-                Sup.setNmSupplier(txtNmSupplier.getText());
-                Sup.setTelepon(txtTelp.getText());
-                Sup.setKota(txtKota.getText());
-                Sup.setAlamat(txtAlamat.getText());
-                try{
-                    supCont.update(Sup);
-                }catch(Exception ex){
-                    ex.printStackTrace();
+                if((update == false || update == true) && !updateKode.equalsIgnoreCase(supplier.getKdSupplier())){
+                    JOptionPane.showMessageDialog(null, "Data supplier ini telah eksis!");
+                    bersih();
+                }else if(update == true && updateKode.equalsIgnoreCase(txtKode.getText())){
+                    Sup.setKdSupplier(txtKode.getText());
+                    Sup.setNmSupplier(txtNmSupplier.getText());
+                    Sup.setTelepon(txtTelp.getText());
+                    Sup.setKota(txtKota.getText());
+                    Sup.setAlamat(txtAlamat.getText());
+                    try{
+                        supCont.update(Sup);
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+                    bersih();
                 }
-                JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
             }
-            bersih();
         }
     }
 
