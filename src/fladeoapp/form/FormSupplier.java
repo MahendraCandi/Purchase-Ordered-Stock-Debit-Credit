@@ -435,6 +435,11 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
             supplier=supCont.findSupplier(txtKode.getText());
             Supplier Sup=new Supplier();
             if(supplier==null){
+                supplier = supCont.findSupplierByName(txtNmSupplier.getText());
+                if(supplier != null){
+                    JOptionPane.showMessageDialog(null, "Nama supplier eksis!");
+                    return;
+                }
                 Sup.setKdSupplier(txtKode.getText());
                 Sup.setNmSupplier(txtNmSupplier.getText());
                 Sup.setTelepon(txtTelp.getText());
@@ -445,24 +450,32 @@ public class FormSupplier extends javax.swing.JInternalFrame implements Navigato
                 }catch(Exception ex){
                     ex.printStackTrace();
                 }
-                JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                JOptionPane.showMessageDialog(null, "Data baru berhasil disimpan!");
                 bersih();
             }else{
-                if((update == false || update == true) && !updateKode.equalsIgnoreCase(supplier.getKdSupplier())){
-                    JOptionPane.showMessageDialog(null, "Data supplier ini telah eksis!");
-                    bersih();
-                }else if(update == true && updateKode.equalsIgnoreCase(txtKode.getText())){
-                    Sup.setKdSupplier(txtKode.getText());
-                    Sup.setNmSupplier(txtNmSupplier.getText());
-                    Sup.setTelepon(txtTelp.getText());
-                    Sup.setKota(txtKota.getText());
-                    Sup.setAlamat(txtAlamat.getText());
-                    try{
-                        supCont.update(Sup);
-                    }catch(Exception ex){
-                        ex.printStackTrace();
+                if(update == true && updateKode.equalsIgnoreCase(txtKode.getText())){
+                    Supplier s = new Supplier();
+                    s = supCont.findSupplierByName(txtNmSupplier.getText());
+                    if(s != null){
+                        JOptionPane.showMessageDialog(null, "Nama supplier eksis!");
+                        bersih();
+                        return;
+                    }else{
+                        Sup.setKdSupplier(txtKode.getText());
+                        Sup.setNmSupplier(txtNmSupplier.getText());
+                        Sup.setTelepon(txtTelp.getText());
+                        Sup.setKota(txtKota.getText());
+                        Sup.setAlamat(txtAlamat.getText());
+                        try{
+                            supCont.update(Sup);
+                        }catch(Exception ex){
+                            ex.printStackTrace();
+                        }
+                        JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+                        bersih();
                     }
-                    JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Data Eksis!");
                     bersih();
                 }
             }

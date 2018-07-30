@@ -1,11 +1,13 @@
 package fladeoapp.form;
 
 import fladeoapp.FladeoApp;
-import fladeoapp.controller.JurnalController;
+import fladeoapp.controller.PelunasanPembayaranController;
 import fladeoapp.data.Jurnal;
+import fladeoapp.data.PelunasanPembayaran;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,17 +19,20 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-public class FormJurnalHeader extends javax.swing.JInternalFrame {
+public class FormPembayaranHeader extends javax.swing.JInternalFrame {
 
-    JurnalController jCont = new JurnalController(FladeoApp.emf);
+    PelunasanPembayaranController ppCont = new PelunasanPembayaranController(FladeoApp.emf);
     DefaultTableModel model;
     FormUtama formUtama = FormUtama.staticUtama;
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"));
-    Jurnal jurnal = new Jurnal();
+    PelunasanPembayaran pembayaran = new PelunasanPembayaran();
+    DecimalFormat myFormatter = new DecimalFormat("###,###.##");
+    Number number;
+    
     /**
-     * Creates new form FormJurnalHeader
+     * Creates new form FormPembayaranHeader
      */
-    public FormJurnalHeader() {
+    public FormPembayaranHeader() {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -38,46 +43,38 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
                 return false;
             }
         };
-        model.addColumn("No.Jurnal");
         model.addColumn("No. Pembayaran");
-        model.addColumn("Tgl. Jurnal");
-        model.addColumn("Keterangan");
-        tableJurnal.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        model.addColumn("Jatuh Tempo");
+        model.addColumn("Supplier");
+        model.addColumn("Jumlah Transaksi");
+        model.addColumn("Total Transaksi");
+        tablePembayaran.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         showTable();
-        renderTableKas();
+        renderTableTgl();
+        renderTableNominal();
     }
     
     private void showTable(){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        List<Jurnal> listKas = jCont.findAllTransaksiPembelian();
-        for(Jurnal item : listKas){
-            Object[] obj = new Object[4];
-            obj[0] = item.getNoJurnal();
-            obj[1] = item.getNoPembayaran();
-            obj[2] = (Date) item.getTglJurnal();
-            obj[3] = item.getKet();
-            model.addRow(obj);
+        List<Object[]> listBayar = ppCont.findAllPembayaranToListWithTransCount();
+        for(Object[] item : listBayar){
+            model.addRow(item);
         }
-        tableJurnal.setModel(model);
+        tablePembayaran.setModel(model);
     }
     
     private void showTableSearch(String cari){
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        List<Jurnal> listKas = jCont.searchTransaksiPembelian(cari);
-        for(Jurnal item : listKas){
-            Object[] obj = new Object[4];
-            obj[0] = item.getNoJurnal();
-            obj[1] = item.getNoPembayaran();
-            obj[2] = (Date) item.getTglJurnal();
-            obj[3] = item.getKet();
-            model.addRow(obj);
+        List<Object[]> listBayar = ppCont.searchPembayaranToListWithTransCount(cari);
+        for(Object[] item : listBayar){
+            model.addRow(item);
         }
-        tableJurnal.setModel(model);
+        tablePembayaran.setModel(model);
     }
     
-    private void renderTableKas(){
+    private void renderTableTgl(){
         TableCellRenderer tbr = new DefaultTableCellRenderer(){
             public Component getTableCellRendererComponent(JTable table,
                     Object value, boolean isSelected, boolean hasFocus,
@@ -88,7 +85,21 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         };
-        tableJurnal.getColumnModel().getColumn(2).setCellRenderer(tbr);
+        tablePembayaran.getColumnModel().getColumn(1).setCellRenderer(tbr);
+    }
+    
+    private void renderTableNominal(){
+        TableCellRenderer tbr = new DefaultTableCellRenderer(){
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus,
+                    int row, int column){
+                if(value instanceof Double){
+                    value = myFormatter.format(value);
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+        tablePembayaran.getColumnModel().getColumn(4).setCellRenderer(tbr);
     }
 
     /**
@@ -104,7 +115,7 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tableJurnal = new javax.swing.JTable();
+        tablePembayaran = new javax.swing.JTable();
         btnTambahJurnal = new javax.swing.JButton();
         btnLihatDetail = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -116,13 +127,13 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Form Jurnal");
+        jLabel10.setText("Form Pelunasan Pembayaran");
 
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
-        tableJurnal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tableJurnal.setForeground(new java.awt.Color(51, 51, 51));
-        tableJurnal.setModel(new javax.swing.table.DefaultTableModel(
+        tablePembayaran.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablePembayaran.setForeground(new java.awt.Color(51, 51, 51));
+        tablePembayaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -130,7 +141,7 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
                 "No. Transaksi", "No. Tanda Terima", "No. Invoice", "Total Transaksi"
             }
         ));
-        jScrollPane4.setViewportView(tableJurnal);
+        jScrollPane4.setViewportView(tablePembayaran);
 
         btnTambahJurnal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnTambahJurnal.setText("Tambah Jurnal");
@@ -207,8 +218,8 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahJurnalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahJurnalActionPerformed
-        jurnal = null;
-        FormJurnal fj = new FormJurnal(jurnal);
+        Object[] objPass = null;
+        FormPembayaran fj = new FormPembayaran(objPass);
         JDesktopPane desktopPane = getDesktopPane();
         desktopPane.add(fj);
         fj.setVisible(true);
@@ -216,12 +227,17 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnTambahJurnalActionPerformed
 
     private void btnLihatDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLihatDetailActionPerformed
-        int row = tableJurnal.getSelectedRow();
+        int row = tablePembayaran.getSelectedRow();
         if(row == -1){
             JOptionPane.showMessageDialog(null, "Pilih data yang mau dilihat!");
         }else{
-            jurnal = jCont.findJurnal(tableJurnal.getValueAt(row, 0).toString());
-            FormJurnal fj = new FormJurnal(jurnal);
+            Object[] objPass = null;
+            String noBayar = tablePembayaran.getValueAt(row, 0).toString();
+            List<Object[]> listBayar = ppCont.searchPembayaranToListWithTransCount(noBayar);
+            for(Object[] item : listBayar){
+                objPass = item;
+            }
+            FormPembayaran fj = new FormPembayaran(objPass);
             JDesktopPane desktopPane = getDesktopPane();
             desktopPane.add(fj);
             fj.setVisible(true);
@@ -248,7 +264,7 @@ public class FormJurnalHeader extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JPanel panelJurnal;
-    private javax.swing.JTable tableJurnal;
+    private javax.swing.JTable tablePembayaran;
     private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }

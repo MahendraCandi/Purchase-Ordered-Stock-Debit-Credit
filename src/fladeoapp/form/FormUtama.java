@@ -497,7 +497,7 @@ public class FormUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_transItemPembelianActionPerformed
 
     private void transItemPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transItemPembayaranActionPerformed
-        FormPembayaran fp = new FormPembayaran();
+        FormPembayaranHeader fp = new FormPembayaranHeader();
         showForm(fp);
     }//GEN-LAST:event_transItemPembayaranActionPerformed
 

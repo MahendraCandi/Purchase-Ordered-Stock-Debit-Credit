@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StrukPelunasanPembayaran" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0ac6a7f-4d10-41c5-b9da-5af08fd115ad">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="160"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     detail_pelunasan_pembayaran.`Id` AS detail_pelunasan_pembayaran_Id,
+     detail_pelunasan_pembayaran.`No_Pembayaran` AS detail_pelunasan_pembayaran_No_Pembayaran,
+     detail_pelunasan_pembayaran.`No_Transaksi` AS detail_pelunasan_pembayaran_No_Transaksi,
+     transaksi_pembelian.`No_Transaksi` AS transaksi_pembelian_No_Transaksi,
+     transaksi_pembelian.`No_Tanda_Terima` AS transaksi_pembelian_No_Tanda_Terima,
+     transaksi_pembelian.`No_Invoice` AS transaksi_pembelian_No_Invoice,
+     transaksi_pembelian.`Total_Transaksi` AS transaksi_pembelian_Total_Transaksi,
+     penerimaan_barang.`No_Tanda_Terima` AS penerimaan_barang_No_Tanda_Terima,
+     penerimaan_barang.`No_PO` AS penerimaan_barang_No_PO,
+     penerimaan_barang.`Tgl_Terima_Barang` AS penerimaan_barang_Tgl_Terima_Barang,
+     purchase_order.`No_PO` AS purchase_order_No_PO,
+     purchase_order.`Tgl_PO` AS purchase_order_Tgl_PO,
+     purchase_order.`Tgl_Kirim` AS purchase_order_Tgl_Kirim,
+     purchase_order.`Kd_Supplier` AS purchase_order_Kd_Supplier,
+     purchase_order.`Total_Qty` AS purchase_order_Total_Qty,
+     purchase_order.`Username` AS purchase_order_Username,
+     supplier.`Kd_Supplier` AS supplier_Kd_Supplier,
+     supplier.`Nm_Supplier` AS supplier_Nm_Supplier,
+     supplier.`Alamat` AS supplier_Alamat,
+     supplier.`Telepon` AS supplier_Telepon,
+     supplier.`Kota` AS supplier_Kota
+FROM
+     `detail_pelunasan_pembayaran` detail_pelunasan_pembayaran,
+     `transaksi_pembelian` transaksi_pembelian,
+     `penerimaan_barang` penerimaan_barang,
+     `purchase_order` purchase_order,
+     `supplier` supplier]]>
+	</queryString>
+	<field name="detail_pelunasan_pembayaran_Id" class="java.lang.Integer"/>
+	<field name="detail_pelunasan_pembayaran_No_Pembayaran" class="java.lang.String"/>
+	<field name="detail_pelunasan_pembayaran_No_Transaksi" class="java.lang.String"/>
+	<field name="transaksi_pembelian_No_Transaksi" class="java.lang.String"/>
+	<field name="transaksi_pembelian_No_Tanda_Terima" class="java.lang.String"/>
+	<field name="transaksi_pembelian_No_Invoice" class="java.lang.String"/>
+	<field name="transaksi_pembelian_Total_Transaksi" class="java.lang.Double"/>
+	<field name="penerimaan_barang_No_Tanda_Terima" class="java.lang.String"/>
+	<field name="penerimaan_barang_No_PO" class="java.lang.String"/>
+	<field name="penerimaan_barang_Tgl_Terima_Barang" class="java.sql.Date"/>
+	<field name="purchase_order_No_PO" class="java.lang.String"/>
+	<field name="purchase_order_Tgl_PO" class="java.sql.Date"/>
+	<field name="purchase_order_Tgl_Kirim" class="java.sql.Date"/>
+	<field name="purchase_order_Kd_Supplier" class="java.lang.String"/>
+	<field name="purchase_order_Total_Qty" class="java.lang.Integer"/>
+	<field name="purchase_order_Username" class="java.lang.String"/>
+	<field name="supplier_Kd_Supplier" class="java.lang.String"/>
+	<field name="supplier_Nm_Supplier" class="java.lang.String"/>
+	<field name="supplier_Alamat" class="java.lang.String"/>
+	<field name="supplier_Telepon" class="java.lang.String"/>
+	<field name="supplier_Kota" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="10" width="112" height="17" backcolor="#CCCCCC" uuid="44ad68ef-957b-4c29-9d87-566742101e09"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PT. SABANG MANDIRI ABADI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="112" height="11" uuid="f08d3e9e-54a0-4fe2-8a0e-c7879c8a625c"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jl. Palmerah Barat No. 9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="38" width="113" height="11" uuid="eead2dbf-e83b-4724-a12f-7afc2b068251"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Palmerah, Jakarta Barat 11480]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="49" width="183" height="11" uuid="4b120e46-a3a4-4940-ac92-3665bd915674"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Telp: 5321584, 5321409 Fax: +62215331812]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="38" width="44" height="11" uuid="4ba5cbcd-43a6-46f7-b693-23dc76d2a06c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="506" y="38" width="49" height="11" backcolor="#CCCCCC" uuid="a631a923-53fd-4c8c-9172-17e640ec29fa"/>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy", $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="445" y="49" width="61" height="11" uuid="99983d48-da0f-4b3e-b9d5-919978be16b6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Jatuh Tempo]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="506" y="49" width="49" height="11" backcolor="#CCCCCC" uuid="f13dd8e2-64f7-4e54-959e-4644dcd3ee84"/>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy", $P{REPORT_LOCALE}).format($F{purchase_order_Tgl_Kirim})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="62" width="555" height="1" uuid="6dd98d68-9bec-44b5-87f6-692b4469ee1b"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="183" y="0" width="183" height="18" backcolor="#CCCCCC" uuid="044f1b06-cd03-4e15-bea9-17b635bc9827"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Segoe UI" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pelunasan Pembayaran]]></text>
+			</staticText>
+			<line>
+				<reportElement x="183" y="17" width="183" height="1" uuid="4b2a1e37-c5f0-4fdd-82c4-db9cd7d6860c"/>
+			</line>
+			<textField>
+				<reportElement x="294" y="18" width="35" height="18" uuid="a0dc9897-c0e7-448e-aabc-28ace3d262a4"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purchase_order_No_PO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="223" y="18" width="71" height="18" uuid="bada1ef7-1ae1-44c8-b197-241513c105bb"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Segoe UI" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Pembayaran]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

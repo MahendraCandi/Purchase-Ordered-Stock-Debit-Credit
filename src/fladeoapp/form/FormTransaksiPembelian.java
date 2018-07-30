@@ -41,7 +41,12 @@ public class FormTransaksiPembelian extends javax.swing.JInternalFrame implement
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        model = new DefaultTableModel();
+        model=new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("No. Transaksi");
         model.addColumn("No. Tanda Terima");
         model.addColumn("No. Invoice");

@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -42,10 +43,11 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag("id-ID"));
     DecimalFormat myFormatter = new DecimalFormat("###,###.##");
     Number number;
+    Object[] pelunasanPembayaranValidasi;
     /**
      * Creates new form FormPembayaran
      */
-    public FormPembayaran() {
+    public FormPembayaran(Object[] pelunasanPembayaran) {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -61,6 +63,25 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         formUtama.buttonOff();
         formUtama.getTambahBtn().setEnabled(true);
         dialogTransaksi.setLocationRelativeTo(this);
+        pelunasanPembayaranValidasi = pelunasanPembayaran;
+        validasiPelunasanPembayaran();
+    }
+    
+    private void validasiPelunasanPembayaran(){
+        if(pelunasanPembayaranValidasi != null){
+            formUtama.buttonOff();
+            txtNoPembayaran.setText( (String) pelunasanPembayaranValidasi[0]);
+            Object[] objSupplier = {pelunasanPembayaranValidasi[2]};
+            cmbSupplier.setModel(new DefaultComboBoxModel(objSupplier));
+            jdcTgl.setDate( (Date) pelunasanPembayaranValidasi[1]);
+            jdcTgl.setLocale(Locale.forLanguageTag("id-ID"));
+            jdcTgl.setDateFormatString("dd MMMM yyyy");
+            List<Object[]> list = detailCont.findDetailPembayaran((String) pelunasanPembayaranValidasi[0]);
+            for (Object[] item : list) {
+                model.addRow(item);
+            }
+            renderTableNominal();
+        }
     }
     
     private void tidakAktif(){
@@ -119,6 +140,21 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
             }
             tableTransaksiDialog.setModel(modelDialog);
         }
+    }
+    
+    private void renderTableNominal(){
+        TableCellRenderer tbr = new DefaultTableCellRenderer(){
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus,
+                    int row, int column){
+                if(value instanceof Double){
+                    value = myFormatter.format(value);
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        };
+        tableTransaksi.getColumnModel().getColumn(5).setCellRenderer(tbr);
+        tableTransaksi.getColumnModel().getColumn(6).setCellRenderer(tbr);
     }
     
     private void renderTableTotal(){
@@ -276,6 +312,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         jLabel10 = new javax.swing.JLabel();
         txtNoPembayaran = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        txtKembali = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksi = new javax.swing.JTable();
         btnHapus = new javax.swing.JButton();
@@ -607,6 +644,13 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Jatuh Tempo");
 
+        txtKembali.setText("Kembali");
+        txtKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -628,7 +672,8 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNoPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNoPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKembali))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -638,7 +683,9 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtKembali)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNoPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
@@ -650,7 +697,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jdcTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43))
+                .addGap(33, 33, 33))
         );
 
         tableTransaksi.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -662,7 +709,15 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
             new String [] {
                 "No. Transaksi", "No. Tanda Terima", "No. PO", "Supplier", "Total Qty", "Total Beli", "Total Transaksi"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableTransaksi);
 
         btnHapus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -716,13 +771,13 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtTotalPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnHapus)
                         .addComponent(btnTambah)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -821,6 +876,14 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         dialogTransaksi.setVisible(true);
     }//GEN-LAST:event_btnTambahActionPerformed
 
+    private void txtKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKembaliActionPerformed
+        FormPembayaranHeader fj = new FormPembayaranHeader();
+        JDesktopPane desktopPane = getDesktopPane();
+        desktopPane.add(fj);
+        fj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_txtKembaliActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
@@ -855,6 +918,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
     private com.toedter.calendar.JDateChooser jdcTgl;
     private javax.swing.JTable tableTransaksi;
     private javax.swing.JTable tableTransaksiDialog;
+    private javax.swing.JButton txtKembali;
     private javax.swing.JTextField txtNoInvoice;
     private javax.swing.JTextField txtNoPO;
     private javax.swing.JTextField txtNoPembayaran;

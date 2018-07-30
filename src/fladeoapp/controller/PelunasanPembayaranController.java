@@ -106,4 +106,54 @@ public class PelunasanPembayaranController implements Serializable{
         }
         return listPembayaran;
     }
+    
+    public List<Object[]> findAllPembayaranToListWithTransCount(){
+        EntityManager em = getEntityManager();
+        List<Object[]> listPembayaran = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("SELECT pp.No_Pembayaran, pp.Jth_Tempo, s.Nm_Supplier, COUNT(dpp.No_Transaksi) AS trans,  pp.Total_Bayar\n" +
+                "FROM pelunasan_pembayaran pp\n" +
+                "LEFT JOIN detail_pelunasan_pembayaran dpp ON pp.No_Pembayaran = dpp.No_Pembayaran\n" +
+                "LEFT JOIN transaksi_pembelian tp ON dpp.No_Transaksi = tp.No_Transaksi\n" +
+                "LEFT JOIN penerimaan_barang pb ON tp.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+                "LEFT JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+                "LEFT JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier\n" +
+                "GROUP BY pp.No_Pembayaran");
+            listPembayaran = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPembayaran;
+    }
+    
+    public List<Object[]> searchPembayaranToListWithTransCount(String cari){
+        EntityManager em = getEntityManager();
+        List<Object[]> listPembayaran = new ArrayList<>();
+        try {
+            Query q = em.createNativeQuery("SELECT pp.No_Pembayaran, pp.Jth_Tempo, s.Nm_Supplier, COUNT(dpp.No_Transaksi) AS trans,  pp.Total_Bayar\n" +
+"FROM pelunasan_pembayaran pp\n" +
+"LEFT JOIN detail_pelunasan_pembayaran dpp ON pp.No_Pembayaran = dpp.No_Pembayaran\n" +
+"LEFT JOIN transaksi_pembelian tp ON dpp.No_Transaksi = tp.No_Transaksi\n" +
+"LEFT JOIN penerimaan_barang pb ON tp.No_Tanda_Terima = pb.No_Tanda_Terima\n" +
+"LEFT JOIN purchase_order po ON pb.No_PO = po.No_PO\n" +
+"LEFT JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier\n" +
+"WHERE pp.No_Pembayaran LIKE ?cari OR s.Nm_Supplier LIKE ?cari\n" +
+"GROUP BY pp.No_Pembayaran");
+            q.setParameter("cari", "%"+cari+"%");
+            listPembayaran = q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPembayaran;
+    }
+    
+    //form header pelunasan pembayaran
+    
+    /*
+    SELECT pp.No_Pembayaran, pp.Jth_Tempo, COUNT(dpp.No_Transaksi) AS trans,  pp.Total_Bayar
+FROM pelunasan_pembayaran pp
+LEFT JOIN detail_pelunasan_pembayaran dpp ON pp.No_Pembayaran = dpp.No_Pembayaran
+WHERE pp.No_Pembayaran LIKE 'Byr-003'
+GROUP BY pp.No_Pembayaran
+    */
 }
