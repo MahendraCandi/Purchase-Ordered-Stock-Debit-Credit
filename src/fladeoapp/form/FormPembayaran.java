@@ -1,6 +1,7 @@
 package fladeoapp.form;
 
 import fladeoapp.FladeoApp;
+import fladeoapp.controller.CetakLaporanController;
 import fladeoapp.controller.DetailPelunasanPembayaranController;
 import fladeoapp.controller.PelunasanPembayaranController;
 import fladeoapp.controller.SupplierController;
@@ -36,6 +37,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
     DetailPelunasanPembayaranController detailCont = new DetailPelunasanPembayaranController(FladeoApp.emf);
     SupplierController sCont = new SupplierController(FladeoApp.emf);
     TransaksiPembelianController trCont = new TransaksiPembelianController(FladeoApp.emf);
+    CetakLaporanController laporanCont = new CetakLaporanController(FladeoApp.emf);
     DefaultTableModel model;
     DefaultTableModel modelDialog;
     FormUtama formUtama = FormUtama.staticUtama;
@@ -70,6 +72,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
     private void validasiPelunasanPembayaran(){
         if(pelunasanPembayaranValidasi != null){
             formUtama.buttonOff();
+            btnCetak.setVisible(true);
             txtNoPembayaran.setText( (String) pelunasanPembayaranValidasi[0]);
             Object[] objSupplier = {pelunasanPembayaranValidasi[2]};
             cmbSupplier.setModel(new DefaultComboBoxModel(objSupplier));
@@ -102,6 +105,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         txtTotalQty.setEnabled(false);
         txtTotalBeli.setEnabled(false);
         txtTotalTrans.setEnabled(false);
+        btnCetak.setVisible(false);
     }
     
     private void dataComboBoxSupplier(){
@@ -313,6 +317,7 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         txtNoPembayaran = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtKembali = new javax.swing.JButton();
+        btnCetak = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTransaksi = new javax.swing.JTable();
         btnHapus = new javax.swing.JButton();
@@ -651,6 +656,13 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
             }
         });
 
+        btnCetak.setText("Cetak Pelunasan Pembayaran");
+        btnCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCetakActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -673,8 +685,11 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNoPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtKembali))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtKembali)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCetak)))
+                .addContainerGap(668, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -684,7 +699,9 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtKembali)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtKembali)
+                    .addComponent(btnCetak))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNoPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -884,8 +901,13 @@ public class FormPembayaran extends javax.swing.JInternalFrame implements Naviga
         this.dispose();
     }//GEN-LAST:event_txtKembaliActionPerformed
 
+    private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
+        laporanCont.cetakPelunasanPembayaran(txtNoPembayaran.getText());
+    }//GEN-LAST:event_btnCetakActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCetak;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnPilihTransaksi;
     private javax.swing.JButton btnTambah;

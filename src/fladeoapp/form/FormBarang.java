@@ -107,7 +107,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
     
     private void dataComboBoxSizeBarang(){
         String[] sizeBarang = {
-            "Pilih size barang", "31-35", "36-40", "40-44", "39-43"};
+            "Pilih size barang", "31-35", "36-40", "40-44", "39-43", "Non"};
         cmbSize.setModel(new DefaultComboBoxModel<>(sizeBarang));
     }
     
@@ -644,6 +644,7 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
 
     @Override
     public void simpan() {
+        int error = 0;
         if("Pilih nama barang".equalsIgnoreCase(cmbNama.getSelectedItem().toString()) ||
                 "Pilih size barang".equalsIgnoreCase(cmbSize.getSelectedItem().toString()) ||
                 txtBeli.getText().isEmpty() || txtJual.getText().isEmpty() || txtKdSupplier.getText().isEmpty() || txtWarna.getText().isEmpty()){
@@ -675,9 +676,14 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                     
                     brgCont.save(brg);
                 }catch(Exception ex){
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Ada kesalahan! Apkah ukuran foto terlalu besar? ");
+                    error = 1;
                 }
-                JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                if(error == 0){
+                    JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Data gagal disimpan!");
+                }
             }else{
                 try{
                     barang.setKdBarang(txtKode.getText());
@@ -701,9 +707,14 @@ public class FormBarang extends javax.swing.JInternalFrame implements NavigatorF
                 
                     brgCont.update(barang);
                 }catch(Exception ex){
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Ada kesalahan! Apkah ukuran foto terlalu besar? ");
+                    error = 1;
                 }
-                JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+                if(error == 0){
+                    JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Data gagal diupdate!");
+                }
             }
             bersih();
         }

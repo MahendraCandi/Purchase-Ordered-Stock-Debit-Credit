@@ -122,4 +122,28 @@ public class CetakLaporanController implements Serializable{
             em.close();
         }
     }
+    
+    public void cetakPelunasanPembayaran(String noBayar){
+        EntityManager em=null;
+        try{
+            em=emf.createEntityManager();
+            em.getTransaction().begin();
+            Connection connect=em.unwrap(Connection.class);
+            File file=new File("");
+            String namafile=file.getAbsolutePath()+"\\src\\report\\StrukPelunasanPembayaran.jasper";
+            HashMap param = new HashMap();
+            Locale local=new Locale("id", "ID");
+            param.put(JRParameter.REPORT_LOCALE, local);
+            param.put("noBayar", noBayar);
+            JasperPrint jprint=JasperFillManager.fillReport (namafile, param,connect);
+            JasperViewer viewer=new JasperViewer(jprint, false);
+            viewer.setFitPageZoomRatio();
+            viewer.setVisible(true);
+            connect.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            em.close();
+        }
+    }
 }

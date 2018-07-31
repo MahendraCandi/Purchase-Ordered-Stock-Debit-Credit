@@ -144,7 +144,7 @@ public class FormPembayaranHeader extends javax.swing.JInternalFrame {
         jScrollPane4.setViewportView(tablePembayaran);
 
         btnTambahJurnal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnTambahJurnal.setText("Tambah Jurnal");
+        btnTambahJurnal.setText("Tambah Pelunasan Pembayaran");
         btnTambahJurnal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahJurnalActionPerformed(evt);
@@ -185,10 +185,10 @@ public class FormPembayaranHeader extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelJurnalLayout.createSequentialGroup()
-                        .addComponent(btnTambahJurnal)
+                        .addComponent(btnTambahJurnal, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLihatDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))

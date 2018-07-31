@@ -24,24 +24,18 @@ public class BarangController implements Serializable{
         return emf.createEntityManager();
     }
     
-    public void save(Barang barang){
+    public void save(Barang barang)throws Exception{
         EntityManager em = getEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.persist(barang);
-            em.getTransaction().commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+        em.getTransaction().begin();
+        em.persist(barang);
+        em.getTransaction().commit();
     }
     
-    public void update(Barang barang){
+    public void update(Barang barang)throws Exception{
         EntityManager em = getEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.merge(barang);
-            em.getTransaction().commit();
-        }catch(Exception ex){}
+        em.getTransaction().begin();
+        em.merge(barang);
+        em.getTransaction().commit();
     }
     
     public void delete(String kodeBarang){

@@ -1,59 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StrukPelunasanPembayaran" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0ac6a7f-4d10-41c5-b9da-5af08fd115ad">
-	<property name="ireport.zoom" value="1.4641000000000006"/>
-	<property name="ireport.x" value="160"/>
-	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT
-     detail_pelunasan_pembayaran.`Id` AS detail_pelunasan_pembayaran_Id,
-     detail_pelunasan_pembayaran.`No_Pembayaran` AS detail_pelunasan_pembayaran_No_Pembayaran,
-     detail_pelunasan_pembayaran.`No_Transaksi` AS detail_pelunasan_pembayaran_No_Transaksi,
-     transaksi_pembelian.`No_Transaksi` AS transaksi_pembelian_No_Transaksi,
-     transaksi_pembelian.`No_Tanda_Terima` AS transaksi_pembelian_No_Tanda_Terima,
-     transaksi_pembelian.`No_Invoice` AS transaksi_pembelian_No_Invoice,
-     transaksi_pembelian.`Total_Transaksi` AS transaksi_pembelian_Total_Transaksi,
-     penerimaan_barang.`No_Tanda_Terima` AS penerimaan_barang_No_Tanda_Terima,
-     penerimaan_barang.`No_PO` AS penerimaan_barang_No_PO,
-     penerimaan_barang.`Tgl_Terima_Barang` AS penerimaan_barang_Tgl_Terima_Barang,
-     purchase_order.`No_PO` AS purchase_order_No_PO,
-     purchase_order.`Tgl_PO` AS purchase_order_Tgl_PO,
-     purchase_order.`Tgl_Kirim` AS purchase_order_Tgl_Kirim,
-     purchase_order.`Kd_Supplier` AS purchase_order_Kd_Supplier,
-     purchase_order.`Total_Qty` AS purchase_order_Total_Qty,
-     purchase_order.`Username` AS purchase_order_Username,
-     supplier.`Kd_Supplier` AS supplier_Kd_Supplier,
-     supplier.`Nm_Supplier` AS supplier_Nm_Supplier,
-     supplier.`Alamat` AS supplier_Alamat,
-     supplier.`Telepon` AS supplier_Telepon,
-     supplier.`Kota` AS supplier_Kota
-FROM
-     `detail_pelunasan_pembayaran` detail_pelunasan_pembayaran,
-     `transaksi_pembelian` transaksi_pembelian,
-     `penerimaan_barang` penerimaan_barang,
-     `purchase_order` purchase_order,
-     `supplier` supplier]]>
+	<property name="ireport.zoom" value="2.3579476910000055"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="290"/>
+	<style name="Zebra">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FBECF3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="noBayar" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT pp.No_Pembayaran, pp.Jth_Tempo, dpp.No_Transaksi, tp.No_Invoice, po.Total_Qty,
+(SELECT SUM(dpo.Harga_Beli) FROM detail_purchase_order dpo WHERE po.No_PO = dpo.No_PO) totalBeli,
+tp.Total_Transaksi, s.Nm_Supplier, s.Telepon, s.Kota, po.Username
+FROM pelunasan_pembayaran pp
+INNER JOIN detail_pelunasan_pembayaran dpp ON pp.No_Pembayaran = dpp.No_Pembayaran
+INNER JOIN transaksi_pembelian tp ON dpp.No_Transaksi = tp.No_Transaksi
+INNER JOIN penerimaan_barang pb ON tp.No_Tanda_Terima = pb.No_Tanda_Terima
+INNER JOIN purchase_order po ON pb.No_PO = po.No_PO
+INNER JOIN supplier s ON po.Kd_Supplier = s.Kd_Supplier
+WHERE pp.No_Pembayaran = $P{noBayar}]]>
 	</queryString>
-	<field name="detail_pelunasan_pembayaran_Id" class="java.lang.Integer"/>
-	<field name="detail_pelunasan_pembayaran_No_Pembayaran" class="java.lang.String"/>
-	<field name="detail_pelunasan_pembayaran_No_Transaksi" class="java.lang.String"/>
-	<field name="transaksi_pembelian_No_Transaksi" class="java.lang.String"/>
-	<field name="transaksi_pembelian_No_Tanda_Terima" class="java.lang.String"/>
-	<field name="transaksi_pembelian_No_Invoice" class="java.lang.String"/>
-	<field name="transaksi_pembelian_Total_Transaksi" class="java.lang.Double"/>
-	<field name="penerimaan_barang_No_Tanda_Terima" class="java.lang.String"/>
-	<field name="penerimaan_barang_No_PO" class="java.lang.String"/>
-	<field name="penerimaan_barang_Tgl_Terima_Barang" class="java.sql.Date"/>
-	<field name="purchase_order_No_PO" class="java.lang.String"/>
-	<field name="purchase_order_Tgl_PO" class="java.sql.Date"/>
-	<field name="purchase_order_Tgl_Kirim" class="java.sql.Date"/>
-	<field name="purchase_order_Kd_Supplier" class="java.lang.String"/>
-	<field name="purchase_order_Total_Qty" class="java.lang.Integer"/>
-	<field name="purchase_order_Username" class="java.lang.String"/>
-	<field name="supplier_Kd_Supplier" class="java.lang.String"/>
-	<field name="supplier_Nm_Supplier" class="java.lang.String"/>
-	<field name="supplier_Alamat" class="java.lang.String"/>
-	<field name="supplier_Telepon" class="java.lang.String"/>
-	<field name="supplier_Kota" class="java.lang.String"/>
+	<field name="No_Pembayaran" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Jth_Tempo" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="No_Transaksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="No_Invoice" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total_Qty" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalBeli" class="java.lang.Double"/>
+	<field name="Total_Transaksi" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nm_Supplier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Telepon" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Kota" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Username" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="GrandTotalQty" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total_Qty}]]></variableExpression>
+	</variable>
+	<variable name="GrandTotalTransaksi" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{Total_Transaksi}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -88,11 +95,11 @@ FROM
 				<text><![CDATA[Telp: 5321584, 5321409 Fax: +62215331812]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="462" y="38" width="44" height="11" uuid="4ba5cbcd-43a6-46f7-b693-23dc76d2a06c"/>
+				<reportElement x="449" y="38" width="57" height="11" uuid="4ba5cbcd-43a6-46f7-b693-23dc76d2a06c"/>
 				<textElement textAlignment="Right">
 					<font fontName="Segoe UI" size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Tanggal]]></text>
+				<text><![CDATA[Tanggal : ]]></text>
 			</staticText>
 			<textField>
 				<reportElement mode="Transparent" x="506" y="38" width="49" height="11" backcolor="#CCCCCC" uuid="a631a923-53fd-4c8c-9172-17e640ec29fa"/>
@@ -102,18 +109,18 @@ FROM
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy", $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="445" y="49" width="61" height="11" uuid="99983d48-da0f-4b3e-b9d5-919978be16b6"/>
+				<reportElement x="453" y="49" width="53" height="11" uuid="99983d48-da0f-4b3e-b9d5-919978be16b6"/>
 				<textElement textAlignment="Right">
 					<font fontName="Segoe UI" size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Jatuh Tempo]]></text>
+				<text><![CDATA[Jatuh Tempo : ]]></text>
 			</staticText>
 			<textField>
 				<reportElement mode="Transparent" x="506" y="49" width="49" height="11" backcolor="#CCCCCC" uuid="f13dd8e2-64f7-4e54-959e-4644dcd3ee84"/>
 				<textElement textAlignment="Right">
 					<font fontName="Segoe UI" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy", $P{REPORT_LOCALE}).format($F{purchase_order_Tgl_Kirim})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy", $P{REPORT_LOCALE}).format($F{Jth_Tempo})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="62" width="555" height="1" uuid="6dd98d68-9bec-44b5-87f6-692b4469ee1b"/>
@@ -129,37 +136,254 @@ FROM
 				<reportElement x="183" y="17" width="183" height="1" uuid="4b2a1e37-c5f0-4fdd-82c4-db9cd7d6860c"/>
 			</line>
 			<textField>
-				<reportElement x="294" y="18" width="35" height="18" uuid="a0dc9897-c0e7-448e-aabc-28ace3d262a4"/>
+				<reportElement x="299" y="18" width="35" height="18" uuid="a0dc9897-c0e7-448e-aabc-28ace3d262a4"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Segoe UI" size="9" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{purchase_order_No_PO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{No_Pembayaran}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="223" y="18" width="71" height="18" uuid="bada1ef7-1ae1-44c8-b197-241513c105bb"/>
+				<reportElement x="218" y="18" width="81" height="18" uuid="bada1ef7-1ae1-44c8-b197-241513c105bb"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Segoe UI" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[No. Pembayaran]]></text>
+				<text><![CDATA[No. Pembayaran :]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="17" uuid="2f0b5d24-8220-49aa-88de-22daf76d8e5d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="506" y="0" width="49" height="17" uuid="3f1932c5-cedf-4e30-9334-8d038e391e50"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="146" height="17" uuid="cadd5967-d336-4638-8752-6c0ab115408c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nm_Supplier}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="453" y="0" width="53" height="17" uuid="d412a845-6de5-47b5-ae09-1f9511018e50"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama User :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="47" width="555" height="1" uuid="5e3617fa-6c74-459f-8039-04015d004097"/>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="28" width="43" height="11" uuid="6ac9fbe0-c1cb-493b-92e6-93d853298919"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kota       :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="28" width="146" height="11" uuid="bd943a10-ac6c-4c8e-8e74-aab8bc2a7b5b"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Kota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="17" width="43" height="11" uuid="4e546f84-e2fc-4e19-8d14-376a52529819"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telp        :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="17" width="146" height="11" uuid="5cd7f9da-71cc-4217-8199-4995622b67e4"/>
+				<textElement>
+					<font fontName="Segoe UI" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Telepon}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="123b5ae7-a883-451d-8390-15e96eab15a1"/>
+			</line>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#FF7675" uuid="dcb61c6c-c56b-411a-a089-215331196d09"/>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="47" y="0" width="151" height="20" forecolor="#FFFFFF" uuid="b49474ac-bd01-4280-964c-8a28d9bc22fc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No. Invoice]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="414" y="0" width="141" height="20" forecolor="#FFFFFF" uuid="6f664b1b-1202-47bb-b76f-87485e1aaff2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="273" y="0" width="141" height="20" forecolor="#FFFFFF" uuid="9bcf0b4d-5e91-418a-b852-b638c427046f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Harga]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="47" height="20" forecolor="#FFFFFF" uuid="dc052a00-daa3-42bd-ae8c-8d50059d1583"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="198" y="0" width="75" height="20" forecolor="#FFFFFF" uuid="ea1b8d3d-72d0-48e7-bc9f-6985c1c72db6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+			</frame>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="495472d7-2ae4-4e96-b49e-c63a1a341dab"/>
+			</line>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="21" splitType="Stretch">
+			<frame>
+				<reportElement style="Zebra" x="0" y="0" width="555" height="20" uuid="aacc4590-19a9-4f99-a7b6-0fed0fef064a"/>
+				<textField>
+					<reportElement x="0" y="0" width="47" height="20" uuid="083f9c3d-bd9b-4b71-bfdd-33a4c5e5a4d0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="47" y="0" width="151" height="20" uuid="b05e9fc1-e9a8-4cc4-b56f-2d290873c819"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{No_Invoice}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="198" y="0" width="75" height="20" uuid="e23f5ca6-2910-4cde-85f4-10a1de2f105a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Total_Qty}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="273" y="0" width="141" height="20" uuid="4ec95b81-62e0-42d1-91ca-a8e7aa671002"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{totalBeli}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###.##">
+					<reportElement x="414" y="0" width="141" height="20" uuid="32c28436-925f-4d98-bd03-faa340391412"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Total_Transaksi}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="528" y="0" width="28" height="14" forecolor="#000000" backcolor="#CCCCCC" uuid="574a39b5-a48e-4acb-a5e0-269f71325a25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="529" height="14" forecolor="#000000" backcolor="#CCCCCC" uuid="203a761c-f98b-4d03-8d7b-d2424331a812"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="-1" y="0" width="110" height="14" backcolor="#CCCCCC" uuid="22fb3af4-e632-43ef-ae52-dc86138be898"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Print date : " + new SimpleDateFormat("dd MMMM yyyy", $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="193" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="130" y="10" width="425" height="20" forecolor="#FFFFFF" backcolor="#FF7675" uuid="abd404b4-7414-4bc7-a211-9b0f1d81ee72"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ Grand Total :]]></text>
+			</staticText>
+			<textField pattern="###,###.##">
+				<reportElement x="198" y="9" width="75" height="20" forecolor="#FFFFFF" uuid="547c9126-5457-4141-b6e1-f503c427bd28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GrandTotalQty}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="130" y="10" width="425" height="1" forecolor="#D63031" uuid="c0275ee2-0fd5-4620-b4eb-5a45b0c26c84"/>
+			</line>
+			<line>
+				<reportElement x="130" y="29" width="425" height="1" forecolor="#D63031" uuid="44072de5-0d5f-445c-8b9d-919f0bd3578c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="#D63031" uuid="0d1acca5-8954-461a-a25c-63381709747d"/>
+			</line>
+			<textField pattern="###,###.##">
+				<reportElement x="414" y="9" width="141" height="20" forecolor="#FFFFFF" uuid="af26d7de-2250-4820-8dc7-846a7950ff36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GrandTotalTransaksi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="412" y="103" width="68" height="20" uuid="c359eb39-20fb-45eb-8231-7f0cd0d768da"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hormat Kami,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="237" y="103" width="68" height="20" uuid="6399460d-ce13-4b29-981d-13726a81e56c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="378" y="184" width="139" height="1" uuid="f526aab8-3e72-4f98-bd24-b81424afa3e6"/>
+			</line>
+			<line>
+				<reportElement x="203" y="184" width="139" height="1" uuid="de958de5-bdeb-4b29-8cd1-263ef86ecfd6"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>

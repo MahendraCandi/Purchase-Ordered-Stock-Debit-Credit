@@ -42,7 +42,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         txtLogin.setForeground((new Color(204, 204, 204)));
-        txtLogin.setText("fnc1");
+        txtLogin.setText("Username");
     }
     
     public void password(){
@@ -54,7 +54,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
         txtLogin.setForeground((new Color(204, 204, 204)));
-        txtPassword.setText("1234");
+        txtPassword.setText("password");
     }
     
     private void login(){
