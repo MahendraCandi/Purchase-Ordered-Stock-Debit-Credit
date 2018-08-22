@@ -134,7 +134,7 @@ public class FormTransaksiPembelian extends javax.swing.JInternalFrame implement
     }
     
     private void cariTable(String cari){
-        List<Object[]> listPb = transCont.searchTransaksiPembelian(cari);
+        List<TransaksiPembelian> listPb = transCont.searchTransaksiPembelian(cari);
         if(listPb.isEmpty()){
             JOptionPane.showMessageDialog(null, "Data tidak ditemukan!");
         }else{
@@ -143,8 +143,13 @@ public class FormTransaksiPembelian extends javax.swing.JInternalFrame implement
             }else{
                 model.getDataVector().removeAllElements();
                 model.fireTableDataChanged();
-                for(Object[] pb : listPb){
-                    model.addRow(pb);
+                for(TransaksiPembelian tp : listPb){
+                Object[] obj = new Object[4];
+                obj[0] = tp.getNoTransaksi();
+                obj[1] = tp.getNoTandaTerima();
+                obj[2] = tp.getNoInvoice();
+                obj[3] = tp.getTotalTransaksi();
+                model.addRow(obj);
                 }
                 tableTransaksi.setModel(model);
             }
@@ -617,7 +622,7 @@ public class FormTransaksiPembelian extends javax.swing.JInternalFrame implement
             JOptionPane.showMessageDialog(null, "Data tanda terima kosong!");
             return;
         }else{
-            List<Object[]> list = transCont.searchTransaksiPembelian(cmbTandaTerima.getSelectedItem().toString());
+            List<TransaksiPembelian> list = transCont.searchTransaksiPembelian(cmbTandaTerima.getSelectedItem().toString());
             if(!list.isEmpty()){
                 JOptionPane.showMessageDialog(null, "No tanda terima eksis!");
             }else{

@@ -125,18 +125,22 @@ public class FormBackupDatabase extends javax.swing.JInternalFrame {
 
     private void btnBrowsePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowsePathActionPerformed
         JFileChooser fc = new JFileChooser();
-        fc.showOpenDialog(this);
+        int result = fc.showOpenDialog(this);
         String tgl = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         try {
-            if(fc.getSelectedFile() == null){
-                JOptionPane.showMessageDialog(null, "Nama File tidak boleh kosong");
+            if(JFileChooser.CANCEL_OPTION == result){
                 return;
+            }else if(JFileChooser.APPROVE_OPTION == result){
+                if(fc.getSelectedFile() == null){
+                    JOptionPane.showMessageDialog(null, "Nama File tidak boleh kosong");
+                    return;
+                }
+                File file = fc.getSelectedFile();
+                path = file.getAbsolutePath();
+                path = path.replace("\\", "\\");
+                path = path + "-" + tgl + ".sql";
+                txtPath.setText(path);
             }
-            File file = fc.getSelectedFile();
-            path = file.getAbsolutePath();
-            path = path.replace("\\", "\\");
-            path = path + "-" + tgl + ".sql";
-            txtPath.setText(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,7 +157,7 @@ public class FormBackupDatabase extends javax.swing.JInternalFrame {
         }
         try {
             Runtime runtime = Runtime.getRuntime();
-            process = runtime.exec(sqlDumpPath + path);
+            process = runtime.exec(sqlDumpPath + "\""+ path + "\"");
             
             int processComplete = process.waitFor();
             if(processComplete == 0){

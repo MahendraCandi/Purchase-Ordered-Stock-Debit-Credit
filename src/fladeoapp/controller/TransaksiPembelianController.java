@@ -175,15 +175,12 @@ public class TransaksiPembelianController implements Serializable{
         return obj;
     }
     
-    public List<Object[]> searchTransaksiPembelian(String cari){
+    public List<TransaksiPembelian> searchTransaksiPembelian(String cari){
         EntityManager em = getEntityManager();
-        List<Object[]> list = new ArrayList<>();
+        List<TransaksiPembelian> list = new ArrayList<>();
         try {
-            Query q=em.createQuery("SELECT tp FROM TransaksiPembelian tp "
-                    + "WHERE tp.noTransaksi LIKE :cari "
-                    + "OR tp.noInvoice LIKE :cari "
-                    + "OR tp.noTandaTerima LIKE :cari");
-            q.setParameter("cari", cari);
+            Query q=em.createQuery("SELECT tp FROM TransaksiPembelian tp WHERE tp.noTransaksi LIKE :cari OR tp.noInvoice LIKE :cari OR tp.noTandaTerima LIKE :cari");
+            q.setParameter("cari", "%"+cari+"%");
             list = q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
